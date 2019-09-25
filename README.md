@@ -1,6 +1,6 @@
-## Amazon S3 Datalake Handson
+## Amazon S3 Data Lake Handson
 
-This provides the contents for AWS Data Lake Handson in both Japanese and English.
+This repository provides the contents for AWS Data Lake Handson in both Japanese and English. As of Sep 27 2019, only Japanese version is available. English version is coming soon.
 
 ## License Summary
 

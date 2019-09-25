@@ -1,0 +1,69 @@
+Parameters:
+  VpcId:
+    Description: select handson-minilake vpc id
+    Type: "AWS::EC2::VPC::Id"
+  EC2SecurityGroupId:
+    Description: select EC2 Security Group ID
+    Type: "AWS::EC2::SecurityGroup::Id"
+Resources:
+# Create Public RouteTable
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VpcId
+      Tags:
+      - Key: Name
+        Value: handson-minilake-private-rt
+# Create Private Subnet A
+  PrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VpcId
+      CidrBlock: 10.0.0.32/27
+      AvailabilityZone: "ap-northeast-1a"
+      Tags:
+      - Key: Name
+        Value: handson-minilake-private-sub
+# Associate with Private subnet and route table for private subnet
+  PriSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet
+      RouteTableId: !Ref PrivateRouteTable
+# Create EIP
+  MyEIP:
+    Type: "AWS::EC2::EIP"
+    Properties:
+      Domain: vpc
+# Create NATGateway
+  myNATGateway:
+    Type: "AWS::EC2::NatGateway"
+    DependsOn: 
+      - MyEIP
+      - PrivateSubnet
+    Properties:
+      AllocationId: !GetAtt MyEIP.AllocationId
+      SubnetId: !Ref PrivateSubnet
+      Tags:
+      - Key: Name
+        Value: handson-minilake-nat
+# set NAT as default gateway on route table for private subnet
+  myPrivateRoute:
+    Type: AWS::EC2::Route
+    DependsOn: myNATGateway
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref myNATGateway
+# create sg for RS
+  myRSSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupName: handson-minilake-sg-private
+      GroupDescription: Enable SSH access via port 5439
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '5439'
+          ToPort: '5439'
+          SourceSecurityGroupId: !Ref EC2SecurityGroupId

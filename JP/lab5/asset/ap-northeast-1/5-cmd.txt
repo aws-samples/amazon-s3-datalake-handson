@@ -1,0 +1,53 @@
+------------------------------------------------------------------------------------
+Copyright <first-edit-year> Amazon.com, Inc. or its affiliates. All Rights Reserved.  
+SPDX-License-Identifier: MIT-0
+
+------------------------------------------------------------------------------------
+
+
+1.
+td-agent-gem install fluent-plugin-kinesis -v 2.1.0
+
+2.
+td-agent-gem list | grep plugin-kinesis
+
+3.
+export AWS_REGION="ap-northeast-1"
+
+4.
+/etc/init.d/td-agent restart
+
+
+6.
+create table ec2log ( timestamp varchar, alarmlevel varchar, host varchar, number int2, text varchar );
+
+7.
+copy ec2log from 's3://[S3 BUCKET NAME]/minilake-in1' format as json 'auto' iam_role '[作成したIAMロールのARN]';
+
+8.
+create external schema my_first_external_schema from data catalog database 'spectrumdb' iam_role '[作成したIAMロールのARN]' create external database if not exists;
+
+9.
+create external table my_first_external_schema.ec2log_external ( timestamp varchar(max), alarmlevel varchar(max), host varchar(max), number int2, text varchar(max) ) partitioned by (year char(4), month char(2), day char(2), hour char(2)) ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe' WITH SERDEPROPERTIES ( 'paths'='timestamp,alarmlevel,host,number,text') STORED AS INPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat' OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'  location 's3://[S3 BUCKET NAME]/minilake-in1/';
+
+10.
+select * from svv_external_schemas;
+
+11.
+select * from svv_external_databases;
+
+12.
+select * from svv_external_tables;
+
+13.
+"ADD PARTITION"句の各パーティションの値は、LOCATION句のS3バケットパスのパーティションの値と合わせてください。下記は一例です。
+
+ALTER TABLE my_first_external_schema.ec2log_external ADD PARTITION (year='2019', month='09', day='27', hour='14') LOCATION 's3://[S3 BUCKET NAME]/minilake-in1/2019/09/27/14';
+
+
+もしパーティション作成を間違えた場合は、以下を参考にDrop Partitionしてください。
+上記ADD PARTITIONで指定したパーティションの値を指定して削除します。
+
+ALTER TABLE my_first_external_schema.ec2log_external DROP PARTITION (year='2019', month='09', day='27', hour='14')
+
+
