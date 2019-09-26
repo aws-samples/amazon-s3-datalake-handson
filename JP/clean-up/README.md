@@ -16,7 +16,7 @@ SPDX-License-Identifier: MIT-0
 
 2. Glue からクローラの削除（クローラ名:minilake-in1、minilake-out1、minilake-out2）  
 
-3. Glue からテーブルの削除（テーブル名:minilake_out1、minilake_out2）  
+3. Glue からテーブルの削除（テーブル名:minilake\_out1、minilake\_out2）  
 
 4. Glue からデータベースの削除（データベース名：minilake）  
 
@@ -54,7 +54,7 @@ SPDX-License-Identifier: MIT-0
 
  4. Glue からクローラの削除（クローラ名:minilake1）
 
- 5. Glue からテーブルの削除（テーブル名:minilake_in1、minilake_out1、ec2log_external）
+ 5. Glue からテーブルの削除（テーブル名:minilake\_in1、minilake\_out1、ec2log\_external）
 
  6. Glue からデータベースの削除（データベース名:minilake、spectrumdb）
 

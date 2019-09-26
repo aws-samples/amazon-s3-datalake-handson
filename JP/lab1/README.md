@@ -45,9 +45,9 @@ CloudFormation を使い、 VPC を作成し、作成された VPC にログを�
  
  7. 最後の確認ページの内容を確認し、 **[スタックの作成]** をクリックします。数分ほど待つと EC2 一台ができあがり、 **/root/es-demo/testapp.log** にログ出力が始まります。  
  
- 8. EC2へ **SSH ログインして root にスイッチし、**ログが2分おきに出力していることを確認します。  
+ 8. EC2 へ **SSH ログインして root にスイッチし、**ログが2分おきに出力していることを確認します。  
  
- **Note：** EC2のログイン方法については、[こちら](additional_info_lab1.md#EC2へのログイン方法)を参照ください。
+ **Note：** EC2 のログイン方法については、[こちら](additional_info_lab1.md#EC2へのログイン方法)を参照ください。 EC2 の 接続先の IP アドレス情報につきましては、 **[CloudFormation]** の画面から、該当の CloudFormation のスタックを選択し、 **[出力]** のタブをクリックすると、 **[AllowIPAddress]** の情報から確認できます。
 
  ```
  $ sudo su -
