@@ -27,7 +27,7 @@ Fluentd から Elasticsearch Service に送信する前段に Amazon CloudWatch�
 Fluentd から CloudWatch Logs にログデータを送信するための設定を行います。
 
  1. EC2 にログインし、 CloudWatch Logs のプラグインをインストールします。
- 
+
     **Asset** 資料：[3-cmd.txt](asset/ap-northeast-1/3-cmd.txt)
 
  ```
