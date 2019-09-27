@@ -111,7 +111,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
  **[追記する行の例]**
  
-      **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
+ **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
  
  ```
  export AWS_REGION="ap-northeast-1"
@@ -279,7 +279,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  17. **[インポートの完了]** がポップアップされたら準備完了です。 **[フィールドリスト]** や **[ビジュアルタイプ]** を適当に選び、データが可視化されていることを確認してください。  
 
  **[完了想定画面]**
- <img src="images/QuickSight_capture01.png">  
+ <img src="images/quicksight_capture01.png">  
  
 
 ## Section4：まとめ

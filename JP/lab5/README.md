@@ -21,6 +21,8 @@ Redshift 用のネットワークを CloudFormation を用いて、構築しま�
  2. **[スタックの作成]** 画面の **[前提条件 - テンプレートの準備]** において、 **[テンプレートの準備完了]** を選択します。 
  
  3. 続いて、 **[スタックの作成]** 画面の **[テンプレートの指定]** において、 **[テンプレートファイルのアップロード]** を選択し、 **[ファイルの選択]** をクリックし、ダウンロードしたテンプレート「 **5-minilake_privatesubnet.yaml** 」を指定し、 **[次へ]** をクリックします。 
+ 
+     **Asset** 資料：[5-minilake_privatesubnet.yaml](asset/ap-northeast-1/5-minilake_privatesubnet.yaml)
 
  4. **[スタックの名前]** に「 **handson-minilake-private-subnet**（任意）」、 **[EC2SecurityGroupId]** 、 **[VpcId]** には、これまでに作成したセキュリティグループと VPC を選択して、 **[次へ]** をクリックします。
 
