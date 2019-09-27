@@ -133,9 +133,9 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  7. **[Import saved objects]** 画面において、**[Import]** アイコンそクリックし、 **Asset** 資料の「 **3-visualization.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
-   **Asset** 資料：[3-visualization.json](asset/ap-northeast-1/3-visualization.json)
+    **Asset** 資料：[3-visualization.json](asset/ap-northeast-1/3-visualization.json)
 
-   **Note：** インポートの **[Import saved objects]** 画面で、 **[New index patten]** において、初期値が「 -- Skip Import -- 」だった場合、「 **cwl-\*** 」を選択する必要があります。
+    **Note：** インポートの **[Import saved objects]** 画面で、 **[New index patten]** において、初期値が「 -- Skip Import -- 」だった場合、「 **cwl-\*** 」を選択する必要があります。
 
  8. 続いて、再度 **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **3-dashboard.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
@@ -154,16 +154,18 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
  5. 間隔を変更するために、 **[編集]** をクリックし、 **[期間]** を「 **1 分** 」に設定し、 **[メトリクスの選択]** をクリックします。
 
  6. 下記を設定し、 **[次へ]** をクリックします。  
-  - しきい値の種類：静的  
-  - アラーム条件を定義：以上  
-  - しきい値：50  
-  ▼その他の設定
-  - アラームを実行するデータポイント：1/1
+ 
+   - しきい値の種類：静的  
+   - アラーム条件を定義：以上  
+   - しきい値：50  
+   ▼その他の設定
+   - アラームを実行するデータポイント：1/1
 
  7. 下記を設定し、 **[トピックの作成]** をクリックし、トピックを作成します。  
-  - SNS トピックの選択：新しいトピックの作成  
-  - 新規トピックの作成中：任意の文字列（例：Default\_CloudWatch\_Alarms\_Topic）
-  - 通知を受け取るEメールエンドポイント：ハンズオン実施中に受信可能なメールアドレス
+ 
+   - SNS トピックの選択：新しいトピックの作成
+   - 新規トピックの作成中：任意の文字列（例：Default\_CloudWatch\_Alarms\_Topic）
+   - 通知を受け取るEメールエンドポイント：ハンズオン実施中に受信可能なメールアドレス
 
     **Note：** 登録後、この手順で登録したメールアドレスに確認メールが飛びますので、メール本文の **[Confirm subscription]** をクリックし確認ください。
 

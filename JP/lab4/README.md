@@ -16,12 +16,13 @@ SPDX-License-Identifier: MIT-0
  
  2. バケット名を以下のルールに従って入力し、画面左下の **[作成]** をクリックします。  
 
-   - バケット名：[YYYYMMDD]-handson-minilake-[Your Name][Your Birthday]
-   - [YYYYMMDD]：ハンズオン実施日
-   - [Your Name]：ご自身のお名前
-   - [Your Birthday]：ご自身の誕生日の日にち
+    - バケット名：[YYYYMMDD]-handson-minilake-[Your Name][Your Birthday]
+    - [YYYYMMDD]：ハンズオン実施日
+    - [Your Name]：ご自身のお名前
+    - [Your Birthday]：ご自身の誕生日の日にち
 
-    **Note：** S3 バケット名はグローバルで一意である必要がありますが、バケット作成ができればバケット名は任意でも構いません。
+
+**Note：** S3 バケット名はグローバルで一意である必要がありますが、バケット作成ができればバケット名は任意でも構いません。
   
 
 ### Step2：Kinesis Data Firehose の作成
@@ -36,13 +37,13 @@ SPDX-License-Identifier: MIT-0
  
  5. **[S3 bucket]** は **Step1** で作成したバケットを選択します。 **[Prefix]** に「 **minilake-in1/** 」を入力します。
  
-   **Note：** **[Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
+    **Note：** **[Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
  
  6. 画面右下の **[Next]** をクリックします。
  
  7. **[Buffer interval]** を「 **60** seconds」に設定します。バッファリングは、 Buffer size か Buffer interval のいずれかの条件がみたされるとS3に配信されます。  
 
-   **Note：** 今回は設定しませんが、データの圧縮、暗号化も可能です。大規模データやセキュリティ要件に対して、有効に働きます。 
+    **Note：** 今回は設定しませんが、データの圧縮、暗号化も可能です。大規模データやセキュリティ要件に対して、有効に働きます。 
  
  8. **[IAM role]** で **[Create new or choose]** をクリックし、 Kinesis Data Firehose が S3 にアクセスするための IAM ロールを作成します。
  
