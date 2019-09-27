@@ -41,14 +41,12 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  ```
  # td-agent-gem list | grep cloudwatch-logs
-
  ```
 
  **[実行結果例]**
 
  ```
  fluent-plugin-cloudwatch-logs (0.4.4)
-
  ```
 
  3. 「 **/etc/td-agent/td-agent.conf** 」の設定を変更するために、一旦「 **/etc/td-agent/td-agent.conf** 」の中身を削除します。 vi 等のエディタで開き、「:%d」などで削除を行います。
@@ -59,7 +57,7 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  4. **Asset** 資料の「 **3-td-agent.conf** 」の内容をコピーして、貼り付けます。
 
-  **Asset** 資料：[3-td-agent.conf](asset/ap-northeast-1/3-td-agent.conf)
+    **Asset** 資料：[3-td-agent.conf](asset/ap-northeast-1/3-td-agent.conf)
 
  5. 「 **/etc/init.d/td-agent** 」ファイルを開き、13行目辺りに以下の行を追加します。
 
@@ -73,7 +71,7 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
  export AWS_REGION="ap-northeast-1"
  ```
 
- **Note：** リージョンを変更した場合は、適宜変更します。
+　　 **Note：** リージョンを変更した場合は、適宜変更します。
 
  6. Fluentd を再起動します。
 
@@ -98,17 +96,17 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  2. ロググループ「 **minilake_group** （任意）」が出力されていることを確認し、クリックします。
 
- **Note：** 数分待ってもログが出ない場合は、 EC2 に IAM ロールがアタッチされてるか確認します。
+    **Note：** 数分待ってもログが出ない場合は、 EC2 に IAM ロールがアタッチされてるか確認します。
 
  3. ログストリーム「 **testapplog_stream** （任意）」をクリックします。直近のログが出力されていることを確認します。画面上部の **[ロググループ]** の文字列をクリックし、ロググループに戻ります。  
 
  4. ロググループ「 **minilake_group** （任意）」にチェックを入れ、 **[アクション]** をクリックし、 **[Amazon Elasticsearch Service へのストリーミングの開始]** をクリックします。  
 
- **Note：** 裏側では自動で Lambda Function が作られます。
+    **Note：** 裏側では自動で Lambda Function が作られます。
 
  5. **[Amazon ES クラスター]** において、作成済みの「 **handson-minilake** （任意）」を選択し、 **[Lambda IAM 実行ロール]** において、 **[新しい IAM ロールの作成]** を選択します。  
 
- **Note：** ブラウザでポップアップブロックが走ったら、許可して、1つ前の手順からやり直して下さい。
+　　**Note：** ブラウザでポップアップブロックが走ったら、許可して、1つ前の手順からやり直して下さい。
 
  6. 「 **lambda_elasticsearch_execution** 」という名前のロールが作られるので、そのまま右下の **[許可]** をクリックします。  
 
@@ -125,7 +123,7 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  3. **[Index pattern]** に「 **cwl-*** 」を入力し、右側の **[Next step]** をクリックします。
 
- **Note：** インデックス作成に多少の時間がかかるため、 **[Next step]** がクリックできるようになるまで、少し時間がかかることが想定されます。  
+    **Note：** インデックス作成に多少の時間がかかるため、 **[Next step]** がクリックできるようになるまで、少し時間がかかることが想定されます。  
 
  4. **[Time Filter field name]** に **[@timestamp]** を選択し、右下の **[Create index pattern]** をクリックします。
 
@@ -135,13 +133,13 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  7. **[Import saved objects]** 画面において、**[Import]** アイコンそクリックし、 **Asset** 資料の「 **3-visualization.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
-  **Asset** 資料：[3-visualization.json](asset/ap-northeast-1/3-visualization.json)
+   **Asset** 資料：[3-visualization.json](asset/ap-northeast-1/3-visualization.json)
 
-  **Note：** インポートの **[Import saved objects]** 画面で、 **[New index patten]** において、初期値が「 -- Skip Import -- 」だった場合、「 **cwl-\*** 」を選択する必要があります。
+   **Note：** インポートの **[Import saved objects]** 画面で、 **[New index patten]** において、初期値が「 -- Skip Import -- 」だった場合、「 **cwl-\*** 」を選択する必要があります。
 
  8. 続いて、再度 **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **3-dashboard.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
-  **Asset** 資料：[3-dashboard.json](asset/ap-northeast-1/3-dashboard.json)
+    **Asset** 資料：[3-dashboard.json](asset/ap-northeast-1/3-dashboard.json)
 
 ### Step3：CloudWatch アラームの設定
 
@@ -167,7 +165,7 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
   - 新規トピックの作成中：任意の文字列（例：Default\_CloudWatch\_Alarms\_Topic）
   - 通知を受け取るEメールエンドポイント：ハンズオン実施中に受信可能なメールアドレス
 
- **Note：** 登録後、この手順で登録したメールアドレスに確認メールが飛びますので、メール本文の **[Confirm subscription]** をクリックし確認ください。
+    **Note：** 登録後、この手順で登録したメールアドレスに確認メールが飛びますので、メール本文の **[Confirm subscription]** をクリックし確認ください。
 
  8. 必要な設定は完了したため、 **[次へ]** をクリックします。
 

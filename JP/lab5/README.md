@@ -44,11 +44,11 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
 
  4. 以下の値を入力し、**[作成]** をクリックします。
 
-  - 名前：**handson-minilake-dwh** （任意）
-  - 説明：**dwh in my vpc** （任意）
-  - VPC ID：メモした「 **VPC ID** 」を選択
-  - アベイラビリティゾーン：**ap-northeast-1a**
-  - サブネットID：メモした「 **サブネット ID** 」を選択し、 **[追加]** をクリック
+    - 名前：**handson-minilake-dwh** （任意）
+    - 説明：**dwh in my vpc** （任意）
+    - VPC ID：メモした「 **VPC ID** 」を選択
+    - アベイラビリティゾーン：**ap-northeast-1a**
+    - サブネットID：メモした「 **サブネット ID** 」を選択し、 **[追加]** をクリック
  
  5. **[Redshift ダッシュボード]** を選択し、 **[クイック起動クラスター]** をクリックします。
 
@@ -56,11 +56,11 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
 
  7. 以下の値を入力し、 **[次へ]** をクリックします。
  
-  - クラスター識別子：**handson-minilake-dwh** （任意）
-  - データベース名：**db** （任意）
-  - データベースポート：**5439** （デフォルト）
-  - マスターユーザー名：**admin** （任意）
-  - マスターユーザーのパスワード：**MyPassword1** （任意）
+    - クラスター識別子：**handson-minilake-dwh** （任意）
+    - データベース名：**db** （任意）
+    - データベースポート：**5439** （デフォルト）
+    - マスターユーザー名：**admin** （任意）
+    - マスターユーザーのパスワード：**MyPassword1** （任意）
  
  8. ノードのタイプなどについてはすべてデフォルトのまま、 **[次へ]** をクリックします。
 
@@ -72,7 +72,7 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
 
  12. Redshift の利用には課金が発生します。ページ下部の注意をよく読み、先に進みます。 **[クラスターの起動]** をクリックします。クラスターの起動完了までに時間がかかる為、次の作業を続けます。  
 
- **Note：** 課金に関する注意事項は必ずご確認ください。
+     **Note：** 課金に関する注意事項は必ずご確認ください。
 
 
 #### 「Lab4：アプリケーションログの永続化と長期間データの分析と可視化」を実施済みの場合、 Section2 と Section3 は実施済みの為、スキップしてください。
@@ -84,12 +84,13 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
  1. AWS マネジメントコンソールのサービス一覧から **S3** を選択し、画面の **[バケットを作成する]** をクリックします。
  
  2. バケット名を以下のルールに従って入力し、画面左下の **[作成]** をクリックします。
-  - バケット名：[YYYYMMDD]-handson-minilake-[Your Name][Your Birthday]
-   	- [YYYYMMDD]：ハンズオン実施日
-   	- [Your Name]：ご自身のお名前
-   	- [Your Birthday]：ご自身の誕生日の日にち
+ 
+    - バケット名：[YYYYMMDD]-handson-minilake-[Your Name][Your Birthday]
+    - [YYYYMMDD]：ハンズオン実施日
+    - [Your Name]：ご自身のお名前
+    - [Your Birthday]：ご自身の誕生日の日にち
 
-  **Note：** S3 バケット名はグローバルで一意である必要がありますが、バケット作成ができればバケット名は任意でも構いません。
+    **Note：** S3 バケット名はグローバルで一意である必要がありますが、バケット作成ができればバケット名は任意でも構いません。
   
 
 ### Step2：Kinesis Data Firehose の作成
@@ -104,13 +105,13 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
  
  5. **[S3 bucket]** は **Step1** で作成したバケットを選択します。 **[Prefix]** に「 **minilake-in1/** 」を入力します。
  
-  **Note：** **[Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
+    **Note：** **[Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
  
  6. 画面右下の **[Next]** をクリックします。
  
  7. **[Buffer interval]** を「 **60** seconds」に設定します。バッファリングは、 Buffer size か Buffer interval のいずれかの条件がみたされるとS3に配信されます。  
 
-  **Note：** 今回は設定しませんが、データの圧縮、暗号化も可能です。大規模データやセキュリティ要件に対して、有効に働きます。 
+    **Note：** 今回は設定しませんが、データの圧縮、暗号化も可能です。大規模データやセキュリティ要件に対して、有効に働きます。 
  
  8. **[IAM role]** で **[Create new or choose]** をクリックし、 Kinesis Data Firehose が S3 にアクセスするための IAM ロールを作成します。
  
@@ -163,11 +164,11 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
    3. 本手順については、どの Lab から開始したかによって、適用する設定ファイルが異なる為、ご自身が実施された手順に応じて、Fluentdの設定を変更してください。
 #### (a) Lab1, 2, 3 から続けて、 Lab4 を実施している場合
-   **Asset** 資料：[5-td-agent1.conf](asset/ap-northeast-1/5-td-agent1.conf) 
+      **Asset** 資料：[5-td-agent1.conf](asset/ap-northeast-1/5-td-agent1.conf) 
 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、 **Asset** 資料の「 **5-td-agent1.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。
 
-	#### (b) Lab1 を実施し、その後　Lab4 を実施している場合
+ #### (b) Lab1 を実施し、その後　Lab4 を実施している場合
    **Asset** 資料：[5-td-agent2.conf](asset/ap-northeast-1/5-td-agent2.conf) 
 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、**Asset** 資料の「 **5-td-agent2.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。  
@@ -201,7 +202,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
    5. S3 にデータが出力されていることを確認します。  
    
-  **Note：** 数分かかります。（S3のパスの例：20190927-handson-minilake-test01/minilake-in1/2019/09/27/13）
+      **Note：** 数分かかります。（S3のパスの例：20190927-handson-minilake-test01/minilake-in1/2019/09/27/13）
 
    6. Kinesis Data Firehose の画面において、作成した **Delivery stream** の「 **minilake1** （任意）」を選択し、 **[Monitoring]** タブをクリック、表示に時間がかかる為、次の手順に進みます。
    
@@ -216,10 +217,10 @@ Redshift に接続できるか確認します。
  
  2. 作成したインスタンスへの接続情報を入力し、 **[接続]** をクリックします。
 
-  - クラスター：**handson-minilake-dwh** （任意）
-  - データベース名：**db** （任意）
-  - データベースユーザー：**admin** （任意）
-  - パスワード：設定済みパスワード
+    - クラスター：**handson-minilake-dwh** （任意）
+    - データベース名：**db** （任意）
+    - データベースユーザー：**admin** （任意）
+    - パスワード：設定済みパスワード
  
  3. 左ペインにテーブル一覧が表示されれば、ログイン成功です。
 
@@ -244,13 +245,13 @@ Redshift にデータをロードします。
 
  8. **[使用可能]** となったら、左ペインから **[Query editor]** を選択し、 Redshift に接続し、先にロード対象のテーブルを作成します。以下のクエリを入力し、 **[Run query]** をクリックし、クエリを実行します。
 
-   **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
+    **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
  
  ```
  create table ec2log ( timestamp varchar, alarmlevel varchar, host varchar, number int2, text varchar );
  ```
  
-  **Note：** ハンズオンの都合上、このテーブル定義はベストプラクティスに沿ったものでは
+   **Note：** ハンズオンの都合上、このテーブル定義はベストプラクティスに沿ったものでは
  ありません。ベストプラクティスに沿ってテーブル定義するには、[こちら](https://docs.aws.amazon.com/ja_jp/redshift/latest/dg/c_designing-tables-best-practices.html)を参照してください。  
    
  9. S3 からデータを COPY します。以下のクエリを入力し、 **[Run query]** をクリックし、クエリを実行します。  
@@ -261,7 +262,7 @@ Redshift にデータをロードします。
  copy ec2log from 's3://[S3 BUCKET NAME]/minilake-in1' format as json 'auto' iam_role '[IAM ROLE ARN]'
  ```
  
-  **Note：** **[S3 BUCKET NAME]** と **[IAM ROLE ARN]** には、実際の値を入力し、実行します。
+   **Note：** **[S3 BUCKET NAME]** と **[IAM ROLE ARN]** には、実際の値を入力し、実行します。
  
  10. **ec2log** テーブルに対して、自由にクエリを実行してみましょう。
  
@@ -298,11 +299,11 @@ Redshift にデータをロードします。
 
  3. **[AWSGlueServiceRole]** にチェックを入れ、 **[ポリシーのアタッチ]** をクリックします。  
 
-  **Note：** Redshift Spectrum で外部スキーマとDBを作成する際、データカタログには AWS Glue のデータカタログが使用されます。そのため、 AWS Glue の操作認可（厳密には resource * に対する glue:CreateDatabase のみ）が必要となります。
+    **Note：** Redshift Spectrum で外部スキーマとDBを作成する際、データカタログには AWS Glue のデータカタログが使用されます。そのため、 AWS Glue の操作認可（厳密には resource * に対する glue:CreateDatabase のみ）が必要となります。
 
  4. Redshift に腹持ちしているスキーマとDB内には外部テーブルを作成することはできないため、別途、外部テーブル用の外部スキーマと、 DB を作成します。  
 
-   **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
+    **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
 
  ```
  create external schema my_first_external_schema from data catalog database 'spectrumdb' iam_role '[IAM ROLE ARN]' create external database if not exists;
@@ -311,7 +312,7 @@ Redshift にデータをロードします。
 
  5. 外部テーブルを作成します。  
 
-   **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
+    **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
 
  ```
  create external table my_first_external_schema.ec2log_external ( timestamp varchar(max), alarmlevel varchar(max), host varchar(max), number int2, text varchar(max) ) partitioned by (year char(4), month char(2), day char(2), hour char(2)) ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe' WITH SERDEPROPERTIES ( 'paths'='timestamp,alarmlevel,host,number,text') STORED AS INPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat' OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'  location 's3://[S3 BUCKET NAME]/minilake-in1/';
@@ -321,7 +322,7 @@ Redshift にデータをロードします。
 
  6. 下記コマンドを実行し、スキーマ 、DB、テーブルを確認します。  
 
-   **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
+    **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
 
  **[スキーマの確認]**
 
@@ -343,7 +344,7 @@ Redshift にデータをロードします。
 
  7. 下記 SQL を実行して、外部テーブルにパーティションを追加します。  
 
-   **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
+    **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
 
  ```
  ALTER TABLE my_first_external_schema.ec2log_external ADD PARTITION (year='2019', month='09', day='27', hour='14') LOCATION 's3://[S3 BUCKET NAME]/minilake-in1/2019/09/27/14';
@@ -355,11 +356,11 @@ Redshift にデータをロードします。
 
  8. AWS マネジメントコンソールのサービス一覧から **Athena** を選択し、データベースとして先程作成した「 **spectrumdb** （任意）」を選択すると、先程作成したテーブル 「**ec2log_external** （任意）」が存在することが確認できます。    
 
-  **Note：** このまま Athena からクエリすることもできます。
+    **Note：** このまま Athena からクエリすることもできます。
 
  9. AWS マネジメントコンソールのサービス一覧から **AWS Glue** を選択し、画面左ペインの **[テーブル]** をクリックすると、先程作成したテーブル「 **ec2log_external** （任意）」が存在することが確認できます。  
 
-  **Note：** AWS Glue を使用してテーブル定義を行う方法は、「Lab4：アプリケーションログの永続化と長期間データの分析と可視化」にて解説しています。
+    **Note：** AWS Glue を使用してテーブル定義を行う方法は、「Lab4：アプリケーションログの永続化と長期間データの分析と可視化」にて解説しています。
 
  10. Redshift のクエリエディタを使って、外部テーブル（ec2log_externalテーブル）に対して、自由にクエリしてみてください。  
 
@@ -383,13 +384,13 @@ QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可
 
  1. AWSマネジメントコンソールのサービス一覧から **QuickSight** を選択します。 QuickSight を初めて使う方はサインアップがまだされていない為、サインアップの画面が出るため、 **[Sign up for QuickSight]** をクリックします。  
 
-  **Note：** すでに東京リージョン以外で登録されている場合、 **[QuickSight の管理]** → **[アカウント設定]** で、 **[サブスクリプション解除]** 実施後、数分待つと、再度 Sign up することが可能になります。 
+    **Note：** すでに東京リージョン以外で登録されている場合、 **[QuickSight の管理]** → **[アカウント設定]** で、 **[サブスクリプション解除]** 実施後、数分待つと、再度 Sign up することが可能になります。 
 
  2. 画面右上の **[English]** アイコンをクリックし、 **[日本語]** に変更します。  
 
  3. **[QuickSight アカウントの作成]** で **[エンタープライズ版]** を選び、 **[続行]** をクリックします。
 
-  **Note：** 1GB までは無料利用枠ですが、無料利用期間が終わってる場合は、1ヶ月単位で $24 かかるので、費用が気になる場合、 QuickSight の手順は飛ばしていただいても構いません。 
+    **Note：** 1GB までは無料利用枠ですが、無料利用期間が終わってる場合は、1ヶ月単位で $24 かかるので、費用が気になる場合、 QuickSight の手順は飛ばしていただいても構いません。 
  
  4. **[リージョンを選択]** で **[Asia Pacific (Tokyo)]** を選択し、 **[QuickSightアカウント名]** に任意の名前、 **[通知のEメールアドレス]** にご自身のメールアドレスを入力し、 **[完了]** をクリックします。  
 

@@ -33,11 +33,11 @@ SPDX-License-Identifier: MIT-0
 
  4. **[モニタリングオプション]** セクション内の **[ジョブメトリクス]** にチェックを入れます。    
 
- **Note：** リソースのモニタリングが可能になります。
+    **Note：** リソースのモニタリングが可能になります。
 
  5. **[セキュリティ設定、スクリプトライブラリおよびジョブパラメータ（省略可能）]** セクション内の **[最大容量]** を「 **2** 」と入力し、画面下の **[次へ]** をクリックします。
 
- **Note：** Maximum capacity（DPU）は Glue の処理能力でデフォルトは10となります。（1DPU = 4vCPU, 16GBメモリ）
+    **Note：** Maximum capacity（DPU）は Glue の処理能力でデフォルトは10となります。（1DPU = 4vCPU, 16GBメモリ）
 
  
  6. **[データソースの選択]** の画面で「 **minilake_in** （任意）」にチェックを入れ、 **[次へ]** をクリックします。
@@ -51,7 +51,7 @@ SPDX-License-Identifier: MIT-0
 	- **フォーマット** ： Parquet
 	- **ターゲットパス** ：「s3://**[S3 BUCKET NAME]**/minilake-out1（任意）」を選択
 	
-	  **Note：** **[S3 BUCKET NAME]**には、ご自身で作成されたS3バケットの名前を入力ください。
+	**Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
 　　　　 
  8. **[ソース列をターゲット列にマッピングします。]** 画面にて、不要なカラムを排除したり、データ型の変更を行うことができます。今回はこのまま **[ジョブを保存してスクリプトを編集する]** をクリックします。
 
@@ -61,11 +61,11 @@ SPDX-License-Identifier: MIT-0
 
  10. AWS マネジメントコンソールのサービス一覧から **AWS Glue** を選択し、 **[AWS Glue]** 画面の左ペインから **[ジョブ]** を選択し、今回のジョブ「 **minilake1** （任意）」にチェックを入れます。  10分程かかる場合もありますが、問題がなければ **[実行ステータス]** が **[Succeeded]** となります。 
  
- **Note：** 時間があれば **[メトリクス]** タブでリソースモニタリングも確認してください。表示まで少し時間かかります。**[追加メトリクスの表示]** をクリックすると詳細が見れますが、本ハンズオンでは値が小さすぎて見づらいことが予想されます。
+     **Note：** 時間があれば **[メトリクス]** タブでリソースモニタリングも確認してください。表示まで少し時間かかります。**[追加メトリクスの表示]** をクリックすると詳細が見れますが、本ハンズオンでは値が小さすぎて見づらいことが予想されます。
 
 11. S3の「 s3://**[S3 BUCKET NAME]**/minilake-out1/」にファイルが出力されていることを確認します。
 
- **Note：** **[S3 BUCKET NAME]**には、ご自身で作成されたS3バケットの名前を入力ください。
+    **Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
 
 ### Step3：Glue クローラの作成と実行
 
@@ -79,7 +79,7 @@ Glue で出力データ用のクローラを作成します。
 
  4. **[データストアの追加]** 画面において、 **[インクルードパス]** に「s3://**[S3 BUCKET NAME]**/minilake-out1（任意） 」を設定し、 **[次へ]** をクリックします。
 
- **Note：** **[S3 BUCKET NAME]**には、ご自身で作成されたS3バケットの名前を入力ください。
+    **Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
 
  5. 次の画面もそのままで **[次へ]** をクリックします。
 
@@ -98,9 +98,9 @@ Glue で出力データ用のクローラを作成します。
 
    1. 以下のクエリを実行し、入力データと出力データで比較を行います。
 
-   **Asset** 資料：[6-cmd.txt](asset/ap-northeast-1/6-cmd.txt) 
+      **Asset** 資料：[6-cmd.txt](asset/ap-northeast-1/6-cmd.txt) 
 
-	**[入力データ]** ：CSV形式で日付でパーティション  
+   **[入力データ]** ：CSV形式で日付でパーティション  
 
    ```
 SELECT count(user) FROM "minilake"."minilake_in1" where user='uchida' and timestamp >= '2019-09-27 13%' AND timestamp <= '2019-09-27 21%';
@@ -117,7 +117,7 @@ SELECT count(user) FROM "minilake"."minilake_in1" where user='uchida' and timest
  
   
 
-	**[出力データ]** ：Parquet 形式  
+  **[出力データ]** ：Parquet 形式  
 
    ```
 SELECT count(user) FROM "minilake"."minilake_out1" where user='uchida' and timestamp >= '2019-09-27 13%' AND timestamp <= '2019-09-27 21%';
@@ -147,8 +147,8 @@ SELECT count(user) FROM "minilake"."minilake_out1" where user='uchida' and times
  2. AWS マネジメントコンソールのサービス一覧から **AWS Glue** を選択し、 **[AWS Glue]** の画面の左ペインから **[ジョブ]** を選択し、 **[ジョブ]** 画面から「 **minilake1** （任意）」ジョブにチェックを入れ、 **[アクション]** から **[スクリプトの編集]** をクリックします。
 
  3. 続いての画面の右側のスクリプト編集箇所で「 **applymapping1** 」と「 **datasink4** 」の2箇所に対して編集を加えます。既存の「 **applymapping1** 」と「 **datasink4** 」の行をコメントアウトし、目印に「###1」の行を入れ、それぞれの行の下にコマンドリファレンスのコードをコピーアンドペーストします。  
-
-   **Note：** コードが長いため、必要に応じて **Asset** 資料を参照ください。
+ 
+    **Note：** コードが長いため、必要に応じて **Asset** 資料を参照ください。
    
    **Asset** 資料：[6-cmd.txt](asset/ap-northeast-1/6-cmd.txt)  
 
@@ -166,9 +166,9 @@ SELECT count(user) FROM "minilake"."minilake_out1" where user='uchida' and times
 	 applymapping1 = ApplyMapping.apply(frame = datasource0, mappings = [("timestamp", "string", "timestamp", "string"), ("alarmlevel", "string", "alarmlevel", "string"), ("host", "string", "host", "string"), ("user", "string", "user", "string"), ("number", "string", "number", "string"), ("text", "string", "text", "string"),("partition_0", "string", "year", "string"), ("partition_1", "string", "month", "string"), ("partition_2", "string", "day", "string"), ("partition_3", "string", "hour", "string")], transformation_ctx = "applymapping1")
 	 ```
 
-	- **datasink4** ：  
-	     - バケット名は、各自の命名に合わせて修正します。
-	     - write\_dynamic\_frame のpartitionKeysオプションを使い、パーティション分割して出力指定します。
+  - **datasink4** ：  
+	   - バケット名は、各自の命名に合わせて修正します。
+	   - write\_dynamic\_frame のpartitionKeysオプションを使い、パーティション分割して出力指定します。
      
 
  		**[コメントアウト対象]**
@@ -192,7 +192,7 @@ SELECT count(user) FROM "minilake"."minilake_out1" where user='uchida' and times
 
  7. **[インクルードパス]** に「 s3:// **[S3 BUCKET NAME]** /minilake-out2 （任意）」を設定し、 **[次へ]** をクリックします。
 
-	  **Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
+	 **Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
 
  8. **[別のデータストアの追加]** 画面もそのままとし、 **[次へ]** をクリックします。
 
@@ -211,7 +211,7 @@ SELECT count(user) FROM "minilake"."minilake_out1" where user='uchida' and times
 
   1. Parquet 形式でパーティション設定したテーブルに対してクエリを実行します。
 
-  **Asset** 資料：[6-cmd.txt](asset/ap-northeast-1/6-cmd.txt)  
+     **Asset** 資料：[6-cmd.txt](asset/ap-northeast-1/6-cmd.txt)  
    
   **[実行クエリ例]**
   

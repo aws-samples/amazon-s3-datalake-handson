@@ -14,13 +14,14 @@ SPDX-License-Identifier: MIT-0
 
  1. AWS マネジメントコンソールのサービス一覧から **S3** を選択し、画面の **[バケットを作成する]** をクリックします。
  
- 2. バケット名を以下のルールに従って入力し、画面左下の **[作成]** をクリックします。
-  - バケット名：[YYYYMMDD]-handson-minilake-[Your Name][Your Birthday]
-   	- [YYYYMMDD]：ハンズオン実施日
-   	- [Your Name]：ご自身のお名前
-   	- [Your Birthday]：ご自身の誕生日の日にち
+ 2. バケット名を以下のルールに従って入力し、画面左下の **[作成]** をクリックします。  
 
-  **Note：** S3 バケット名はグローバルで一意である必要がありますが、バケット作成ができればバケット名は任意でも構いません。
+   - バケット名：[YYYYMMDD]-handson-minilake-[Your Name][Your Birthday]
+   - [YYYYMMDD]：ハンズオン実施日
+   - [Your Name]：ご自身のお名前
+   - [Your Birthday]：ご自身の誕生日の日にち
+
+    **Note：** S3 バケット名はグローバルで一意である必要がありますが、バケット作成ができればバケット名は任意でも構いません。
   
 
 ### Step2：Kinesis Data Firehose の作成
@@ -35,13 +36,13 @@ SPDX-License-Identifier: MIT-0
  
  5. **[S3 bucket]** は **Step1** で作成したバケットを選択します。 **[Prefix]** に「 **minilake-in1/** 」を入力します。
  
-  **Note：** **[Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
+   **Note：** **[Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
  
  6. 画面右下の **[Next]** をクリックします。
  
  7. **[Buffer interval]** を「 **60** seconds」に設定します。バッファリングは、 Buffer size か Buffer interval のいずれかの条件がみたされるとS3に配信されます。  
 
-  **Note：** 今回は設定しませんが、データの圧縮、暗号化も可能です。大規模データやセキュリティ要件に対して、有効に働きます。 
+   **Note：** 今回は設定しませんが、データの圧縮、暗号化も可能です。大規模データやセキュリティ要件に対して、有効に働きます。 
  
  8. **[IAM role]** で **[Create new or choose]** をクリックし、 Kinesis Data Firehose が S3 にアクセスするための IAM ロールを作成します。
  
@@ -94,12 +95,12 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
    3. 本手順については、どの Lab から開始したかによって、適用する設定ファイルが異なる為、ご自身が実施された手順に応じて、 Fluentd の設定を変更してください。
 #### (a) Lab1, 2, 3 から続けて、 Lab4 を実施している場合
-   **Asset** 資料：[4-td-agent1.conf](asset/ap-northeast-1/4-td-agent1.conf) 
+      **Asset** 資料：[4-td-agent1.conf](asset/ap-northeast-1/4-td-agent1.conf) 
 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、 **Asset** 資料の「 **4-td-agent1.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。
 
  #### (b) Lab1 を実施し、その後　Lab4 を実施している場合
-   **Asset** 資料：[4-td-agent2.conf](asset/ap-northeast-1/4-td-agent2.conf) 
+      **Asset** 資料：[4-td-agent2.conf](asset/ap-northeast-1/4-td-agent2.conf) 
 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、**Asset** 資料の「 **4-td-agent2.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。  
  
@@ -132,7 +133,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
    5. S3 にデータが出力されていることを確認します。  
    
-  **Note：** 数分かかります。（S3 のパスの例：20190927-handson-minilake-test01/minilake-in1/2019/09/27/13）
+      **Note：** 数分かかります。（S3 のパスの例：20190927-handson-minilake-test01/minilake-in1/2019/09/27/13）
 
    6. Kinesis Data Firehose の画面において、作成した **Delivery stream** の「 **minilake1** （任意）」を選択し、 **[Monitoring]** タブをクリック、表示に時間がかかる為、次の手順に進みます。
 
@@ -153,7 +154,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
  6. **[信頼関係の編集]** 画面において、**”Service”: “ec2.amazonaws.com”** の箇所に **glue** を追記します。 **[]**でくくり、 **カンマ** で区切り、 **glue.amazonaws.com** を追記し、**[信頼ポリシーの更新]** をクリックします。
   
- **Asset** 資料：[4-policydocument.txt](asset/ap-northeast-1/4-policydocument.txt) 
+    **Asset** 資料：[4-policydocument.txt](asset/ap-northeast-1/4-policydocument.txt) 
  
  **[記入例]**
  
@@ -211,7 +212,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
 
  3. クエリエディタで下記 SQL を実行します。
  
-   **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
+    **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
  
  ```
  SELECT * FROM "minilake"."minilake_in1";
@@ -227,13 +228,13 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
 
  4. Where 句をつけたクエリを実行してみます。
 
-   **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
+    **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
 
  ```
  SELECT * FROM "minilake"."minilake_in1" where partition_0 = '2019' AND partition_1 = '09' AND partition_2 = '27' AND partition_3 = '14';
  ```
 
-  **Note：** Where 句の日付はデータが存在するものを入力してください。
+   **Note：** Where 句の日付はデータが存在するものを入力してください。
 
 **参考**：[Athena におけるクエリ実行の補足説明](additional_info_lab4.md)
 
@@ -242,13 +243,13 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
 
  1. AWS マネジメントコンソールのサービス一覧から **QuickSight** を選択します。 QuickSight を初めて使う方はサインアップがまだされていない為、サインアップの画面が出るため、 **[Sign up for QuickSight]** をクリックします。  
 
-  **Note：** すでに東京リージョン以外で登録されている場合、 **[QuickSight の管理]** → **[アカウント設定]** で、 **[サブスクリプション解除]** 実施後、数分待つと、再度 Sign up することが可能になります。 
+    **Note：** すでに東京リージョン以外で登録されている場合、 **[QuickSight の管理]** → **[アカウント設定]** で、 **[サブスクリプション解除]** 実施後、数分待つと、再度 Sign up することが可能になります。 
 
  2. 画面右上の **[English]** アイコンをクリックし、 **[日本語]** に変更します。  
 
  3. **[QuickSight アカウントの作成]** で **[エンタープライズ版]** を選び、 **[続行]** をクリックします。
 
-  **Note：** 1GB までは無料利用枠ですが、無料利用期間が終わってる場合は、1ヶ月単位で $24 かかるので、費用が気になる場合、 QuickSight の手順は飛ばしていただいても構いません。 
+    **Note：** 1GB までは無料利用枠ですが、無料利用期間が終わってる場合は、1ヶ月単位で $24 かかるので、費用が気になる場合、 QuickSight の手順は飛ばしていただいても構いません。 
  
  4. **[リージョンを選択]** で **[Asia Pacific (Tokyo)]** を選択し、 **[QuickSight アカウント名]** に任意の名前、 **[通知のEメールアドレス]** にご自身のメールアドレスを入力し、 **[完了]** をクリックします。  
 
