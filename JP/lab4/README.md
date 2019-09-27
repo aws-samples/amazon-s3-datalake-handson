@@ -98,7 +98,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、 **Asset** 資料の「 **4-td-agent1.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。
 
-	#### (b) Lab1 を実施し、その後　Lab4 を実施している場合
+ #### (b) Lab1 を実施し、その後　Lab4 を実施している場合
    **Asset** 資料：[4-td-agent2.conf](asset/ap-northeast-1/4-td-agent2.conf) 
 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、**Asset** 資料の「 **4-td-agent2.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。  
