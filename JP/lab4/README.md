@@ -76,23 +76,23 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
       **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
  
- ```
- $ sudo su -
- # td-agent-gem install fluent-plugin-kinesis -v 2.1.0
- ```
+	 ```
+	 $ sudo su -
+	 # td-agent-gem install fluent-plugin-kinesis -v 2.1.0
+	 ```
  
    2. プラグインのインストールを確認します。
 
       **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
 
- ```
- # td-agent-gem list | grep plugin-kinesis
- ```
+	 ```
+	 # td-agent-gem list | grep plugin-kinesis
+	 ```
    **[実行結果例]**  
    
-   ```
-  fluent-plugin-kinesis (2.1.0)
-   ```
+	 ```
+	 fluent-plugin-kinesis (2.1.0)
+	 ```
  
    3. 本手順については、どの Lab から開始したかによって、適用する設定ファイルが異なる為、ご自身が実施された手順に応じて、 Fluentd の設定を変更してください。
 #### (a) Lab1, 2, 3 から続けて、 Lab4 を実施している場合
@@ -103,7 +103,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
 
  #### (b) Lab1 を実施し、その後　Lab4 を実施している場合
       
-      **Asset** 資料：[4-td-agent2.conf](asset/ap-northeast-1/4-td-agent2.conf) 
+   **Asset** 資料：[4-td-agent2.conf](asset/ap-northeast-1/4-td-agent2.conf) 
 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、**Asset** 資料の「 **4-td-agent2.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。  
  
