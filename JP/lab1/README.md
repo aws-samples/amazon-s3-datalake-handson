@@ -21,13 +21,13 @@ AWS CloudFormation（以降、CloudFormation）にて、 Amazon VPC（以降、V
    **Note：** 既存のキーペアを使われる場合は、こちらの手順は飛ばしてください。
 
 ## Section2：EC2 環境構築
-### Step1：EC2 を1台を CloudFormation で構築
+### Step1：EC2 1台を CloudFormation で構築
 
 CloudFormation を使い、 VPC を作成し、作成された VPC にログを出力し続ける EC2 を構築します。 ログは2分おきに10件前後出力され、10分おきに300件のエラーログが出力されます。  
 
  1. AWS マネジメントコンソールのサービス一覧から **CloudFormation** を選択します。  
 
-    **Note：** CloudFormation が見つけられない場合。検索窓に「cloudform」などと入力し、選択します。
+    **Note：** CloudFormation が見つけられない場合、検索窓に「cloudform」などと入力し、選択します。
   
  2. **[CloudFormation]** の画面において、画面右上の **[スタックの作成]** をクリックします。  
  

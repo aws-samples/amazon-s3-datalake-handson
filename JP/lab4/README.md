@@ -96,14 +96,10 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
    3. 本手順については、どの Lab から開始したかによって、適用する設定ファイルが異なる為、ご自身が実施された手順に応じて、 Fluentd の設定を変更してください。
 #### (a) Lab1, 2, 3 から続けて、 Lab4 を実施している場合（**Asset** 資料：[4-td-agent1.conf](asset/ap-northeast-1/4-td-agent1.conf)）
-
-       
-
+ 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、 **Asset** 資料の「 **4-td-agent1.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。
 
  #### (b) Lab1 を実施し、その後　Lab4 を実施している場合（**Asset** 資料：[4-td-agent2.conf](asset/ap-northeast-1/4-td-agent2.conf) ）
- 
-      
 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、**Asset** 資料の「 **4-td-agent2.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。  
  
@@ -182,7 +178,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
 ### Step2：Glue Crawler を使ったスキーマの自動作成
 
- 1. AWS マネジメントコンソールのサービス一覧で **Glue** を選択し、 **[AWS Glue]** 画面の左ペインにおいて、 **[クローラ]** を選択し、 **[クローラの追加]** をクリックします。
+ 1. AWS マネジメントコンソールのサービス一覧で **AWS Glue** を選択し、 **[AWS Glue]** 画面の左ペインにおいて、 **[クローラ]** を選択し、 **[クローラの追加]** をクリックします。
 
  2. **[クローラの名前]** に「 **minilake-in1** （任意）」と入力し、 **[次へ]** をクリックし、続いての画面もそのまま **[次へ]** をクリックします。
 

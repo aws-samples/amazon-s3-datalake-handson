@@ -143,7 +143,7 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
 
  8. **Kibana** の画面の左ペインから **[Management]** をクリックし、 **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
 
- 9. **[Import saved objects]** 画面において、**[Import]** アイコンそクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 9. **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
     **Asset** 資料：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
   
