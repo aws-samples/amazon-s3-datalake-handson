@@ -65,7 +65,7 @@ SPDX-License-Identifier: MIT-0
 
  12. S3の「 s3://**[S3 BUCKET NAME]**/minilake-out1/」にファイルが出力されていることを確認します。
 
-    **Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
+   **Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
 
 ### Step3：Glue クローラの作成と実行
 
