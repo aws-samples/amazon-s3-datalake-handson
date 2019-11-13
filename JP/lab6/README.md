@@ -171,7 +171,7 @@ SELECT count(user) FROM "minilake"."minilake_out1" where user='uchida' and times
 	   - write\_dynamic\_frame のpartitionKeysオプションを使い、パーティション分割して出力指定します。
      
 
- 		**[コメントアウト対象]**
+ 	**[コメントアウト対象]**
  
 	 ```
 	 #datasink4 = glueContext.write_dynamic_frame.from_options(frame = dropnullfields3, connection_type = "s3", connection_options = {"path": "s3://[S3 BUCKET NAME]/minilake-out"}, format = "parquet", transformation_ctx = "datasink4")
