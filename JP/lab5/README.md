@@ -306,7 +306,7 @@ Redshift にデータをロードします。
  ```
  create external schema my_first_external_schema from data catalog database 'spectrumdb' iam_role '[IAM ROLE ARN]' create external database if not exists;
  ```
-**Note：** **[IAM ROLE ARN]** には、 Section4 の Step2 でメモした値を入力します。
+    **Note：** **[IAM ROLE ARN]** には、 Section4 の Step2 でメモした値を入力します。
 
  5. 外部テーブルを作成します。  
 
@@ -316,7 +316,7 @@ Redshift にデータをロードします。
  create external table my_first_external_schema.ec2log_external ( timestamp varchar(max), alarmlevel varchar(max), host varchar(max), number int2, text varchar(max) ) partitioned by (year char(4), month char(2), day char(2), hour char(2)) ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe' WITH SERDEPROPERTIES ( 'paths'='timestamp,alarmlevel,host,number,text') STORED AS INPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat' OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'  location 's3://[S3 BUCKET NAME]/minilake-in1/';
  ```
 
-**Note：** **[S3 BUCKET NAME]** には、作成済みの S3 バケット名を入力します。
+    **Note：** **[S3 BUCKET NAME]** には、作成済みの S3 バケット名を入力します。
 
  6. 下記コマンドを実行し、スキーマ 、DB、テーブルを確認します。  
 
