@@ -154,7 +154,7 @@ SELECT count(user) FROM "minilake"."minilake_out1" where user='uchida' and times
 
   - **applymapping1** ：Partition_0 などはわかりづらいので applymapping 関数で year や month に変換しています。  
 
- 	 **[コメントアウト対象]**
+ 	**[コメントアウト対象]**
  
 	 ```
 	 #applymapping1 = ApplyMapping.apply(frame = datasource0, mappings = [("timestamp", "string", "timestamp", "string"), ("alarmlevel", "string", "alarmlevel", "string"), ("host", "string", "host", "string"), ("user", "string", "user", "string"), ("number", "string", "number", "string"), ("text", "string", "text", "string")], transformation_ctx = "applymapping1")
