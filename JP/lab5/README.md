@@ -164,7 +164,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
    3. 本手順については、どの Lab から開始したかによって、適用する設定ファイルが異なる為、ご自身が実施された手順に応じて、Fluentdの設定を変更してください。
 #### (a) Lab1, 2, 3 から続けて、 Lab4 を実施している場合
-      **Asset** 資料：[5-td-agent1.conf](asset/ap-northeast-1/5-td-agent1.conf) 
+     **Asset** 資料：[5-td-agent1.conf](asset/ap-northeast-1/5-td-agent1.conf) 
 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、 **Asset** 資料の「 **5-td-agent1.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。
 
@@ -181,7 +181,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
  **[追記する行の例]**
  
-       **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt)
+  **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt)
  
  ```
  export AWS_REGION="ap-northeast-1"
@@ -190,7 +190,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
   **Note：** リージョンを変更した場合は、適宜変更します。
   
 
-	#### 以下の手順からは、上記両方の場合において実施します。
+ #### 以下の手順からは、上記両方の場合において実施します。
  
    4. Fluentd を再起動します。
  
@@ -308,7 +308,7 @@ Redshift にデータをロードします。
  ```
  create external schema my_first_external_schema from data catalog database 'spectrumdb' iam_role '[IAM ROLE ARN]' create external database if not exists;
  ```
- **Note：** **[IAM ROLE ARN]**には、 Section4 の Step2 でメモした値を入力します。
+**Note：** **[IAM ROLE ARN]**には、 Section4 の Step2 でメモした値を入力します。
 
  5. 外部テーブルを作成します。  
 
@@ -318,7 +318,7 @@ Redshift にデータをロードします。
  create external table my_first_external_schema.ec2log_external ( timestamp varchar(max), alarmlevel varchar(max), host varchar(max), number int2, text varchar(max) ) partitioned by (year char(4), month char(2), day char(2), hour char(2)) ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe' WITH SERDEPROPERTIES ( 'paths'='timestamp,alarmlevel,host,number,text') STORED AS INPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat' OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'  location 's3://[S3 BUCKET NAME]/minilake-in1/';
  ```
 
- **Note：** **[S3 BUCKET NAME]**には、作成済みの S3 バケット名を入力します。
+**Note：** **[S3 BUCKET NAME]**には、作成済みの S3 バケット名を入力します。
 
  6. 下記コマンドを実行し、スキーマ 、DB、テーブルを確認します。  
 
