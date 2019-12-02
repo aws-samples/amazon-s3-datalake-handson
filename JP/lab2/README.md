@@ -18,7 +18,7 @@ SPDX-License-Identifier: MIT-0
  
     **Note：** **6.8** 以外のバージョンを選択した場合、Kibanaの準備済み画面などが正常に動作しない可能性がありますので、 **6.8** を選択して本ハンズオンは実施ください。
  
- 3. **ドメインの設定** にて、 **[Elasticsearch ドメイン名]** を「 **handson-minilake** （任意）」と入力し、 **[インスタンスタイプ]** は無料枠対象である **[t2.small.elasticsearch]** を選び、他の設定は変更せず、画面右下の **[次へ]** をクリックします。
+ 3. **ドメインの設定** にて、 **[Elasticsearch ドメイン名]** を「 **handson-minilake**（任意）」と入力し、 **[インスタンスタイプ]** は無料枠対象である **[t2.small.elasticsearch]** を選び、他の設定は変更せず、画面右下の **[次へ]** をクリックします。
  
  4. **[ネットワーク構成]** にて、 **[パブリックアクセス]** を選択し、 **[アクセスポリシー]** にて、 **[ドメインアクセスポリシーの設定]** において **[テンプレートを選択]** クリックし、 **[ドメインへのオープンアクセスを許可]** を選択します。
  
@@ -34,9 +34,9 @@ SPDX-License-Identifier: MIT-0
 ## Section2：EC2, Fluentd, Elasticsearch Service の設定
 ### Step1：IAM ロールの設定
 
-作成済の「 **handson-minilake** （任意）」の IAM ロールに以下のようにポリシーを追加します。
+作成済の「 **handson-minilake**（任意）」の IAM ロールに以下のようにポリシーを追加します。
 
- 1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake** （任意）」のロール名をクリックします。
+ 1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake**（任意）」のロール名をクリックします。
 
  2. **[アクセス権限]** タブを選択し、 **[ポリシーをアタッチします]** をクリックします。
 
@@ -49,7 +49,7 @@ SPDX-License-Identifier: MIT-0
 
 Fluentd から Elasticsearch Service にログデータを送信するための設定を行います。
 
- 1. AWS マネジメントコンソールのサービス一覧から **Elasticserach Service** を選択し、 **[Amazon Elasticsearch Service ダッシュボード]** 画面から作成したドメイン名「 **handson-minilake** （任意）」をクリックし、 **[エンドポイント]** にある **URL の文字列** を **https://を含めない形** でパソコンのメモ帳などにメモしておきます。
+ 1. AWS マネジメントコンソールのサービス一覧から **Elasticserach Service** を選択し、 **[Amazon Elasticsearch Service ダッシュボード]** 画面から作成したドメイン名「 **handson-minilake**（任意）」をクリックし、 **[エンドポイント]** にある **URL の文字列** を **https://を含めない形** でパソコンのメモ帳などにメモしておきます。
 
  2. EC2 にログインし、 Elasticsearch のプラグインをインストールします。
 
@@ -108,7 +108,7 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  # /etc/init.d/td-agent start
  ```
  
- 5. Fluentd のログを確認します。
+ 8. Fluentd のログを確認します。
  
      **Asset** 資料：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
  
@@ -127,7 +127,7 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
 
  1. AWS マネジメントコンソールのサービス一覧から **Elasticsearch Service** を選択します。  
 
- 2. **[Amazon Elasticsearch Service ダッシュボード]** が開きます。作成した「 **handson-minilake** （任意）」ドメインの **[ドメインのステータス]** が **[アクティブ]** で、 **[検索可能なドキュメント]** の件数が1件以上になっていることを確認し、「 **handson-minilake** （任意）」ドメインをクリックします。  
+ 2. **[Amazon Elasticsearch Service ダッシュボード]** が開きます。作成した「 **handson-minilake**（任意）」ドメインの **[ドメインのステータス]** が **[アクティブ]** で、 **[検索可能なドキュメント]** の件数が1件以上になっていることを確認し、「 **handson-minilake**（任意）」ドメインをクリックします。  
 
  3. **[Kibana]** の右のURLをクリックします。  
  

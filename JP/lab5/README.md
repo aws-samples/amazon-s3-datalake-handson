@@ -16,7 +16,7 @@ SPDX-License-Identifier: MIT-0
 Redshift 用のネットワークを CloudFormation を用いて、構築します。
 これまでに作成した VPC にプライベートサブネットを作成し、 Redshift に設定するセキュリティグループも同時に作成します。
 
- 1. AWS マネジメントコンソールのサービス一覧から **CloudFormation** を選択し、 **[スタックの作成]** をクリックします。
+ 1. AWS マネジメントコンソールのサービス一覧から **CloudFormation** を選択し、 **[スタックの作成]** をクリックし、 **[新しいリソースを使用（標準）]** を選択します。 
 
  2. **[スタックの作成]** 画面の **[前提条件 - テンプレートの準備]** において、 **[テンプレートの準備完了]** を選択します。 
  
@@ -26,7 +26,7 @@ Redshift 用のネットワークを CloudFormation を用いて、構築しま�
 
  4. **[スタックの名前]** に「 **handson-minilake-private-subnet**（任意）」、 **[EC2SecurityGroupId]** 、 **[VpcId]** には、これまでに作成したセキュリティグループと VPC を選択して、 **[次へ]** をクリックします。
 
- 5. オプションの **[タグ]** の画面で、 **[キー]** に「 **Name** 」、 **[値]** に「 **handson-minilake-private** （任意）」と入力し、 **[次へ]** をクリックします。
+ 5. オプションの **[タグ]** の画面で、 **[キー]** に「 **Name** 」、 **[値]** に「 **handson-minilake-private**（任意）」と入力し、 **[次へ]** をクリックします。
  
  6. 最後の確認ページで内容を確認し、 **[スタックの作成]** をクリックします。数分ほど待つとプライベートサブネットが作成されます。
 
@@ -44,8 +44,8 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
 
  4. 以下の値を入力し、**[作成]** をクリックします。
 
-    - 名前：**handson-minilake-dwh** （任意）
-    - 説明：**dwh in my vpc** （任意）
+    - 名前：**handson-minilake-dwh**（任意）
+    - 説明：**dwh in my vpc**（任意）
     - VPC ID：メモした「 **VPC ID** 」を選択
     - アベイラビリティゾーン：**ap-northeast-1a**
     - サブネットID：メモした「 **サブネット ID** 」を選択し、 **[追加]** をクリック
@@ -56,17 +56,17 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
 
  7. 以下の値を入力し、 **[次へ]** をクリックします。
  
-    - クラスター識別子：**handson-minilake-dwh** （任意）
-    - データベース名：**db** （任意）
+    - クラスター識別子：**handson-minilake-dwh**（任意）
+    - データベース名：**db**（任意）
     - データベースポート：**5439** （デフォルト）
-    - マスターユーザー名：**admin** （任意）
-    - マスターユーザーのパスワード：**MyPassword1** （任意）
+    - マスターユーザー名：**admin**（任意）
+    - マスターユーザーのパスワード：**MyPassword1**（任意）
  
  8. ノードのタイプなどについてはすべてデフォルトのまま、 **[次へ]** をクリックします。
 
  9. **[VPC の選択]** で、以前メモした「 **VPC ID** 」を選択します。また、 **[パブリックアクセス可能]** は **[いいえ]** を選択します。
  
- 10. **[VPC セキュリティグループ]** は、「 **handson-minilake-sg-private** （任意）」を選択します。
+ 10. **[VPC セキュリティグループ]** は、「 **handson-minilake-sg-private**（任意）」を選択します。
 
  11. その他の項目はすべてデフォルト値のまま **[次へ]** をクリックします。
 
@@ -95,11 +95,11 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
 
 ### Step2：Kinesis Data Firehose の作成
 
- 1. AWS マネジメントコンソールのサービス一覧から **Kinesis** を選択し、 Kinesis Data Firehose 配信ストリームの **[配信ストリームを作成する]** をクリックします。
+ 1. AWS マネジメントコンソールのサービス一覧から **Kinesis** を選択し、 Kinesis Data Firehose 配信ストリームの **[配信ストリームの作成]** をクリックします。
  
- 2. **[Delivery stream name]** に「 **minilake1** （任意）」と入力し、 **[Next]** をクリックします。
+ 2. **[Delivery stream name]** に「 **minilake1**（任意）」と入力し、 **[Next]** をクリックします。
  
- 3. **[Record transformation]** を **[Disabled]** 、 **[Record format conversion]** を **[Disabled]** のまま、 **[Next]** をクリックします。
+ 3. **[Data transformation]** を **[Disabled]** 、 **[Record format conversion]** を **[Disabled]** のまま、 **[Next]** をクリックします。
  
  4. **[Destination]** で、「 **Amazon S3** 」を選択します。
  
@@ -127,9 +127,9 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
 ## Section3：EC2 の設定変更
 ### Step1：IAM ロールのポリシー追加
 
-作成済の「 **handson-minilake** （任意）」の IAM ロールに以下のようにポリシーを追加します。 
+作成済の「 **handson-minilake**（任意）」の IAM ロールに以下のようにポリシーを追加します。 
 
- 1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake** （任意）」のロール名をクリックします。
+ 1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake**（任意）」のロール名をクリックします。
  
  2. **[アクセス権限]** タブを選択し、 **[ポリシーのアタッチ]** をクリックします。
  
@@ -202,7 +202,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
    
       **Note：** 数分かかります。（S3のパスの例：20190927-handson-minilake-test01/minilake-in1/2019/09/27/13）
 
-   6. Kinesis Data Firehose の画面において、作成した **Delivery stream** の「 **minilake1** （任意）」を選択し、 **[Monitoring]** タブをクリック、表示に時間がかかる為、次の手順に進みます。
+   6. Kinesis Data Firehose の画面において、作成した **Delivery stream** の「 **minilake1**（任意）」を選択し、 **[Monitoring]** タブをクリック、表示に時間がかかる為、次の手順に進みます。
    
 
 ## Section4：Redshift への接続
@@ -215,9 +215,9 @@ Redshift に接続できるか確認します。
  
  2. 作成したインスタンスへの接続情報を入力し、 **[接続]** をクリックします。
 
-    - クラスター：**handson-minilake-dwh** （任意）
-    - データベース名：**db** （任意）
-    - データベースユーザー：**admin** （任意）
+    - クラスター：**handson-minilake-dwh**（任意）
+    - データベース名：**db**（任意）
+    - データベースユーザー：**admin**（任意）
     - パスワード：設定済みパスワード
  
  3. 左ペインにテーブル一覧が表示されれば、ログイン成功です。
@@ -233,7 +233,7 @@ Redshift にデータをロードします。
 
  3. **[AmazonS3ReadOnlyAccess]** を選択して、 **[次のステップ：タグ]** をクリックします。次の画面で **[次のステップ：確認]** をクリックします。
  
- 4. **[ロール名]** に「 **handson-minilake-dwh-role** （任意）」と入力し、 **[ロールの作成]** をクリックします。
+ 4. **[ロール名]** に「 **handson-minilake-dwh-role**（任意）」と入力し、 **[ロールの作成]** をクリックします。
 
  5. 作成したロールの ARN は後で使用するのでメモしておきます。
 
@@ -257,7 +257,7 @@ Redshift にデータをロードします。
    **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
  
  ```
- copy ec2log from 's3://[S3 BUCKET NAME]/minilake-in1' format as json 'auto' iam_role '[IAM ROLE ARN]'
+ copy ec2log from 's3://[S3 BUCKET NAME]/minilake-in1' format as json 'auto' iam_role '[IAM ROLE ARN]';
  ```
  
    **Note：** **[S3 BUCKET NAME]** と **[IAM ROLE ARN]** には、実際の値を入力し、実行します。
@@ -291,7 +291,7 @@ Redshift にデータをロードします。
 
 ### Step3：Redshift Spectrum の使用
 
- 1. Redshift Spectrum のスキーマとデータベースを作成することができるように、以前作成した IAM ロールにポリシーを追加します。 AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake-dwh** （任意）」のロール名をクリックします。
+ 1. Redshift Spectrum のスキーマとデータベースを作成することができるように、以前作成した IAM ロールにポリシーを追加します。 AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake-dwh**（任意）」のロール名をクリックします。
 
  2. **[アクセス権限]** タブを選択し、 **[ポリシーのアタッチ]** をクリックします。
 
@@ -316,7 +316,7 @@ Redshift にデータをロードします。
  create external table my_first_external_schema.ec2log_external ( timestamp varchar(max), alarmlevel varchar(max), host varchar(max), number int2, text varchar(max) ) partitioned by (year char(4), month char(2), day char(2), hour char(2)) ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe' WITH SERDEPROPERTIES ( 'paths'='timestamp,alarmlevel,host,number,text') STORED AS INPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat' OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'  location 's3://[S3 BUCKET NAME]/minilake-in1/';
  ```
 
-**Note：** **[S3 BUCKET NAME]** には、作成済みの S3 バケット名を入力します。
+   **Note：** **[S3 BUCKET NAME]** には、作成済みの S3 バケット名を入力します。
 
  6. 下記コマンドを実行し、スキーマ 、DB、テーブルを確認します。  
 
@@ -352,11 +352,11 @@ Redshift にデータをロードします。
   **Note：** **ADD PARTITION** 句の各パーティションの値は、 **LOCATION** 句の S3 バケットのパスのパーティションの値と合わせてください。  
 また、パーティションのタイプ、およびパーティションの追加方法については、[こちら](https://image.slidesharecdn.com/aws-blackbeltathena20170301-170301101854/95/aws-black-belt-online-seminar-2017-amazon-athena-29-638.jpg?cb=1498216689)を参照してください。     
 
- 8. AWS マネジメントコンソールのサービス一覧から **Athena** を選択し、データベースとして先程作成した「 **spectrumdb** （任意）」を選択すると、先程作成したテーブル 「**ec2log_external** （任意）」が存在することが確認できます。    
+ 8. AWS マネジメントコンソールのサービス一覧から **Athena** を選択し、データベースとして先程作成した「 **spectrumdb**（任意）」を選択すると、先程作成したテーブル 「**ec2log_external**（任意）」が存在することが確認できます。    
 
     **Note：** このまま Athena からクエリすることもできます。
 
- 9. AWS マネジメントコンソールのサービス一覧から **AWS Glue** を選択し、画面左ペインの **[テーブル]** をクリックすると、先程作成したテーブル「 **ec2log_external** （任意）」が存在することが確認できます。  
+ 9. AWS マネジメントコンソールのサービス一覧から **AWS Glue** を選択し、画面左ペインの **[テーブル]** をクリックすると、先程作成したテーブル「 **ec2log_external**（任意）」が存在することが確認できます。  
 
     **Note：** AWS Glue を使用してテーブル定義を行う方法は、「Lab4：アプリケーションログの永続化と長期間データの分析と可視化」にて解説しています。
 
