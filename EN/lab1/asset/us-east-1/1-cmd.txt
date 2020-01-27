@@ -1,0 +1,18 @@
+------------------------------------------------------------------------------------
+Copyright <first-edit-year> Amazon.com, Inc. or its affiliates. All Rights Reserved.  
+SPDX-License-Identifier: MIT-0
+
+------------------------------------------------------------------------------------
+
+
+1.
+yum -y install redhat-lsb-core gcc
+
+2.
+rpm -ivh http://packages.treasuredata.com.s3.amazonaws.com/3/redhat/6/x86_64/td-agent-3.1.1-0.el6.x86_64.rpm
+
+3.
+vi /etc/init.d/td-agent
+
+4.
+chkconfig td-agent on

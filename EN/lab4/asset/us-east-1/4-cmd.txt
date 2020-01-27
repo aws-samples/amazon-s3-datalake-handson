@@ -1,0 +1,24 @@
+------------------------------------------------------------------------------------
+Copyright <first-edit-year> Amazon.com, Inc. or its affiliates. All Rights Reserved.  
+SPDX-License-Identifier: MIT-0
+
+------------------------------------------------------------------------------------
+
+
+1.
+td-agent-gem install fluent-plugin-kinesis -v 2.1.0
+
+2.
+td-agent-gem list | grep plugin-kinesis
+
+3.
+export AWS_REGION="ap-northeast-1"
+
+4.
+/etc/init.d/td-agent restart
+
+5.
+SELECT * FROM "minilake"."minilake_in1";
+
+6.
+SELECT * FROM "minilake"."minilake_in1" where partition_0 = '2019' AND partition_1 = '09' AND partition_2 = '27' AND partition_3 = '14';

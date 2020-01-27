@@ -1,0 +1,116 @@
+Parameters:
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t1.micro
+      - t2.micro
+    ConstraintDescription: must be a valid EC2 instance type.
+  KeyPair:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Type: "AWS::EC2::KeyPair::KeyName"
+    MinLength: '1'
+    MaxLength: '255'
+    AllowedPattern: '[\x20-\x7E]*'
+    ConstraintDescription: can contain only ASCII characters.
+Resources:
+# Create VPC
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/24
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      InstanceTenancy: default
+      Tags:
+      - Key: Name
+        Value: handson-minilake
+# Create Public RouteTable
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+      - Key: Name
+        Value: handson-minilake
+# Create Public Subnet A
+  PublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 10.0.0.0/27
+      AvailabilityZone: "us-east-1a"
+      Tags:
+      - Key: Name
+        Value: handson-minilake
+  PubSubnetARouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnetA
+      RouteTableId: !Ref PublicRouteTable
+# Create InternetGateway
+  myInternetGateway:
+    Type: "AWS::EC2::InternetGateway"
+    Properties:
+      Tags:
+      - Key: Name
+        Value: handson-minilake
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref MyVPC
+      InternetGatewayId: !Ref myInternetGateway
+  myRoute:
+    Type: AWS::EC2::Route
+    DependsOn: myInternetGateway
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref myInternetGateway
+  MyEIP:
+    Type: "AWS::EC2::EIP"
+    Properties:
+      Domain: vpc
+  ElasticIPAssociate:
+    DependsOn: MyEC2Instance
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId: !GetAtt MyEIP.AllocationId
+      InstanceId: !Ref MyEC2Instance
+  MyEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: ami-010bdc9d71b0090aa
+      InstanceType: t2.micro
+      SubnetId: !Ref PublicSubnetA
+      KeyName :
+        Ref: KeyPair
+      SecurityGroupIds:
+        - Ref: MyEC2SecurityGroup
+      Tags:
+        - Key: Name
+          Value: handson-minilake
+  MyEC2SecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupName: handson-minilake-sg
+      GroupDescription: Enable SSH access via port 22
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp:
+            '0.0.0.0/0'
+        - IpProtocol: tcp
+          FromPort: '5439'
+          ToPort: '5439'
+          CidrIp:
+            '0.0.0.0/0'
+Outputs:
+  AllowIPAddress:
+    Description: EC2 PublicIP
+    Value: !Join
+      - ','
+      - - !Ref MyEIP

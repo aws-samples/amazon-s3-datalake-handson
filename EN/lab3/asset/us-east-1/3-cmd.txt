@@ -1,0 +1,23 @@
+------------------------------------------------------------------------------------
+Copyright <first-edit-year> Amazon.com, Inc. or its affiliates. All Rights Reserved.  
+SPDX-License-Identifier: MIT-0
+
+------------------------------------------------------------------------------------
+
+
+1.
+td-agent-gem install fluent-plugin-cloudwatch-logs -v 0.4.4
+td-agent-gem list | grep fluent-plugin-cloudwatch-logs
+
+2.
+export AWS_REGION="ap-northeast-1"
+
+※バージニア北部で実施の場合
+export AWS_REGION="us-east-1"
+
+
+3.
+/etc/init.d/td-agent restart
+
+4.
+tail -f /var/log/td-agent/td-agent.log
