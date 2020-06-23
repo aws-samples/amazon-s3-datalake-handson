@@ -29,7 +29,7 @@ SPDX-License-Identifier: MIT-0
  
  5. **[アクセスの設定]** 画面に戻ります。 **[次へ]** をクリックし、 **[確認]** 画面において内容を確認し、画面右下の **[確認]** をクリックします。  
 
-    **Note：** Elasticsearch Service の作成が始まります。構築完了には10分ほどかかりますが完了を待たずに次の手順を進めてください。
+   **Note：** Elasticsearch Service の作成が始まります。構築完了には10分ほどかかりますが完了を待たずに次の手順を進めてください。
  
 
 ## Section2：EC2, Fluentd, Elasticsearch Service の設定
