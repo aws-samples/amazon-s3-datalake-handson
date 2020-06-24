@@ -131,11 +131,9 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  6. **Kibana** の画面の左ペインから **[Management]** をクリックし、 **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
 
- 7. **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **3-visualization.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 7. **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **3-visualization.json** 」を選択し、 **[New index patten]** において、初期値が「 -- Skip Import -- 」だった場合、「 **cwl-\*** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
     **Asset** 資料：[3-visualization.json](asset/ap-northeast-1/3-visualization.json)
-
-    **Note：** インポートの **[Import saved objects]** 画面で、 **[New index patten]** において、初期値が「 -- Skip Import -- 」だった場合、「 **cwl-\*** 」を選択する必要があります。
 
  8. 続いて、再度 **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **3-dashboard.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 

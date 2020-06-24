@@ -14,9 +14,9 @@ SPDX-License-Identifier: MIT-0
 
  1. AWS マネージメントコンソールのサービス一覧から **Elasticsearch Service** を選択し、 **[新しいドメインの作成]** をクリックします。
  
- 2. **[デプロイタイプの選択]** にて、 **[開発およびテスト]** を選択し、 **[バージョン]** にて、 **[6.8]** を選択し、 **[次へ]** をクリックします。  
+ 2. **[デプロイタイプの選択]** にて、 **[開発およびテスト]** を選択し、 **[バージョン]** にて、 **[7.4]** を選択し、 **[次へ]** をクリックします。  
  
-    **Note：** **6.8** 以外のバージョンを選択した場合、Kibanaの準備済み画面などが正常に動作しない可能性がありますので、 **6.8** を選択して本ハンズオンは実施ください。
+    **Note：** **7.4** 以外のバージョンを選択した場合、Kibanaの準備済み画面などが正常に動作しない可能性がありますので、 **7.4** を選択して本ハンズオンは実施ください。
  
  3. **ドメインの設定** にて、 **[Elasticsearch ドメイン名]** を「 **handson-minilake**（任意）」と入力し、 **[インスタンスタイプ]** は無料枠対象である **[t2.small.elasticsearch]** を選び、他の設定は変更せず、画面右下の **[次へ]** をクリックします。
  
@@ -144,11 +144,9 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
 
  8. **Kibana** の画面の左ペインから **[Management]** をクリックし、 **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
 
- 9. **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 9. **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[New index patten]** において、初期値が「 -- Skip Import -- 」だった場合、「 **testappec2log-\*** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
     **Asset** 資料：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
-  
-    **Note：** インポートの **[Import saved objects]** 画面で、 **[New index patten]** において、初期値が「 -- Skip Import -- 」だった場合、「 **testappec2log-\*** 」を選択する必要があります。
 
  10. 続いて、再度 **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-dashboard.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 

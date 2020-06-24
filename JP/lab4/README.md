@@ -65,7 +65,7 @@ SPDX-License-Identifier: MIT-0
  
  2. **[アクセス権限]** タブを選択し、 **[ポリシーのアタッチ]** をクリックします。
  
- 3. 検索窓で「 **amazonkinesis** 」と入れ検索し、  **[AmazonKinesisFirehoseFullAccess]** にチェックを入れ、 **[ポリシーのアタッチ]** をクリックします。  
+ 3. 検索窓で「 **amazonkinesisfirehose** 」と入れ検索し、  **[AmazonKinesisFirehoseFullAccess]** にチェックを入れ、 **[ポリシーのアタッチ]** をクリックします。  
     **Note：** **[AmazonKinesisAnalyticsFullAccess]** ではなく、 **[AmazonKinesisFirehoseFullAccess]** となります。
  
  4. 変更実施したロールの **[アクセス権限]** タブを選択し、 **[AmazonKinesisFirehoseFullAccess]** がアタッチされたことを確認します。
