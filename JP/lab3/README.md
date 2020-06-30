@@ -102,7 +102,7 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  3. ログストリーム「 **testapplog_stream**（任意）」をクリックします。直近のログが出力されていることを確認します。画面上部の **[ロググループ]** の文字列をクリックし、ロググループに戻ります。  
 
- 4. ロググループ「 **minilake_group**（任意）」にチェックを入れ、 **[アクション]** をクリックし、 **[Amazon Elasticsearch Service へのストリーミングの開始]** をクリックします。  
+ 4. ロググループ「 **minilake_group**（任意）」にチェックを入れ、 **[アクション]** をクリックし、 **[Amazon Elasticsearch Service へのストリーム]** をクリックします。  
 
     **Note：** 裏側では自動で Lambda Function が作られます。
 
