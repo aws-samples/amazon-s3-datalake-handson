@@ -80,5 +80,7 @@ SPDX-License-Identifier: MIT-0
  2. CloudFormation でスタック削除（EC2 や　EIP の削除）
 
  3. IAM ロールの削除（ロール名：handson-minilake）
+ 
+ 4. （作成いただいた場合）キーペアの削除（キーペア名：handson）
 
 後片付けは以上です。
