@@ -27,7 +27,7 @@ SPDX-License-Identifier: MIT-0
 
 ### Step2：Kinesis Data Firehose の作成
 
- 1. AWS マネジメントコンソールのサービス一覧から **Kinesis** を選択し、 Kinesis Data Firehose 配信ストリームの **[配信ストリームの作成]** をクリックします。
+ 1. AWS マネジメントコンソールのサービス一覧から **Kinesis** を選択し、 Kinesis Data Firehose の **[配信ストリームを作成]** をクリックします。
  
  2. **[Delivery stream name]** に「 **minilake1**（任意）」と入力し、 **[Next]** をクリックします。
  
@@ -45,15 +45,11 @@ SPDX-License-Identifier: MIT-0
 
     **Note：** 今回は設定しませんが、データの圧縮、暗号化も可能です。大規模データやセキュリティ要件に対して、有効に働きます。 
  
- 8. **[IAM role]** で **[Create new or choose]** をクリックし、 Kinesis Data Firehose が S3 にアクセスするための IAM ロールを作成します。
- 
- 9. 作成する IAM ロールの情報が表示され、 **[ポリシードキュメントを表示]** をクリックするとポリシー内容が確認できます。確認後、 **[許可]** をクリックします。
- 
- 10. 元の画面に戻ったことを確認し、 **[Next]** をクリックします。
+ 8. **[Permissions]** で **[Create or update IAM role (自動で割り当てられた IAM ロール名)]** を選択し、  **[Next]** をクリックします。
 
- 11. 続いて、 Review 画面になるので設定値に問題なければ、 **[Create delivery stream]** をクリックします。
+ 9. 続いて、 Review 画面になるので設定値に問題なければ、 **[Create delivery stream]** をクリックします。
  
- 12. **[Status]** が「 **Creating** 」となります。数分で「 **Active** 」になるので次の手順に進めてください。
+ 10. **[Status]** が「 **Creating** 」となります。数分で「 **Active** 」になるので次の手順に進めてください。
 
 
 ## Section2：EC2 の設定変更
@@ -104,7 +100,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
 
  3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、**Asset** 資料の「 **4-td-agent2.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。  
  
- 3-2. 「 **/etc/init.d/td-agent** 」ファイルを開き、13行目辺りに以下の行を追加します。
+ 3-2. 「 **/etc/init.d/td-agent** 」ファイルを開き、 14 行目辺りに以下の行を追加します。
  
  ```
  # vi /etc/init.d/td-agent
@@ -185,7 +181,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
 
  3. **[データストアの追加]** 画面において、 **[インクルードパス]** に作成した「 **s3://[S3 BUCKET NAME]/minilake-in1**（任意）」を入力し、 **[次へ]** をクリックします。
 
-	**Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
+	**Note：** **[S3 BUCKET NAME]** には、ご自身で作成された S3 バケットの名前を入力ください。
  
  4. **[別のデータストアの追加]** 画面においても、 **[次へ]** をクリックします。
  
@@ -210,7 +206,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
 
  2. **[設定]** を選択し **[クエリの結果の場所]** に「 **s3://[S3 BUCKET NAME]/result/**（任意）」を入力し、**[保存]** をクリックします。
 
-	**Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
+	**Note：** **[S3 BUCKET NAME]** には、ご自身で作成された S3 バケットの名前を入力ください。該当の AWS アカウントで、 Athena の画面を初めて開く場合は、「最初のクエリを実行する前に、 Amazon S3 でクエリ結果の場所を設定する必要があります。詳細はこちら」と画面上に出ている可能性があります。その場合は、「Amazon S3 でクエリ結果の場所を設定する」のリンクに飛ぶことで設定可能です。
 
  3. **[データベース]** において「 **minilake**（任意）」を選び、テーブルは先程作成した「 **minilake_in1**（任意）」を選び、テーブル名の右端の **[点マーク]** をクリックし、 **[テーブルのプレビュー]** をクリックします。
 
