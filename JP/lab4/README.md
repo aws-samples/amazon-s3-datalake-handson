@@ -31,6 +31,8 @@ SPDX-License-Identifier: MIT-0
  
  2. **[Delivery stream name]** に「 **minilake1**（任意）」と入力し、 **[Next]** をクリックします。
  
+    **Note：** 「 **minilake1**（任意）」を異なる名前に指定した場合、後続の手順において、「 **/etc/td-agent/td-agent.conf** 」のファイルにある「delivery_stream_name minilake1」の指定を合わせて変更いただく必要があります。
+ 
  3. **[Data transformation]** を **[Disabled]** 、 **[Record format conversion]** を **[Disabled]** のまま、 **[Next]** をクリックします。
  
  4. **[Destination]** で、「 **Amazon S3** 」を選択します。
