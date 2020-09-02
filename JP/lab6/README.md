@@ -122,7 +122,7 @@ Glue を使って、JSON 形式のデータを Parquet 形式に変換します�
 
  12. S3の「 s3://**[S3 BUCKET NAME]**/minilake-out1/」にファイルが出力されていることを確認します。
 
-   **Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
+     **Note：** **[S3 BUCKET NAME]** には、ご自身で作成されたS3バケットの名前を入力ください。
 
 ### Step4：Glue クローラの作成と実行
 
