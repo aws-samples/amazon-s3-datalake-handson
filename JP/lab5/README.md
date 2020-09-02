@@ -446,7 +446,7 @@ QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可
 
  16. QuickSight コンソールからプライベートサブネット内にある Redshift への接続設定を行っていきます。 画面右上のアカウント名が書かれたアイコンをクリックし、　**[QuickSightの 管理]** をクリックします。  
 
-  **Note：** 東京リージョンとなっていない場合は、東京リージョンを選択します。
+     **Note：** 東京リージョンとなっていない場合は、東京リージョンを選択します。
 
  17. 画面左ペインの **[VPC 接続の管理]** をクリックします。
 
@@ -472,7 +472,7 @@ QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可
 
   **Note：** 接続の検証が失敗する場合は、まずは VPC 接続の作成ステップを見直してみてください。
 
-  <img src="images/Lab5-Section4-Step4-21.png">
+  <img src="images/Lab5-Section4-Step4-21.png" width="500">
 
  22. 接続可能であることを確認後、 **[データソースを作成]** をクリックします。  
 
