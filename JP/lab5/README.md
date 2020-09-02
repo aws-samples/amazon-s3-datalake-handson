@@ -358,7 +358,7 @@ Redshift にデータをロードします。
 
     **Note：** このまま Athena からクエリすることもできます。
     
-   <img src="images/Lab5-Section4-Step3-8.png">
+   <img src="images/Lab5-Section4-Step3-8.png" width="500">
 
  9. AWS マネジメントコンソールのサービス一覧から **AWS Glue** を選択し、画面左ペインの **[テーブル]** をクリックすると、先程作成したテーブル「 **ec2log_external**（任意）」が存在することが確認できます。  
 
