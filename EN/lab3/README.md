@@ -169,7 +169,7 @@ If the value is collected and the graph is displayed according with the value, y
    - Create a new topic…：Default\_CloudWatch\_Alarms\_Topic（Optional）
    - Email endpoints that will receive the notification…：Your email address that can receive email during this hands-on
 
-   **Note：** After registration, a confirmation email will be sent to the email address registered in this procedure. Click **[Confirm subscription]** in the email body.
+     **Note：** After registration, a confirmation email will be sent to the email address registered in this procedure. Click **[Confirm subscription]** in the email body.
 
  8. Now that you have all the settings you need, click **[Next]**.
 
