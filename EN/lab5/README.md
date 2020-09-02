@@ -88,7 +88,7 @@ Go to the **VPC** console and note the "**VPC ID**" that you created at the begi
     - [Your Birthday]：The date of your birthday
 
 
-**Note：** The S3 bucket name must be globally unique, but any bucket name can be used as long as the bucket can be created.
+    **Note：** The S3 bucket name must be globally unique, but any bucket name can be used as long as the bucket can be created.
   
 
 ### Step2：Create Kinesis Data Firehose
@@ -441,7 +441,7 @@ Connect to the Redshift and Redshift Spectrum tables from QuickSight for visuali
 
  16. Set up a connection from the QuickSight console to Redshift in the private subnet. Click the icon with the account name in the upper right corner of the screen and click **[Manage QuickSight]**.  
 
-  **Note：** If it is not the Tokyo region, select the Tokyo region.
+     **Note：** If it is not the Tokyo region, select the Tokyo region.
 
  17. Click **[Manage VPC connections]** in the left pane of the screen.
 
