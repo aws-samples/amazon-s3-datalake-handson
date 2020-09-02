@@ -22,20 +22,72 @@ Add a policy to the created "**handson-minilake** (optional)" IAM role as follow
  
  4. Click the name of the changed role again, select the **[Permissions]** tab, and confirm that **[AmazonS3FullAccess]** is attached.
  
+ 5. In case you skipped Lab4, click the **[Trust relationships]** tab and click the **[Edit trust relationship]** button.
+ 
+ 6. In case you skipped Lab4, on the **[Edit Trust Relationship]** screen, add the setting of **glue** in addition to ”Service”: “ec2.amazonaws.com” as follows. Click **[Update Trust Policy]**.
+  
+    **Asset** resource：[4-policydocument.txt](../lab4/asset/ap-northeast-1/4-policydocument.txt) 
+ 
+ **[Example]**
+ 
+ ```
+ {
+ 		"Version": "2012-10-17",
+ 		"Statement": [
+			{
+      		"Effect": "Allow",
+      		"Principal": {
+        		"Service": [             
+          		"glue.amazonaws.com",
+          		"ec2.amazonaws.com"
+        		]                        
+      		},
+      		"Action": "sts:AssumeRole"
+    		}
+  		]
+}
+ ```
+### Step2：Automatic schema creation with Glue Crawler
+#### Note : Skip this in case you completed Lab4 already.
 
-### Step2：Create and run ETL jobs in Glue
+ 1. Select **AWS Glue** in the AWS Management Console service list, select **[Crawlers]** in the left pane of the **[AWS Glue]** screen, and click **[Add crawler]**.
+
+ 2. Enter "**minilake-in1** (optional)" in **[Crawler name]**, click **[Next]**, and click **[Next]** on the next screen.
+
+ 3. On the **[Add a data store]** screen, choose the "**s3://[S3 BUCKET NAME]/minilake-in1** (optional)" created in **[Include path]** and click **[Next]**.
+
+	**Note：** In **[S3 BUCKET NAME]**, choose the name of the S3 bucket you created.
+ 
+ 4. On the **[Add another data store]** screen, click **[Next]**.
+ 
+ 5. On the **[Choose an IAM role]** screen, check **[Choose an existing IAM role]**, select the created role "**handson-minilake** (optional)", and click **[Next]**.
+ 
+ 6. On the next screen, keep **[Run on demand]** for **[Frequency]** and click **[Next]**.
+
+ 7. On the **[Configure the crawler's output]** screen, click **[Add database]**. In the pop-up screen, select "**minilake** (optional)" and click **[Create]**.
+
+ 8. Go back to the screen **[Configure the crawler's output]** and click **[Next]**.
+
+ 9. Check the contents of the next screen and click **[Finish]**.
+
+ 10. On the **[Crawlers]** screen, check “**minilake-in1** (optional)” for the crawler you created and click **[Run crawler]**. Wait a few minutes after the status is **[Starting]**. When the status returns to **[Ready]** again, click **[Tables]** in the left pane.
+
+ 11. Check that the "**minilake_in1** (optional)" table has been created, click the table name, and check the schema definition.
+
+
+### Step3：Create and run ETL jobs in Glue
 
  1. Select **S3** from the list of services in the AWS Management Console, and select the bucket created in this hands-on. Click **[Create folder]**, enter "**minilake-out1** (optional)" for the folder name, and click **[Save]**.
 
  2. Select **AWS Glue** from the list of services in the AWS Management Console. Click **[Jobs]** from the left pane of the screen, and then click **[Add job]**.
 
- 3. Enter "**minilake1** (optional)" for **[Name]** and "**handson-minilake** (optional)" for **[IAM role]**, click **[Advanced properties]**, click **[Monitoring options]**, and click **[Security configuration, script libraries, and job parameters (optional)]**.
+ 3. Enter "**minilake1** (optional)" for **[Name]** and "**handson-minilake** (optional)" for **[IAM role]**, click **[Monitoring options]**, and click **[Security configuration, script libraries, and job parameters (optional)]**.
 
  4. Check **[Job metrics]** in the **[Monitoring options]** section.    
 
     **Note：** Now that you can monitor your resources.
 
- 5. In the section **[Security configuration, script libraries, and job parameters (optional)]**, enter **[Maximum capacity]** as "**2**", and click **[Next]** at the bottom of the screen.
+ 5. In the section **[Security configuration, script libraries, and job parameters (optional)]**, enter **[Number of workers]** as "**2**", and click **[Next]** at the bottom of the screen.
 
     **Note：** Maximum capacity (DPU) is the processing power of Glue and the default value is 10. (1DPU = 4vCPU, 16GB memory)
 
@@ -67,7 +119,7 @@ Add a policy to the created "**handson-minilake** (optional)" IAM role as follow
 
     **Note：** In **[S3 BUCKET NAME]**, enter the name of the S3 bucket you created.
 
-### Step3：Create and run the Glue Crawler
+### Step4：Create and run the Glue Crawler
 
  Create a crawler for output data in Glue.
 
@@ -94,13 +146,17 @@ Add a policy to the created "**handson-minilake** (optional)" IAM role as follow
  10. Click **[Tables]** in the left pane, click the table name "**minilake_out1** (optional)", and check the schema information.
 
 
-### Step4：Query comparison with Athena
+### Step5：Query comparison with Athena
 
-   1. Execute the following query and compare input data and output data.
+ 1. Select **Athena** from the list of services in the AWS Management Console.
+ 
+ 2. If this is the first time to use Athena by your AWS account, click **[Settings]**, ipnut "**s3://[S3 BUCKET NAME]/result/** (optional)" for **[Query result location]** and click **[Save]**.
+ 
+ 3. Execute the following query and compare input data and output data.
 
       **Asset** resource：[6-cmd.txt](asset/ap-northeast-1/6-cmd.txt) 
 
-   **[Input data]** ：Partition by date in CSV format  
+   **[Input data]** ：Partition by date in JSON format  
 
    ```
 SELECT count(user) FROM "minilake"."minilake_in1" where user='uchida' and timestamp >= '2019-09-27 13%' AND timestamp <= '2019-09-27 21%';
@@ -139,10 +195,10 @@ SELECT count(user) FROM "minilake"."minilake_out1" where user='uchida' and times
 
 ||Run time|Data scanned|
 |---|:---:|:---:|
-|(1) Partition by date in CSV format | 4.3 seconds| 27.01 MB|
+|(1) Partition by date in JSON format | 4.3 seconds| 27.01 MB|
 |(2) Parquet format | 3.09 seconds| 787.93 KB|
 
-### Step5：Make the data partitioning and converting to Parquet in Glue job
+### Step6：Make the data partitioning and converting to Parquet in Glue job
 
  1. Select **S3** from the list of services in the AWS Management Console, and select the bucket you just created. Click **[Create folder]**, enter "**minilake-out2** (optional)" as the folder name, and click **[Save]**.
  
@@ -209,7 +265,7 @@ SELECT count(user) FROM "minilake"."minilake_out1" where user='uchida' and times
  13. Click **[Tables]** in the left pane, click the table name "**minilake_out2** (optional)", and check the schema information.
 
 
-### Step6：Query comparison with Athena
+### Step7：Query comparison with Athena
 
   1. Run a query against the partitioned table in Parquet format.
 

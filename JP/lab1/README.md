@@ -143,7 +143,12 @@ EC2 にログインし、ログ収集ソフトウェアの Fluentd のインス�
  ```
  # chkconfig td-agent on
  ```
- 
+
+## Section3：まとめ
+
+CloudFormation を使い、 VPC を作成し、2分おきに10件前後のログを、10分おきに300件のエラーログを出力し続ける EC2 を作成した VPC 内に構築し、構築した EC2 上に、ログ収集ソフトウェアの Fluentd のインストール、設定を行いました。
+
+<img src="../images/architecture_lab1.png">
 
 Lab1 は以上です。選択されているパターンに合わせて次の手順を実施ください。
 

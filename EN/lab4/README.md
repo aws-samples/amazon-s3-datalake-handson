@@ -44,15 +44,11 @@ After sending the stream data to Amazon Kinesis Data Firehose (Kinesis Data Fire
 
     **Note：** Although we are not going over at this time, data can be compressed and encrypted. Compression is useful for large data, and encryption should be applied for environment with a strict security requirements. 
  
- 8. In **[IAM role]**, click **[Create new or choose]** to create an IAM role for Kinesis Data Firehose to access S3.
- 
- 9. The information of the IAM role to be created is displayed. Click **[View Policy Document]** to check the policy contents. After confirming, click **[Allow]**.
- 
- 10. Confirm that you have returned to the original screen and click **[Next]**.
+ 8. In **[Permissions]**, click **[Create or update IAM role (Automatically assigned IAM role name)]** to create an IAM role for Kinesis Data Firehose to access S3.
 
- 11. Next, the Review screen will appear. If there are no problems with the settings, click **[Create delivery stream]**.
+ 9. Next, the Review screen will appear. If there are no problems with the settings, click **[Create delivery stream]**.
  
- 12. **[Status]** will be "**Creating**". It will become "**Active**" in a few minutes, so please proceed to the next step.
+ 10. **[Status]** will be "**Creating**". It will become "**Active**" in a few minutes, so please proceed to the next step.
 
 
 ## Section2：EC2 settings
@@ -98,13 +94,21 @@ Configure settings to send log data from Fluentd to Kinesis Data Firehose.
       **Asset** resource：[4-td-agent1.conf](asset/ap-northeast-1/4-td-agent1.conf) 
 
  3-1. To change the setting of "**/etc/td-agent/td-agent.conf**", delete the contents of "**/etc/td-agent/td-agent.conf**" once. Open it with an editor such as vi and delete it with ":%d". Copy the contents of "**4-td-agent.conf**" in **Asset** resource and paste them.
+ 
+ ```
+ # vi /etc/td-agent/td-agent.conf
+ ```    
 
  #### (b) In case of performing Lab4 after Lab1
       **Asset** resource：[4-td-agent2.conf](asset/ap-northeast-1/4-td-agent2.conf) 
 
  3-1. Delete the contents of "**/etc/td-agent/td-agent.conf**" once. Open it with an editor such as vi and delete it with ":%d". Copy the contents of "**4-td-agent2.conf**" in **Asset** resource and paste them.  
  
- 3-2. Open the file"**/etc/init.d/td-agent**" and then add the following line around the 13th line.
+ ```
+ # vi /etc/td-agent/td-agent.conf
+ ```    
+ 
+ 3-2. Open the file"**/etc/init.d/td-agent**" and then add the following line around the 14th line.
  
  ```
  # vi /etc/init.d/td-agent
@@ -206,11 +210,15 @@ Add a policy to the created "**handson-minilake** (optional)" IAM role as follow
 
 ### Step3：Query execution with Athena
 
- 1. Select **Athena** from the list of services in the AWS Management Console, choose "**minilake** (optional)" for **[Database]**, select the created table "**minilake_in1** (optional)", click **[：]** at the right end of the table name and click **[Preview table]**.
+ 1. Select **Athena** from the list of services in the AWS Management Console.
+ 
+ 2. If this is the first time to use Athena by your AWS account, click **[Settings]**, ipnut "**s3://[S3 BUCKET NAME]/result/** (optional)" for **[Query result location]** and click **[Save]**.
 
- 2. Confirm that the query results are displayed at the bottom of the screen.
+ 3. Choose "**minilake** (optional)" for **[Database]**, select the created table "**minilake_in1** (optional)", click **[：]** at the right end of the table name and click **[Preview table]**.
 
- 3. Execute the following SQL in the query editor.
+ 4. Confirm that the query results are displayed at the bottom of the screen.
+
+ 5. Execute the following SQL in the query editor.
  
     **Asset** resource：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
  
@@ -226,7 +234,7 @@ Add a policy to the created "**handson-minilake** (optional)" IAM role as follow
 
  ```
 
- 4. Try running a query with a Where clause.
+ 6. Try running a query with a Where clause.
 
     **Asset** resource：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
 

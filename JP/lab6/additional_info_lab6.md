@@ -6,11 +6,11 @@ SPDX-License-Identifier: MIT-0
 
 
 # Athena におけるクエリ比較の補足説明
-## CSV 形式 vs CSV 形式（パーティション） vs Parquet 形式 vs Parquet 形式（パーティション）
+## JSON 形式 vs JSON 形式（パーティション） vs Parquet 形式 vs Parquet 形式（パーティション）
 
-### 1. CSV 形式
+### 1. JSON 形式
 
-  <img src="images/CSV_nopartition.png">
+  <img src="images/JSON_nopartition.png">
 
  **[クエリ例]**
  
@@ -19,9 +19,9 @@ SPDX-License-Identifier: MIT-0
  ```
  
     
-### 2. CSV 形式（年・月・日・時間でパーティション）
+### 2. JSON 形式（年・月・日・時間でパーティション）
 
-  <img src="images/CSV_partition.png">
+  <img src="images/JSON_partition.png">
 
  **[クエリ例]**
  

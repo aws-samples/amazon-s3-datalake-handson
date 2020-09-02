@@ -39,11 +39,11 @@ It takes time before a Redshift cluster becomes available, so you should work on
  1. Check the VPC to create Redshift and the destination subnet.  
 Go to the **VPC** console and note the "**VPC ID**" that you created at the beginning of this hands-on and the "**Subnet ID**" that you created with CloudFormation at the beginning of this chapter.
 
- 2. Select **Amazon Redshift** from the list of services in the AWS Management Console and select **[Security]** in the left pane of the **[Redshift dashboard]** screen.
+ 2. Select **Amazon Redshift** from the list of services in the AWS Management Console and select **[CONFIG]** in the left pane of the **[Redshift dashboard]** screen.
 
- 3. Click the **[Subnet Groups]** tab and click **[Create Cluster Subnet Group]**.
+ 3. Click the **[Subnet Groups]** and click **[Create cluster subnet group]**.
 
- 4. Enter the following values and click **[Create]**.
+ 4. Enter the following values and click **[Create cluster subnet group]**.
 
     - Name：**handson-minilake-dwh** (optional)
     - handson-minilake-dwh：**dwh in my vpc** (optional)
@@ -51,27 +51,23 @@ Go to the **VPC** console and note the "**VPC ID**" that you created at the begi
     - dwh in my vpc：**ap-northeast-1a**
     - dwh in my vpc：Select "**Subnet ID**" which you created and click **[Add]**
  
- 5. Select **[Redshift dashboard]** and click **[Quick launch cluster]**.
+ 5. Select **[DASHBOARD]** and click **[Create cluster]**.
 
- 6. Click **[Switch to advanced settings]**.
-
- 7. Enter the following values and click **[Continue]**.
+ 6. Enter the following values.
  
     - Cluster identifier：**handson-minilake-dwh** (optional)
+    - What are you planning to use this cluster for?：**Free trial**
     - Database name：**db** (optional)
     - Database port：**5439** (default)
     - Master user name：**admin** (optional)
     - Master user password：**MyPassword1** (optional)
  
- 8. Leave all contents by default and click **[Continue]**.
+ 7. Turn off **[Use defaults]** in **[Additional configurations]** and enter the following values in **[Network and security]**. 
 
- 9. Select "**VPC ID**" which you created for **[Choose a VPC]** and select **[No]** for **[Publicly accessible]**.
- 
- 10. Select "**handson-minilake-sg-private** (optional)" for **[VPC security groups]**.
+    - Virtual private cloud (VPC) : Select "**VPC ID**" which you created
+    - VPC security groups : **handson-minilake-sg-private** (optional)
 
- 11. Leave all contents by default and click **[Continue]**.
-
- 12. You will be charged for using Redshift. Read the note at the bottom of the page carefully and continue. Click **[Launch cluster]**. Since it takes time to complete the cluster startup, continue with the next task.  
+ 8. You will be charged for using Redshift. Read the note regarding the billing carefully and continue. Click **[Create cluster]**. Since it takes time to complete the cluster startup, continue with the next task.  
 
      **Note：** Please be sure to read the content of the note regarding the billing to your account.
 
@@ -115,15 +111,11 @@ Go to the **VPC** console and note the "**VPC ID**" that you created at the begi
 
     **Note：** Although not set this time, data can be compressed and encrypted. Works well for large data and security requirements. 
  
- 8. In **[IAM role]**, click **[Create new or choose]** to create an IAM role for Kinesis Data Firehose to access S3.
- 
- 9. The information of the IAM role to be created is displayed. Click **[View Policy Document]** to check the policy contents. After confirming, click **[Allow]**.
- 
- 10. Confirm that you have returned to the original screen and click **[Next]**.
+ 8. In **[Permissions]**, click **[Create or update IAM role (Automatically assigned IAM role name)]** to create an IAM role for Kinesis Data Firehose to access S3.
 
- 11. Next, the Review screen will appear. If there are no problems with the settings, click **[Create delivery stream]**.
+ 9. Next, the Review screen will appear. If there are no problems with the settings, click **[Create delivery stream]**.
  
- 12. **[Status]** will be "**Creating**". It will become "**Active**" in a few minutes, so please proceed to the next step.
+ 10. **[Status]** will be "**Creating**". It will become "**Active**" in a few minutes, so please proceed to the next step.
  
 
 ## Section3：EC2 settings
@@ -170,12 +162,20 @@ Configure settings to send log data from Fluentd to Kinesis Data Firehose.
 
  3-1. To change the setting of "**/etc/td-agent/td-agent.conf**", delete the contents of "**/etc/td-agent/td-agent.conf**" once. Open it with an editor such as vi and delete it with ":%d". Copy the contents of "**4-td-agent.conf**" in **Asset** resource and paste them.
 
+ ```
+ # vi /etc/td-agent/td-agent.conf
+ ```   
+
  #### (b) In case of performing Lab4 after Lab1
    **Asset** resource：[5-td-agent2.conf](asset/ap-northeast-1/5-td-agent2.conf) 
 
  3-1. Delete the contents of "**/etc/td-agent/td-agent.conf**" once. Open it with an editor such as vi and delete it with ":%d". Copy the contents of "**4-td-agent2.conf**" in **Asset** resource and paste them.  
  
- 3-2. Open the file"**/etc/init.d/td-agent**" and then add the following line around the 13th line.
+ ```
+ # vi /etc/td-agent/td-agent.conf
+ ```  
+ 
+ 3-2. Open the file"**/etc/init.d/td-agent**" and then add the following line around the 14th line.
  
  ```
  # vi /etc/init.d/td-agent
@@ -241,11 +241,11 @@ Load data into Redshift.
 
  5. Take a note of the ARN of the created role for later use.
 
- 6. Return to **[Redshift dashboard]**, select **[Clusters]** in the left pane of the screen, and click the name of the Redshift cluster you created (eg: handson-minilake-dwh). Click **[See IAM roles]** in **[IAM Roles]**.
+ 6. Return to **[Redshift Dashboard]**, select **[CLUSTERS]** in the left pane of the screen, and click the name of the Redshift cluster you created (eg: handson-minilake-dwh). Click **[Manage IAM roles]** from **[Actions]**.
 
- 7. Select the "**handson-minilake-dwh** (optional)" IAM role that you just created and click **[Apply changes]** to close the sub window. **[Cluster Status]** is now **[modifying]**, so wait until it becomes **[available]**.
+ 7. Select the "**handson-minilake-dwh** (optional)" IAM role that you just created, click **[Add IAM roke]** and click **[Done]**. **[Status]** in **[CLUSTERS]** is now **[Modifying]**, so wait until **[Modifying]** disappears.
 
- 8. When the **[Cluster Status]** changed to **[available]**, select **[Query editor]** from the left pane, connect to Redshift, and create the table to be loaded first. Enter the following query and click **[Run query]** to run the query.
+ 8. When **[Modifying]** status disappears, select **[EDITOR]** from the left pane, connect to Redshift, and create the table to be loaded first. Enter the following query and click **[Run]** to run the query.
 
     **Asset** resource：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
  
@@ -255,7 +255,7 @@ Load data into Redshift.
  
    **Note：** For hands-on convenience, this table definition is not based on the best practices. Refer to [here](https://docs.aws.amazon.com/redshift/latest/dg/c_designing-tables-best-practices.html) in order to define tables based on the best practice.  
    
- 9. COPY data from S3. Enter the following query and click **[Run query]** to run the query.  
+ 9. COPY data from S3. Enter the following query and click **[Run]** to run the query.  
 
    **Asset** resource：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
  
@@ -294,7 +294,7 @@ Load data into Redshift.
 
 ### Step3：Use Redshift Spectrum
 
- 1. Add a policy to the previously created IAM role so that you can create the Redshift Spectrum schema and database. Select **IAM** from the list of services in the AWS Management Console, select **[Roles]** in the left pane of **[Identity and Access Management (IAM)]** dashboard, click the role name "**handson-minilake** (optional)".
+ 1. Add a policy to the previously created IAM role so that you can create the Redshift Spectrum schema and database. Select **IAM** from the list of services in the AWS Management Console, select **[Roles]** in the left pane of **[Identity and Access Management (IAM)]** dashboard, click the role name "**handson-minilake-dwh** (optional)".
 
  2. Select the **[Permissions]** tab and click **[Attach policies]**.
 
@@ -476,7 +476,7 @@ Connect to the Redshift and Redshift Spectrum tables from QuickSight for visuali
  25. Select **[Import to SPICE for quicker analytics]** and click **[Visualize]**. Once **[Import complete]** pop-up come up, it is ready to visualize the data. Choose **[Fields list]** or **[Visual types]** and make sure that the data is visible.  
 
  **[Example]**
- <img src="../lab4/images/quicksight_capture01.png" >  
+ <img src="../lab5/images/Lab5-Section4-Step4-25.png" >  
 
 
 # Section5：Summary
