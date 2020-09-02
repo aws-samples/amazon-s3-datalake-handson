@@ -136,8 +136,8 @@ Configure settings to send log data from Fluentd to Kinesis Data Firehose.
  ```
  
    5.	Check if the data output to the S3 as expected.
-   
-       **Note：** You might have to wait a few minutes before confirming the data.（Example of S3 path：20190927-handson-minilake-test01/minilake-in1/2019/09/27/13）
+
+   **Note：** You might have to wait a few minutes before confirming the data.（Example of S3 path：20190927-handson-minilake-test01/minilake-in1/2019/09/27/13）
 
    6. On the Kinesis Data Firehose screen, select "**minilake1** (optional)" as the created **Delivery stream**, click the **[Monitoring]** tab. It will take some time to show the result, so proceed to the next step.
 
