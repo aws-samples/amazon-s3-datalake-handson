@@ -6,11 +6,11 @@ SPDX-License-Identifier: MIT-0
 
 
 # Additional guidance of query comparison in Athena
-## CSV format vs CSV format (partition) vs Parquet format vs Parquet format (partition)
+## JSON format vs JSON format (partition) vs Parquet format vs Parquet format (partition)
 
-### 1. CSV format
+### 1. JSON format
 
-  <img src="images/CSV_nopartition.png">
+  <img src="images/JSON_nopartition.png">
 
  **[Query example]**
  
@@ -19,9 +19,9 @@ SPDX-License-Identifier: MIT-0
  ```
  
     
-### 2. CSV format (Partitioned by year, month, day and time)
+### 2. JSON format (Partitioned by year, month, day and time)
 
-  <img src="images/CSV_partition.png">
+  <img src="images/JSON_partition.png">
 
  **[Query example]**
  
