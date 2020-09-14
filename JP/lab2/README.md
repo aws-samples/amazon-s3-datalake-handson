@@ -149,7 +149,7 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
 
  10. **[Saved Objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** をクリックします。続いての画面において、 **[New index patten]** に対して、「 **testappec2log-\*** 」を選択し、 **[Confirm all changes]** をクリックし、インポートを完了します。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
-    **Asset** 資料：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
+     **Asset** 資料：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
 
  11. 続いて、再度 **[Saved Objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-dashboard.json** 」を選択し、 **[Import]** をクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
