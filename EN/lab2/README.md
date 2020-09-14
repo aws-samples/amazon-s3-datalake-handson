@@ -17,21 +17,23 @@ These logs continuously output approximately 10 every 2 minutes, and 300 log ent
 
  1. Select **Elasticsearch Service** from the list of services in the AWS Management Console and then click **[Create a new domain]**. 
  
- 2. Select **[Development and testing]** in **[Choose deployment type]**, select **[6.8]** in **[Version]** and then click **[Next]**.
+ 2. At **"Step 1: Choose deployment type"**, select **[Development and testing]** in **[Deployment type]**, don't change **[Version]** and then click **[Next]**.
  
     **Note：** If you select a version other than 6.8, the preconfigured dashboards in Kibana may not work properly. Select 6.8 and perform this Hands-on.
  
- 3. Input "**handson-minilake** (optional)" as **[Elasticsearch domain name]** in **[Configure domain]**, select **[t2.small.elasticsearch]** which is for free tier as **[Dedicated master instance type]**, leave the other settings unchanged, and click **[Next]** at the bottom right of the screen.
+ 3. At **"Step 2: Configure domain"**, input "**handson-minilake** (optional)" as **[Elasticsearch domain name]** in **[Configure domain]**, select **[t2.small.elasticsearch]** which is for free tier, leave the other settings unchanged, and click **[Next]** at the bottom right of the screen.
  
- 4. Select **[Public Access]** in **[Network configuration]**. In **[Access policy]**, click **[Select a template]** in **[Set the domain access policy to]** and select **[Allow open access to the domain]**.
+ 4. At **"Step 3: Configure access and security"**, select **[Public access]** in **[Network configuration]**. 
  
- 5. A **[Confirm]** pop-up will appear. Check **[I accept the risk]** and click **[OK]**.
- 
-    **Note：** This configuration is not recommended for any production environment. For this hands-on, we do not set security measure strictly, due to the nature of hands-on dealing with no confidential data.
- 
- 6. Return to the **[Set up access]** screen. Click **[Next]**, confirm the contents on the **[Confirm]** screen, and click **[Confirm]** at the bottom right of the screen. 
+ 5. In **[Access policy]**, choose **[Custom access policy]** in **[Domain access policy]**, set up as follows and click **[Next]**.
 
-    **Note：** At this point, the launch process of Elasticsearch Service has started. It takes about 10 minutes to complete launching. Please proceed to the next step without waiting for completion.
+   - Choose **[IPv4 address]** for **[Select Type]**, input **"** **\*** **"** for **[Enter Principal]** and select **[Allow]** for **[Select Action]**.
+
+    **Note：** This configuration is not recommended for any production environment. For this hands-on, we do not set security measure strictly, due to the nature of hands-on dealing with no confidential data.   
+ 
+ 6. At **"Step 4: Review"**, confirm the contents and click **[Confirm]** at the bottom right of the screen. 
+
+    **Note：** At this point, the launch process of Elasticsearch Service has started. It takes about 15 minutes to complete launching. Please proceed to the next step without waiting for completion.
  
 
 ## Section2：EC2, Fluentd, Elasticsearch Service settings
@@ -132,43 +134,45 @@ It may take some time for you to be able to see the output.
 
  2. In **[Amazon Elasticsearch Service dashboard]**, confirm that **[Domain status]** of the created domain "**handson-minilake** (optional)" is **[Active]** and the number of **[Searchable documents]** is more than one, and then click the domain "**handson-minilake** (optional)".
 
- 3. Click the URL to the right of **[Kibana]**.
+ 3. Select **[Actions]** and click **[Modify access policy]**. Select **[Custome access policy]** for **"Domain access policy"**, set up as follows and click **[Submit]**.
+
+   - Choose **[IAM ARN]** for **[Select Type]**, input **"** **\*** **"** for **[Enter Principal]** and select **[Allow]** for **[Select Action]**.
+
+ 4. Click the URL to the right of **[Kibana]**.
  
- 4. **[Welcome to Kibana]** screen appears. Select **[Explore on my own]** to open **Kibana** screen.
+ 5. **[Welcome to Kibana]** screen appears. Select **[Explore on my own]** to open **Kibana** screen.
 
  #### Kibana settings
 
- 5. Click **[Management]** from the left pane of the **Kibana** screen, and then click **[Index Patterns]**.
+ 6. Click ![kibana_management](images/kibana_management.png)icon from the left pane of the **Kibana** screen, and then click **[Index Patterns]**.
 
- 6. On the **[Create index pattern]** screen, enter "**testappec2log-***" in **[Index pattern]** and click **[Next step]** on the right.
+ 7. Click **[Create index pattern]**, enter "**testappec2log-***" in **[Index pattern]** and click **[Next step]** on the right.
 
- 7. In **[Time Filter field name]**, select **[@timestamp]** and click **[Create index pattern]** at the bottom right of the screen.
+ 8. In **[Time Filter field name]**, select **[@timestamp]** and click **[Create index pattern]** at the bottom right of the screen.
 
- 8. Click **[Management]** from the left pane of the **Kibana** screen, and then click **[Saved Objects]**. Click **[Import]** at the top right of the screen.
+ 9. Click ![kibana_management](images/kibana_management.png)icon from the left pane of the **Kibana** screen, and then click **[Saved Objects]**. Click **[Import]** at the top right of the screen.
 
- 9. On the **[Import saved objects]** screen, click the **[Import]** icon, select "**2-visualization.json**" in **Asset** resource and click the **[Import]** icon to import it. After importing without any errors, click **[Done]** to return to the original screen.
+ 10. On the **[Saved Objects]** screen, click the **[Import]** icon, select "**2-visualization.json**" in **Asset** resource and click the **[Import]** icon. Then, at the next screen, select "**testappec2log-\***" and click **[Confirm all changes]** to complete importing. After importing without any errors, click **[Done]** to return to the original screen.
 
     **Asset** resource：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
-  
-    **Note：** In the **[Import saved objects]** screen of import, if **[New index patten]** has an initial value of " -- Skip Import -- ", then "**testappec2log-\***" must be selected.
 
- 10. Next, on the **[Import saved objects]** screen, click the **[Import]** icon again, select "**2-dashboard.json**" in **Asset** resource, and click the **[Import]** icon to import. After importing without any errors, click **[Done]** to return to the original screen.
+ 11. Next, on the **[Saved Objects]** screen, click the **[Import]** icon again, select "**2-dashboard.json**" in **Asset** resource, and click the **[Import]** icon to import. After importing without any errors, click **[Done]** to return to the original screen.
 
      **Asset** resource：[2-dashboard.json](asset/ap-northeast-1/2-dashboard.json)
 
- 11. Click **[Dashboard]** from the left pane of the **Kibana** screen, click the imported "**test1-dashboard**", and if the values ​​are displayed as shown below, you have completed this section.  
+ 12. Click ![kibana_dashboard](images/kibana_dashboard.png)icon from the left pane of the **Kibana** screen, click the imported "**test1-dashboard**", and if the values ​​are displayed as shown below, you have completed this section.  
 
  <img src="images/kibana_capture01.png">  
 
- 12. On the **Kibana** screen, you can select the time range in the upper right, so let's set the period to **[Last 1 hour]**. You can confirmthat the graph changes to show the acquired value for 1 hour.
+ 13. On the **Kibana** screen, you can select the time range in the upper right, so let's set the period to **[Last 1 hour]**. You can confirmthat the graph changes to show the acquired value for 1 hour.
 
- 13. Click **[Discover]** from the left pane of the **Kibana** screen, and click **[alarmlevel]** in the menu on the right to see the percentage for each alarm level. 
+ 14. Click ![kibana_discover](images/kibana_discover.png)icon from the left pane of the **Kibana** screen, and click **[alarmlevel]** in the menu on the right to see the percentage for each alarm level. 
 
- 14. Click **[add]** to the right of **[alarmlevel]**. Similarly, if you click **[add]** to the right of **[user]**, you can limit the view to only the target columns (Time, alarmlevel, user).  
+ 15. Click **[add]** to the right of **[alarmlevel]**. Similarly, if you click **[add]** to the right of **[user]**, you can limit the view to only the target columns (Time, alarmlevel, user).  
 
      **Note：** **[add]** is displayed only when the cursor is on it.
 
- 15. Enter "**user:"imai"**" in the search window and press Enter to filter by the user "**imai**".
+ 16. Enter "**user:"imai"**" in the search window and press Enter to filter by the user "**imai**".
 
 
 ## Section3：Summary

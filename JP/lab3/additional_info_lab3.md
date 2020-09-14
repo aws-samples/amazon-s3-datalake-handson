@@ -86,4 +86,4 @@ Amazon Elasticsearch Service（以下、Elasticsearch Service）で、イベン�
  - Destination name：sns-handson-minilake – (Amazon SNS)
  - Message subject：alert-handson-minilake（任意）
  
-15. 10分ごとに ERROR が300件出る設定になっていますので、10分程度経過すると、アラートがトリガーされていることが確認できます。
+15. 10 分ごとに ERROR が 300 件出る設定になっていますので、10 分程度経過すると、アラートがトリガーされていることが確認できます。

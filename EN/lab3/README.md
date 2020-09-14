@@ -61,7 +61,7 @@ Configure settings for sending log data from Fluentd to CloudWatch Logs.
 
     **Asset** resource：[3-td-agent.conf](asset/ap-northeast-1/3-td-agent.conf)
 
- 5. Open the file"**/etc/init.d/td-agent**" and then add the following line around the 13th line.
+ 5. Open the file"**/etc/init.d/td-agent**" and then add the following line around the 14th line.
 
  ```
  # vi /etc/init.d/td-agent
@@ -93,7 +93,7 @@ Configure settings for sending log data from Fluentd to CloudWatch Logs.
 
 ## Section2：CloudWatch, Elasticsearch Service settings
 ### Step1：CloudWatch Logs settings
- 1. Select **CloudWatch** from the list of services in the AWS Management Console and then click **[Logs]** in the left pane of **[CloudWatch]** dashboard
+ 1. Select **CloudWatch** from the list of services in the AWS Management Console and then click **[Log groups]** in the left pane of **[CloudWatch]** dashboard
 
  2. Confirm that the log group "**minilake_group** (optional)" is created and then click it. 
 
@@ -105,20 +105,20 @@ Configure settings for sending log data from Fluentd to CloudWatch Logs.
 
     **Note：** A Lambda Function is automatically created in the background.
 
- 5. Select "**handson-minilake** (optional)" in **[Amazon ES cluster]**. Select **[Create new IAM role]** in **[Lambda IAM Execution Role]**.  
+ 5. At **"Step 1: Choose Destination"**, select "**This Account**" for **[Select account]** and select "**handson-minilake** (optional)" in **[Amazon ES cluster]**. Select **[Create new IAM role]** in **[Lambda IAM Execution Role]**.  
 
 　　**Note：** If a pop-up block runs in your browser, set the permission to allow, and start over from the previous step.
 
- 6. A role named "**lambda_elasticsearch_execution**" will be created. Click **[Allow]** at the bottom right.  
+ 6. A role named "**lambda\_elasticsearch\_execution**" will be created. Click **[Allow]** at the bottom right.  
 
- 7. On the **[Start Streaming minilake_group to Amazon Elasticsearch Service]** screen, simply click **[Next]**.
+ 7. At **"Step 1: Choose Destination"**, simply click **[Next]**.
 
- 8. In **[Log Format]**, select **[Other]**, click **[Next]**, and then click **[Next]**. Click **[Start Streaming]**.
+ 8. At **"Step 2: Configure Log Format and Filters"**, select **[Other]** for **[Log Format]**, click **[Next]**, and then click **[Next]** at **"Step 3: Review"**. Click **[Start Streaming]** at **"Step 4: Confirmation"**.
 
 
 ### Step2：Elasticsearch Service settings
 
- 1. Open **Kibana** screen, click **[Management]** from the left pane of the **Kibana** screen, and then click **[Index Patterns]**.  
+ 1. Open **Kibana** screen, click ![kibana_management](../lab2/images/kibana_management.png)icon from the left pane of the **Kibana** screen, and then click **[Index Patterns]**.  
 
  2. Click **[Create Index Pattern]**.
 
@@ -128,16 +128,13 @@ Configure settings for sending log data from Fluentd to CloudWatch Logs.
 
  4. Select **[@timestamp]** in **[Time Filter field name]** and then click **[Create index pattern]**.
 
- 5. Click **[Discover]** from the left pane of the **Kibana** screen and select "**cwl-***" for Index. 
-If the value is collected and the graph is displayed according with the value, you can move forward.
+ 5. Click ![kibana_discover](../lab2/images/kibana_discover.png)icon from the left pane of the **Kibana** screen and select "**cwl-***" for Index. If the value is collected and the graph is displayed according with the value, you can move forward.
 
- 6. Click **[Management]** from the left pane of the **Kibana** screen, and then click **[Saved Objects]**. Click **[Import]** at the top right of the screen.
+ 6. Click ![kibana_management](../lab2/images/kibana_management.png)icon from the left pane of the **Kibana** screen, and then click **[Saved Objects]**. Click **[Import]** at the top right of the screen.
 
- 7. On the **[Import saved objects]** screen, click the **[Import]** icon, select "**3-visualization.json**" in **Asset** resource, and click the **[Import]** icon to import the json file. After importing without any problems, click **[Done]** to return to the original screen.
+ 7. On the **[Saved Objects]** screen, click the **[Import]** icon, select "**3-visualization.json**" in **Asset** resource and click the **[Import]** icon. Then, at the next screen, select "**cwl-\***" and click **[Confirm all changes]** to complete importing. After importing without any errors, click **[Done]** to return to the original screen.
 
     **Asset** resource：[3-visualization.json](asset/ap-northeast-1/3-visualization.json)
-
-    **Note：** In the **[Import saved objects]** screen of import, if **[New index patten]** has an initial value of " -- Skip Import -- ", then "**cwl-\***" must be selected.
 
  8. Next, on the **[Import saved objects]** screen, click the **[Import]** icon again, select "**3-dashboard.json**" in **Asset** resource, and click the **[Import]** icon to import. After importing without any errors, click **[Done]** to return to the original screen.
 

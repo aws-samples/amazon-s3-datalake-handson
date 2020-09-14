@@ -14,22 +14,21 @@ SPDX-License-Identifier: MIT-0
 
  1. AWS マネージメントコンソールのサービス一覧から **Elasticsearch Service** を選択し、 **[新しいドメインの作成]** をクリックします。
  
- 2. **[デプロイタイプの選択]** にて、 **[開発およびテスト]** を選択し、 **[バージョン]** にて、 **[7.4]** を選択し、 **[次へ]** をクリックします。  
+ 2. **"Step 1: デプロイタイプの選択"** において、 **"デプロイタイプ"** で **[開発およびテスト]** を選択します。 バージョンは変更せず、そのまま **[次へ]** をクリックします。  
  
-    **Note：** **7.4** 以外のバージョンを選択した場合、Kibanaの準備済み画面などが正常に動作しない可能性がありますので、 **7.4** を選択して本ハンズオンは実施ください。
+ 3. **"Step 2: ドメインの設定"** において、 **"Elasticsearch ドメイン名"** に「 **handson-minilake**（任意）」と入力し、 **"インスタンスタイプ"** に **[t2.small.elasticsearch]** を選択します。その他の設定は変更せず、画面右下の **[次へ]** をクリックします。
  
- 3. **ドメインの設定** にて、 **[Elasticsearch ドメイン名]** を「 **handson-minilake**（任意）」と入力し、 **[インスタンスタイプ]** は **[t2.small.elasticsearch]** を選び、他の設定は変更せず、画面右下の **[次へ]** をクリックします。
+ 4. **"Step 3: アクセスとセキュリティの設定"** において、 **"ネットワーク構成"** を **[パブリックアクセス]** に設定します。
  
- 4. **[ネットワーク構成]** にて、 **[パブリックアクセス]** を選択し、 **[アクセスポリシー]** の **[ドメインアクセスポリシー]** において **[カスタムアクセスポリシー]** 選択し、 直下の要素について以下を入力します。
- 
-   - タイプに **[IAM ARN]** を選択, プリンシパルに「 **\*** 」を入力, アクションに **[許可]** を選択
-   - タイプに **[IPv4 アドレス]** を選択, プリンシパルに「 **\*** 」を入力, アクションに **[許可]** を選択
+ 5. 次に、アクセスポリシーの項目を設定します。 **"ドメインアクセスポリシー"** において **[カスタムアクセスポリシー]** 選択し、以下の内容を設定し、画面一番下の **[次へ]** をクリックします。
+
+   - タイプに **[IPv4 アドレス]** を選択、プリンシパルに「 **\*** 」を入力、アクションに **[許可]** を選択
 
      **Note：** この設定は本番環境では推奨いたしません。今回はハンズオンであり機密データも取り扱わない為、セキュリティを厳しく設定しておりません。 
  
- 5. **[アクセスの設定]** 画面に戻ります。 **[次へ]** をクリックし、 **[確認]** 画面において内容を確認し、画面右下の **[確認]** をクリックします。  
+ 6. **"Step 4: 確認"** において、これまでの設定内容を確認し、特に問題がなければ画面右下の  **[確認]** をクリックしドメインを作成します。 
 
-     **Note：** Elasticsearch Service の作成が始まります。構築完了には10分ほどかかりますが完了を待たずに次の手順を進めてください。
+     **Note：** Elasticsearch Service の作成が始まります。構築完了には 15 分ほどかかりますが完了を待たずに次の手順を進めてください。
  
 
 ## Section2：EC2, Fluentd, Elasticsearch Service の設定
@@ -129,44 +128,46 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  1. AWS マネジメントコンソールのサービス一覧から **Elasticsearch Service** を選択します。  
 
  2. **[Amazon Elasticsearch Service ダッシュボード]** が開きます。作成した「 **handson-minilake**（任意）」ドメインの **[ドメインのステータス]** が **[アクティブ]** で、 **[検索可能なドキュメント]** の件数が1件以上になっていることを確認し、「 **handson-minilake**（任意）」ドメインをクリックします。  
-
- 3. **[Kibana]** の右のURLをクリックします。  
  
- 4. **[Welcome to Kibana]** 画面が表示されるため、 **[Explore on my own]** を選択し、 **Kibana** の画面を開きます。
+ 3. **[アクション]** を選択し、 **[アクセスポリシーの変更]** を選択します。 **"ドメインアクセスポリシー"** において、 **[カスタムアクセスポリシー]** を選択し、以下の内容を設定し、画面一番下の **[送信]** をクリックします。
+
+   - タイプに **[IAM ARN]** を選択、プリンシパルに「 **\*** 」を入力、アクションに **[許可]** を選択
+
+ 4. **[Kibana]** の右のURLをクリックします。  
+ 
+ 5. **[Welcome to Elastic Kibana]** 画面が表示されるため、 **[Explore on my own]** を選択し、 **Kibana** の画面を開きます。
 
  #### Kibana での操作
 
- 5. **Kibana** の画面の左ペインから **[Management]** をクリックし、 **[Index Patterns]** をクリックします。
+ 6. **Kibana** の画面の左ペインから![kibana_management](images/kibana_management.png)アイコンをクリックし、 **[Index Patterns]** をクリックします。
 
-     **Note：** **[Management]** 等は、画面左のアイコンに配置されています。
+ 7. **[Create index pattern]** をクリックし、 **[Create index pattern]** 画面において、 **[Index pattern]** に「 **testappec2log-*** 」を入力し、右側の **[Next step]** をクリックします。
 
- 6. **[Create index pattern]** 画面において、 **[Index pattern]** に「 **testappec2log-*** 」を入力し、右側の **[Next step]** をクリックします。
+ 8. **[Time Filter field name]** において、 **[@timestamp]** を選択し、画面右下の **[Create index pattern]** をクリックします。
 
- 7. **[Time Filter field name]** において、 **[@timestamp]** を選択し、画面右下の **[Create index pattern]** をクリックします。
+ 9. **Kibana** の画面の左ペインから![kibana_management](images/kibana_management.png)アイコンをクリックし、 **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
 
- 8. **Kibana** の画面の左ペインから **[Management]** をクリックし、 **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
-
- 9. **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[New index patten]** において、初期値が「 -- Skip Import -- 」だった場合、「 **testappec2log-\*** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 10. **[Saved Objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** をクリックします。続いての画面において、 **[New index patten]** に対して、「 **testappec2log-\*** 」を選択し、 **[Confirm all changes]** をクリックし、インポートを完了します。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
     **Asset** 資料：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
 
- 10. 続いて、再度 **[Import saved objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-dashboard.json** 」を選択し、 **[Import]** アイコンをクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 11. 続いて、再度 **[Saved Objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-dashboard.json** 」を選択し、 **[Import]** をクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
      **Asset** 資料：[2-dashboard.json](asset/ap-northeast-1/2-dashboard.json)
 
- 11. **Kibana** の画面の左ペインから **[Dashboard]** をクリックし、インポートした「 **test1-dashboard** 」をクリックし、以下のように値が表示されていれば完了です。  
+ 12. **Kibana** の画面の左ペインから![kibana_dashboard](images/kibana_dashboard.png)アイコンをクリックし、インポートした「 **test1-dashboard** 」をクリックし、以下のように値が表示されていれば完了です。  
 
  <img src="images/kibana_capture01.png">  
 
- 12. **Kibana** の画面にて、右上でタイムレンジが選べるため、期間を **[Last 1 hour]** にしてみます。グラフ表示が1時間の間の取得値に変化していることが確認できます。  
+ 13. **Kibana** の画面にて、右上でタイムレンジが選べるため、期間を **[Last 1 hour]** にしてみます。グラフ表示が1時間の間の取得値に変化していることが確認できます。  
 
- 13. **Kibana** の画面の左ペインから **[Discover]** をクリックし、その右のメニューの **[alarmlevel]** をクリックすると、アラームレベルごとの割合を見ることができます。  
+ 14. **Kibana** の画面の左ペインから![kibana_discover](images/kibana_discover.png)アイコンをクリックします。  
 
- 14. **[alarmlevel]** の右の **[add]** をクリックします。同じように **[user]** の右側の **[add]** をクリックすると、対象のカラム（Time, alarmlevel, user）だけが表示されます。  
+ 15. **"Available fields"** において、 **[alarmlevel]** の右の **[add]** をクリックします。同じように **[user]** の右側の **[add]** をクリックすると、対象のカラム（Time, alarmlevel, user）だけが表示されます。  
 
      **Note：** **[add]** はカーソルがある時にだけ表示されます。
 
- 15. 検索窓に「 **user:"imai"** 」と入力し、Enterを押すと、「 **imai** 」というユーザーでフィルタリングされます。  
+ 16. 検索窓に「 **user:"imai"** 」と入力し、Enterを押すと、「 **imai** 」というユーザーでフィルタリングされます。  
 
 
 ## Section3：まとめ
