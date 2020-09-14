@@ -154,7 +154,7 @@ It may take some time for you to be able to see the output.
 
  10. On the **[Saved Objects]** screen, click the **[Import]** icon, select "**2-visualization.json**" in **Asset** resource and click the **[Import]** icon. Then, at the next screen, select "**testappec2log-\***" and click **[Confirm all changes]** to complete importing. After importing without any errors, click **[Done]** to return to the original screen.
 
-    **Asset** resource：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
+     **Asset** resource：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
 
  11. Next, on the **[Saved Objects]** screen, click the **[Import]** icon again, select "**2-dashboard.json**" in **Asset** resource, and click the **[Import]** icon to import. After importing without any errors, click **[Done]** to return to the original screen.
 
