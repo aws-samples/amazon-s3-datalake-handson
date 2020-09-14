@@ -29,7 +29,7 @@ These logs continuously output approximately 10 every 2 minutes, and 300 log ent
 
    - Choose **[IPv4 address]** for **[Select Type]**, input **"** **\*** **"** for **[Enter Principal]** and select **[Allow]** for **[Select Action]**.
 
-    **Note：** This configuration is not recommended for any production environment. For this hands-on, we do not set security measure strictly, due to the nature of hands-on dealing with no confidential data.   
+   **Note：** This configuration is not recommended for any production environment. For this hands-on, we do not set security measure strictly, due to the nature of hands-on dealing with no confidential data.   
  
  6. At **"Step 4: Review"**, confirm the contents and click **[Confirm]** at the bottom right of the screen. 
 
