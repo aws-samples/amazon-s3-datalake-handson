@@ -56,7 +56,11 @@ Configure settings for sending log data from Fluentd to Elasticsearch Service.
 
  1. Select **Elasticsearch Service** from the list of services in the AWS Management Console, click the domain name "**handson-minilake** (optional)" in **[Amazon Elasticsearch Service dashboard]**, copy and paste the **URL string** in **[Endpoint]** without "**https://**" in a notepad on your computer.
 
- 2. Log in to EC2 and install the Elasticsearch plugin.
+ 2. Select **[Actions]** and click **[Modify access policy]**. Select **[Custome access policy]** for **"Domain access policy"**, set up as follows and click **[Submit]**.
+
+   - Choose **[IAM ARN]** for **[Select Type]**, input **"** **\*** **"** for **[Enter Principal]** and select **[Allow]** for **[Select Action]**.
+
+ 3. Log in to EC2 and install the Elasticsearch plugin.
 
     **Asset** resource：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
 
@@ -65,7 +69,7 @@ Configure settings for sending log data from Fluentd to Elasticsearch Service.
  # td-agent-gem install -v 2.6.0 fluent-plugin-elasticsearch
  ```
  
- 3. Confirm plugin installation.
+ 4. Confirm plugin installation.
 
     **Asset** resource：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
  
@@ -79,17 +83,17 @@ Configure settings for sending log data from Fluentd to Elasticsearch Service.
  fluent-plugin-elasticsearch (2.6.0, 2.4.0)
  ```
  
- 4. To change the setting of "**/etc/td-agent/td-agent.conf**", delete the contents of "**/etc/td-agent/td-agent.conf**" once. Open it with an editor such as vi and delete it with ":%d".
+ 5. To change the setting of "**/etc/td-agent/td-agent.conf**", delete the contents of "**/etc/td-agent/td-agent.conf**" once. Open it with an editor such as vi and delete it with ":%d".
  
  ```
  # vi /etc/td-agent/td-agent.conf
  ```
 
- 5. Copy the contents of "**2-td-agent.conf**" in **Asset** resource and paste them.
+ 6. Copy the contents of "**2-td-agent.conf**" in **Asset** resource and paste them.
 
     **Asset** resource：[2-td-agent.conf](asset/ap-northeast-1/2-td-agent.conf)
 
- 6. After pasting, modify some of the contents. Replace the value of **eshost** with the value of the endpoint copied in step 1 and save.  
+ 7. After pasting, modify some of the contents. Replace the value of **eshost** with the value of the endpoint copied in step 1 and save.  
 
     **Note：** Do not include "**https://**" as the value of **eshost**.
  
@@ -105,7 +109,7 @@ Configure settings for sending log data from Fluentd to Elasticsearch Service.
  host search-handson-minilake-ikop2vbusshbf3pgnuqzlxxxxx.ap-northeast-1.es.amazonaws.com
  ``` 
 
- 7. Start the td-agent process.
+ 8. Start the td-agent process.
  
      **Asset** resource：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
  
@@ -113,7 +117,7 @@ Configure settings for sending log data from Fluentd to Elasticsearch Service.
  # /etc/init.d/td-agent start
  ```
  
- 8. Check the Fluentd log.
+ 9. Check the Fluentd log.
  
      **Asset** resource：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
  
@@ -134,45 +138,41 @@ It may take some time for you to be able to see the output.
 
  2. In **[Amazon Elasticsearch Service dashboard]**, confirm that **[Domain status]** of the created domain "**handson-minilake** (optional)" is **[Active]** and the number of **[Searchable documents]** is more than one, and then click the domain "**handson-minilake** (optional)".
 
- 3. Select **[Actions]** and click **[Modify access policy]**. Select **[Custome access policy]** for **"Domain access policy"**, set up as follows and click **[Submit]**.
-
-   - Choose **[IAM ARN]** for **[Select Type]**, input **"** **\*** **"** for **[Enter Principal]** and select **[Allow]** for **[Select Action]**.
-
- 4. Click the URL to the right of **[Kibana]**.
+ 3. Click the URL to the right of **[Kibana]**.
  
- 5. **[Welcome to Kibana]** screen appears. Select **[Explore on my own]** to open **Kibana** screen.
+ 4. **[Welcome to Kibana]** screen appears. Select **[Explore on my own]** to open **Kibana** screen.
 
  #### Kibana settings
 
- 6. Click ![kibana_management](images/kibana_management.png)icon from the left pane of the **Kibana** screen, and then click **[Index Patterns]**.
+ 5. Click ![kibana_management](images/kibana_management.png)icon from the left pane of the **Kibana** screen, and then click **[Index Patterns]**.
 
- 7. Click **[Create index pattern]**, enter "**testappec2log-***" in **[Index pattern]** and click **[Next step]** on the right.
+ 6. Click **[Create index pattern]**, enter "**testappec2log-***" in **[Index pattern]** and click **[Next step]** on the right.
 
- 8. In **[Time Filter field name]**, select **[@timestamp]** and click **[Create index pattern]** at the bottom right of the screen.
+ 7. In **[Time Filter field name]**, select **[@timestamp]** and click **[Create index pattern]** at the bottom right of the screen.
 
- 9. Click ![kibana_management](images/kibana_management.png)icon from the left pane of the **Kibana** screen, and then click **[Saved Objects]**. Click **[Import]** at the top right of the screen.
+ 8. Click ![kibana_management](images/kibana_management.png)icon from the left pane of the **Kibana** screen, and then click **[Saved Objects]**. Click **[Import]** at the top right of the screen.
 
- 10. On the **[Saved Objects]** screen, click the **[Import]** icon, select "**2-visualization.json**" in **Asset** resource and click the **[Import]** icon. Then, at the next screen, select "**testappec2log-\***" and click **[Confirm all changes]** to complete importing. After importing without any errors, click **[Done]** to return to the original screen.
+ 9. On the **[Saved Objects]** screen, click the **[Import]** icon, select "**2-visualization.json**" in **Asset** resource and click the **[Import]** icon. Then, at the next screen, select "**testappec2log-\***" and click **[Confirm all changes]** to complete importing. After importing without any errors, click **[Done]** to return to the original screen.
 
      **Asset** resource：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
 
- 11. Next, on the **[Saved Objects]** screen, click the **[Import]** icon again, select "**2-dashboard.json**" in **Asset** resource, and click the **[Import]** icon to import. After importing without any errors, click **[Done]** to return to the original screen.
+ 10. Next, on the **[Saved Objects]** screen, click the **[Import]** icon again, select "**2-dashboard.json**" in **Asset** resource, and click the **[Import]** icon to import. After importing without any errors, click **[Done]** to return to the original screen.
 
      **Asset** resource：[2-dashboard.json](asset/ap-northeast-1/2-dashboard.json)
 
- 12. Click ![kibana_dashboard](images/kibana_dashboard.png)icon from the left pane of the **Kibana** screen, click the imported "**test1-dashboard**", and if the values ​​are displayed as shown below, you have completed this section.  
+ 11. Click ![kibana_dashboard](images/kibana_dashboard.png)icon from the left pane of the **Kibana** screen, click the imported "**test1-dashboard**", and if the values ​​are displayed as shown below, you have completed this section.  
 
  <img src="images/kibana_capture01.png">  
 
- 13. On the **Kibana** screen, you can select the time range in the upper right, so let's set the period to **[Last 1 hour]**. You can confirmthat the graph changes to show the acquired value for 1 hour.
+ 12. On the **Kibana** screen, you can select the time range in the upper right, so let's set the period to **[Last 1 hour]**. You can confirmthat the graph changes to show the acquired value for 1 hour.
 
- 14. Click ![kibana_discover](images/kibana_discover.png)icon from the left pane of the **Kibana** screen, and click **[alarmlevel]** in the menu on the right to see the percentage for each alarm level. 
+ 13. Click ![kibana_discover](images/kibana_discover.png)icon from the left pane of the **Kibana** screen, and click **[alarmlevel]** in the menu on the right to see the percentage for each alarm level. 
 
- 15. Click **[add]** to the right of **[alarmlevel]**. Similarly, if you click **[add]** to the right of **[user]**, you can limit the view to only the target columns (Time, alarmlevel, user).  
+ 14. Click **[add]** to the right of **[alarmlevel]**. Similarly, if you click **[add]** to the right of **[user]**, you can limit the view to only the target columns (Time, alarmlevel, user).  
 
      **Note：** **[add]** is displayed only when the cursor is on it.
 
- 16. Enter "**user:"imai"**" in the search window and press Enter to filter by the user "**imai**".
+ 15. Enter "**user:"imai"**" in the search window and press Enter to filter by the user "**imai**".
 
 
 ## Section3：Summary

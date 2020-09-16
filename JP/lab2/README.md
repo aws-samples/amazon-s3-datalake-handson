@@ -51,7 +51,11 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
 
  1. AWS マネジメントコンソールのサービス一覧から **Elasticserach Service** を選択し、 **[Amazon Elasticsearch Service ダッシュボード]** 画面から作成したドメイン名「 **handson-minilake**（任意）」をクリックし、 **[エンドポイント]** にある **URL の文字列** を **https://を含めない形** でパソコンのメモ帳などにメモしておきます。
 
- 2. EC2 にログインし、 Elasticsearch のプラグインをインストールします。
+ 2. **[アクション]** を選択し、 **[アクセスポリシーの変更]** を選択します。 **"ドメインアクセスポリシー"** において、 **[カスタムアクセスポリシー]** を選択し、以下の内容を設定し、画面一番下の **[送信]** をクリックします。
+
+   - タイプに **[IAM ARN]** を選択、プリンシパルに「 **\*** 」を入力、アクションに **[許可]** を選択
+
+ 3. EC2 にログインし、 Elasticsearch のプラグインをインストールします。
 
     **Asset** 資料：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
 
@@ -60,7 +64,7 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  # td-agent-gem install -v 2.6.0 fluent-plugin-elasticsearch
  ```
  
- 3. プラグインのインストールを確認します。
+ 4. プラグインのインストールを確認します。
 
     **Asset** 資料：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
  
@@ -74,17 +78,17 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  fluent-plugin-elasticsearch (2.6.0, 2.4.0)
  ```
  
- 4. 「 **/etc/td-agent/td-agent.conf** 」の設定を変更するために、一旦 「**/etc/td-agent/td-agent.conf** 」の中身を削除します。 vi 等のエディタで開き、「:%d」などで削除を行います。
+ 5. 「 **/etc/td-agent/td-agent.conf** 」の設定を変更するために、一旦 「**/etc/td-agent/td-agent.conf** 」の中身を削除します。 vi 等のエディタで開き、「:%d」などで削除を行います。
  
  ```
  # vi /etc/td-agent/td-agent.conf
  ```
 
- 5. **Asset** 資料の「 **2-td-agent.conf** 」の内容をコピーして、貼り付けます。
+ 6. **Asset** 資料の「 **2-td-agent.conf** 」の内容をコピーして、貼り付けます。
 
     **Asset** 資料：[2-td-agent.conf](asset/ap-northeast-1/2-td-agent.conf)
 
- 6. 貼り付けたあと、内容を一部修正します。 **eshost** の値を手順1でコピーしておいたエンドポイントの値と置き換え、保存します。  
+ 7. 貼り付けたあと、内容を一部修正します。 **eshost** の値を手順1でコピーしておいたエンドポイントの値と置き換え、保存します。  
 
     **Note：** **eshost** の値として、 **https://** は含めません。
  
@@ -100,7 +104,7 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  host search-handson-minilake-ikop2vbusshbf3pgnuqzlxxxxx.ap-northeast-1.es.amazonaws.com
  ``` 
 
- 7. td-agent のプロセスを起動します。
+ 8. td-agent のプロセスを起動します。
  
      **Asset** 資料：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
  
@@ -108,7 +112,7 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  # /etc/init.d/td-agent start
  ```
  
- 8. Fluentd のログを確認します。
+ 9. Fluentd のログを確認します。
  
      **Asset** 資料：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
  
@@ -128,46 +132,42 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  1. AWS マネジメントコンソールのサービス一覧から **Elasticsearch Service** を選択します。  
 
  2. **[Amazon Elasticsearch Service ダッシュボード]** が開きます。作成した「 **handson-minilake**（任意）」ドメインの **[ドメインのステータス]** が **[アクティブ]** で、 **[検索可能なドキュメント]** の件数が1件以上になっていることを確認し、「 **handson-minilake**（任意）」ドメインをクリックします。  
- 
- 3. **[アクション]** を選択し、 **[アクセスポリシーの変更]** を選択します。 **"ドメインアクセスポリシー"** において、 **[カスタムアクセスポリシー]** を選択し、以下の内容を設定し、画面一番下の **[送信]** をクリックします。
 
-   - タイプに **[IAM ARN]** を選択、プリンシパルに「 **\*** 」を入力、アクションに **[許可]** を選択
-
- 4. **[Kibana]** の右のURLをクリックします。  
+ 3. **[Kibana]** の右のURLをクリックします。  
  
- 5. **[Welcome to Elastic Kibana]** 画面が表示されるため、 **[Explore on my own]** を選択し、 **Kibana** の画面を開きます。
+ 4. **[Welcome to Elastic Kibana]** 画面が表示されるため、 **[Explore on my own]** を選択し、 **Kibana** の画面を開きます。
 
  #### Kibana での操作
 
- 6. **Kibana** の画面の左ペインから![kibana_management](images/kibana_management.png)アイコンをクリックし、 **[Index Patterns]** をクリックします。
+ 5. **Kibana** の画面の左ペインから![kibana_management](images/kibana_management.png)アイコンをクリックし、 **[Index Patterns]** をクリックします。
 
- 7. **[Create index pattern]** をクリックし、 **[Create index pattern]** 画面において、 **[Index pattern]** に「 **testappec2log-*** 」を入力し、右側の **[Next step]** をクリックします。
+ 6. **[Create index pattern]** をクリックし、 **[Create index pattern]** 画面において、 **[Index pattern]** に「 **testappec2log-*** 」を入力し、右側の **[Next step]** をクリックします。
 
- 8. **[Time Filter field name]** において、 **[@timestamp]** を選択し、画面右下の **[Create index pattern]** をクリックします。
+ 7. **[Time Filter field name]** において、 **[@timestamp]** を選択し、画面右下の **[Create index pattern]** をクリックします。
 
- 9. **Kibana** の画面の左ペインから![kibana_management](images/kibana_management.png)アイコンをクリックし、 **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
+ 8. **Kibana** の画面の左ペインから![kibana_management](images/kibana_management.png)アイコンをクリックし、 **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
 
- 10. **[Saved Objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** をクリックします。続いての画面において、 **[New index patten]** に対して、「 **testappec2log-\*** 」を選択し、 **[Confirm all changes]** をクリックし、インポートを完了します。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 9. **[Saved Objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** をクリックします。続いての画面において、 **[New index patten]** に対して、「 **testappec2log-\*** 」を選択し、 **[Confirm all changes]** をクリックし、インポートを完了します。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
      **Asset** 資料：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
 
- 11. 続いて、再度 **[Saved Objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-dashboard.json** 」を選択し、 **[Import]** をクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 10. 続いて、再度 **[Saved Objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-dashboard.json** 」を選択し、 **[Import]** をクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
      **Asset** 資料：[2-dashboard.json](asset/ap-northeast-1/2-dashboard.json)
 
- 12. **Kibana** の画面の左ペインから![kibana_dashboard](images/kibana_dashboard.png)アイコンをクリックし、インポートした「 **test1-dashboard** 」をクリックし、以下のように値が表示されていれば完了です。  
+ 11. **Kibana** の画面の左ペインから![kibana_dashboard](images/kibana_dashboard.png)アイコンをクリックし、インポートした「 **test1-dashboard** 」をクリックし、以下のように値が表示されていれば完了です。  
 
  <img src="images/kibana_capture01.png">  
 
- 13. **Kibana** の画面にて、右上でタイムレンジが選べるため、期間を **[Last 1 hour]** にしてみます。グラフ表示が1時間の間の取得値に変化していることが確認できます。  
+ 12. **Kibana** の画面にて、右上でタイムレンジが選べるため、期間を **[Last 1 hour]** にしてみます。グラフ表示が1時間の間の取得値に変化していることが確認できます。  
 
- 14. **Kibana** の画面の左ペインから![kibana_discover](images/kibana_discover.png)アイコンをクリックします。  
+ 13. **Kibana** の画面の左ペインから![kibana_discover](images/kibana_discover.png)アイコンをクリックします。  
 
- 15. **"Available fields"** において、 **[alarmlevel]** の右の **[add]** をクリックします。同じように **[user]** の右側の **[add]** をクリックすると、対象のカラム（Time, alarmlevel, user）だけが表示されます。  
+ 14. **"Available fields"** において、 **[alarmlevel]** の右の **[add]** をクリックします。同じように **[user]** の右側の **[add]** をクリックすると、対象のカラム（Time, alarmlevel, user）だけが表示されます。  
 
      **Note：** **[add]** はカーソルがある時にだけ表示されます。
 
- 16. 検索窓に「 **user:"imai"** 」と入力し、Enterを押すと、「 **imai** 」というユーザーでフィルタリングされます。  
+ 15. 検索窓に「 **user:"imai"** 」と入力し、Enterを押すと、「 **imai** 」というユーザーでフィルタリングされます。  
 
 
 ## Section3：まとめ
