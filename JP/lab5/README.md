@@ -54,20 +54,20 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
  6. 以下の値を入力します。
 
     - クラスター識別子：**handson-minilake-dwh**（任意）
-    - What are you planning to use this cluster for?：**Free trial**
+    - このクラスターを何に使用する予定ですか?：**無料トライアル**
     - データベース名：**db**（任意）
     - データベースポート：**5439** （デフォルト）
     - マスターユーザー名：**admin**（任意）
     - マスターユーザーのパスワード：**MyPassword1**（任意）
 
-     **Note：** AWS アカウントの使用状況に応じて、 **Free trial** を選択できない場合は、**Production** を選択し、 **ノードの種類** に **dc2.large** を選択してください。
+     **Note：** AWS アカウントの使用状況に応じて、 **無料トライアル** を選択できない場合は、**Production** を選択し、 **ノードの種類** に **dc2.large** を選択してください。無料トライアルでない場合、課金に関する注意事項は必ずご確認ください。
 
  7. **[追加設定]** の **[デフォルトを使用]** のラジオボタンをオフにし、**[ネットワークとセキュリティ]** にて以下の値を入力します。
 
     - Virtual Private Cloud (VPC) : 以前メモした「 **VPC ID** 」を選択
     - VPC セキュリティグループ : **handson-minilake-sg-private**（任意）
 
- 8. Redshift の利用には課金が発生します。**[設定の概要]** において推定コンピューティング料金を確認し、**[クラスターを作成]** をクリックします。クラスターの起動完了までに時間がかかる為、次の作業を続けます。  
+ 8. 無料トライアルでない場合、Redshift の利用には課金が発生します。**[設定の概要]** において推定コンピューティング料金を確認し、**[クラスターを作成]** をクリックします。クラスターの起動完了までに時間がかかる為、次の作業を続けます。  
 
      **Note：** 課金に関する注意事項は必ずご確認ください。
 
@@ -95,17 +95,19 @@ EC2 上で出力されているログを Fluentd 経由で、Kinesi Data Firehos
 ### Step2：Kinesis Data Firehose の作成
 EC2 上で出力されているログを Fluentd 経由で、Kinesi Data Firehose を使って、S3 に取り込みますが、本手順では、Kinesi Data Firehose の設定を行います。
 
- 1. AWS マネジメントコンソールのサービス一覧から **Kinesis** を選択し、 Kinesis Data Firehose 配信ストリームの **[配信ストリームの作成]** をクリックします。
+ 1. AWS マネジメントコンソールのサービス一覧から **Kinesis** を選択し、 Kinesis Data Firehose の **[配信ストリームを作成]** をクリックします。
  
  2. **[Delivery stream name]** に「 **minilake1**（任意）」と入力し、 **[Next]** をクリックします。
  
- 3. **[Data transformation]** を **[Disabled]** 、 **[Record format conversion]** を **[Disabled]** のまま、 **[Next]** をクリックします。
+    **Note：** 「 **minilake1**（任意）」を異なる名前に指定した場合、後続の手順において、「 **/etc/td-agent/td-agent.conf** 」のファイルにある「 **delivery_stream_name minilake1** 」の指定を合わせて変更いただく必要があります。
  
- 4. **[Destination]** で、「 **Amazon S3** 」を選択します。
+ 3. **[Data transformation]** を **[Disabled]** 、 **[Convert record format]** を **[Disabled]** のまま、 **[Next]** をクリックします。
  
- 5. **[S3 bucket]** は **Step1** で作成したバケットを選択します。 **[Prefix]** に「 **minilake-in1/** 」を入力します。
+ 4. **[Choose a destination]** で、「 **Amazon S3** 」を選択します。
  
-    **Note：** **[Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
+ 5. **[S3 bucket]** は **Step1** で作成したバケットを選択します。 **[S3 Prefix]** に「 **minilake-in1/** 」を入力します。
+ 
+    **Note：** **[S3 Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
  
  6. 画面右下の **[Next]** をクリックします。
  
@@ -239,7 +241,7 @@ Redshift にデータをロードします。
 
  6. **[Redshift Dashboard]** に戻り、画面左ペインの **[クラスター]** を選択し、作成した Redshift クラスター名（例：handson-minilake-dwh）をクリックします。 **[アクション]** から **[IAMロールの管理]** をクリックします。
 
- 7. さきほど作成した IAM ロール「 **handson-minilake-dwh**（任意）」を選択 **[IAMロールを追加]** をクリックし **[Done]** をクリックします。**クラスター** の画面で **[状態]** が **[変更中]** となっているため、 **[変更中]** が消えるまで待ちます。
+ 7. さきほど作成した IAM ロール「 **handson-minilake-dwh**（任意）」を選択 **[IAMロールを追加]** をクリックし **[完了]** をクリックします。**クラスター** の画面で **[状態]** が **[変更中]** となっているため、 **[変更中]** が消えるまで待ちます。
 
   <img src="images/Lab5-Section4-Step2-7.png" >
 
@@ -470,7 +472,7 @@ QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可
 	- ユーザー名：admin（任意）
 	- パスワード：Redshift 用に設定したパスワード
 
-  **Note：** 接続の検証が失敗する場合は、まずは VPC 接続の作成ステップを見直してみてください。
+  **Note：** 設定した VPC 接続が利用可能になるまで数分程度時間がかかります。数分経過しても接続できず、接続の検証が失敗する場合は、まずは VPC 接続の作成ステップを見直してみてください。
 
   <img src="images/Lab5-Section4-Step4-21.png" width="500">
 

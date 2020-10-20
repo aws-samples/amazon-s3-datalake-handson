@@ -33,13 +33,13 @@ SPDX-License-Identifier: MIT-0
  
     **Note：** 「 **minilake1**（任意）」を異なる名前に指定した場合、後続の手順において、「 **/etc/td-agent/td-agent.conf** 」のファイルにある「 **delivery_stream_name minilake1** 」の指定を合わせて変更いただく必要があります。
  
- 3. **[Data transformation]** を **[Disabled]** 、 **[Record format conversion]** を **[Disabled]** のまま、 **[Next]** をクリックします。
+ 3. **[Data transformation]** を **[Disabled]** 、 **[Convert record format]** を **[Disabled]** のまま、 **[Next]** をクリックします。
  
- 4. **[Destination]** で、「 **Amazon S3** 」を選択します。
+ 4. **[Choose a destination]** で、「 **Amazon S3** 」を選択します。
  
- 5. **[S3 bucket]** は **Step1** で作成したバケットを選択します。 **[Prefix]** に「 **minilake-in1/** 」を入力します。
+ 5. **[S3 bucket]** は **Step1** で作成したバケットを選択します。 **[S3 Prefix]** に「 **minilake-in1/** 」を入力します。
  
-    **Note：** **[Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
+    **Note：** **[S3 Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
  
  6. 画面右下の **[Next]** をクリックします。
  
