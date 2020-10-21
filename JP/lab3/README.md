@@ -102,7 +102,7 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  4. ロググループ「 **minilake_group**（任意）」にチェックを入れ、 **[アクション]** をクリックし、 **[Amazon Elasticsearch Service へのストリーム]** をクリックします。  
 
-    **Note：** 裏側では自動で Lambda Function が作られます。
+    **Note：** 裏側では自動で Lambda Function が作られます。**[Amazon Elasticsearch Service へのストリーム]** という項目が見つからない場合、2020年10月現在、新しい CloudWatch ダッシュボードを参照されている可能性があります。画面上部のリンクから、CloudWatch ダッシュボードを以前のバージョンに切り替えていただいて、お試しください。
 
  5. **"ステップ 1: 送信先の選択"** において、 **[アカウントの選択]** で **[このアカウント]** を選択し、 **[Amazon ES クラスター]** において、作成済みの「 **handson-minilake**（任意）」を選択し、 **[Lambda IAM 実行ロール]** において、 **[新しい IAM ロールの作成]** を選択します。  
 
