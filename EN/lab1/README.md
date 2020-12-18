@@ -83,11 +83,9 @@ Create an IAM role for EC2 to use in the remaining labs.
  
  6. Enter "**handson-minilake** (optional)" for **[Role name]** and click **[Create role]**.
  
- 7. Select **EC2** from the list of services in the AWS Management Console, click **[Instances]** from the left pane of the **[EC2 Dashboard]** screen, select the instance **handson-minilake** (optional)" and click **[Actions] → [Instance Settings] → [Attach/Replace IAM Role]**.
+ 7. Select **EC2** from the list of services in the AWS Management Console, click **[Instances]** from the left pane of the **[EC2 Dashboard]** screen, select the instance **handson-minilake** (optional)" and click **[Actions] → [Security] → [Modify IAM role]**.
  
- 8. On the **[Attach/Replace IAM Role]** screen, select "**handson-minilake** (optional)" for **[IAM role]** and click **[Apply]**.
- 
- 9. Click **[Close]** to return to the instance list screen.
+ 8. On the **[Modiry IAM role]** screen, select "**handson-minilake** (optional)" for **[IAM role]** and click **[Save]**.
   
 
 ### Step3：Install Fluentd
