@@ -13,23 +13,34 @@ SPDX-License-Identifier: MIT-0
 ### Step1：Elasticsearch Service の起動
 
  1. AWS マネージメントコンソールのサービス一覧から **Elasticsearch Service** を選択し、 **[新しいドメインの作成]** をクリックします。
- 
+
  2. **"Step 1: デプロイタイプの選択"** において、 **"デプロイタイプ"** で **[開発およびテスト]** を選択します。 バージョンは変更せず、そのまま **[次へ]** をクリックします。  
- 
- 3. **"Step 2: ドメインの設定"** において、 **"Elasticsearch ドメイン名"** に「 **handson-minilake**（任意）」と入力し、 **"インスタンスタイプ"** に **[t2.small.elasticsearch]** を選択します。その他の設定は変更せず、画面右下の **[次へ]** をクリックします。
- 
+
+     **Note：** 今回の手順はバージョン7.9で確認しました。
+
+ 3. **"Step 2: ドメインの設定"** において、 **"Elasticsearch ドメイン名"** に「 **handson-minilake**（任意）」と入力し、 **"インスタンスタイプ"** に **[t3.small.elasticsearch]** を選択します。その他の設定は変更せず、画面右下の **[次へ]** をクリックします。
+
  4. **"Step 3: アクセスとセキュリティの設定"** において、 **"ネットワーク構成"** を **[パブリックアクセス]** に設定します。
- 
- 5. 次に、アクセスポリシーの項目を設定します。 **"ドメインアクセスポリシー"** において **[カスタムアクセスポリシー]** 選択し、以下の内容を設定し、画面一番下の **[次へ]** をクリックします。
 
-   - タイプに **[IPv4 アドレス]** を選択、プリンシパルに「 **\*** 」を入力、アクションに **[許可]** を選択
+ 5. **[細かいアクセスコントロールを有効化]** にチェックを入れる。
 
-     **Note：** この設定は本番環境では推奨いたしません。今回はハンズオンであり機密データも取り扱わない為、セキュリティを厳しく設定しておりません。 
- 
- 6. **"Step 4: 確認"** において、これまでの設定内容を確認し、特に問題がなければ画面右下の  **[確認]** をクリックしドメインを作成します。 
+ 6. **[マスターユーザーの作成]** にチェックを入れ、 **"マスターユーザー名"** と **"マスターパスワード"** を以下の通り設定する。
+
+    - マスターユーザー名：**aesadmin**（任意）
+    - マスターユーザーのパスワード：**MyPassword1**（任意）
+
+ 7. 次に、アクセスポリシーの項目を設定します。 **"ドメインアクセスポリシー"** において **[カスタムアクセスポリシー]** 選択し、以下の内容を設定し、画面一番下の **[次へ]** をクリックします。
+
+    - タイプに **[IPv4 アドレス]** を選択、プリンシパルに「 **[ご自身のIPアドレス](http://checkip.amazonaws.com/)** 」を入力、アクションに **[許可]** を選択
+
+    - **[要素を追加]** をクリックし、タイプに **[IPv4 アドレス]** を選択、プリンシパルに「 **Lab1で作成したインスタンスのパブリックIP** 」を入力、アクションに **[許可]** を選択
+
+    - **[要素を追加]** をクリックし、タイプに **[IAM ARN]** を選択、プリンシパルに「 **ご自身のAWSアカウントID** 」を入力、アクションに **[許可]** を選択
+
+ 8. **"Step 4: 確認"** において、これまでの設定内容を確認し、特に問題がなければ画面右下の  **[確認]** をクリックしドメインを作成します。
 
      **Note：** Elasticsearch Service の作成が始まります。構築完了には 15 分ほどかかりますが完了を待たずに次の手順を進めてください。
- 
+
 
 ## Section2：EC2, Fluentd, Elasticsearch Service の設定
 ### Step1：IAM ロールの設定
@@ -63,23 +74,23 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  $ sudo su -
  # td-agent-gem install -v 2.6.0 fluent-plugin-elasticsearch
  ```
- 
+
  4. プラグインのインストールを確認します。
 
     **Asset** 資料：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
- 
+
  ```
  # td-agent-gem list | grep plugin-elasticsearch
  ```
- 
+
   **[実行結果例]**
-  
+
  ```
  fluent-plugin-elasticsearch (2.6.0, 2.4.0)
  ```
- 
+
  5. 「 **/etc/td-agent/td-agent.conf** 」の設定を変更するために、一旦 「**/etc/td-agent/td-agent.conf** 」の中身を削除します。 vi 等のエディタで開き、「:%d」などで削除を行います。
- 
+
  ```
  # vi /etc/td-agent/td-agent.conf
  ```
@@ -91,37 +102,46 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  7. 貼り付けたあと、内容を一部修正します。 **eshost** の値を手順1でコピーしておいたエンドポイントの値と置き換え、保存します。  
 
     **Note：** **eshost** の値として、 **https://** は含めません。
- 
+
  **[変更前]**
-  
+
  ```
  host eshost
- ``` 
- 
+ ```
+
  **[変更後の例]**
-  
+
  ```
  host search-handson-minilake-ikop2vbusshbf3pgnuqzlxxxxx.ap-northeast-1.es.amazonaws.com
- ``` 
+ ```
 
- 8. td-agent のプロセスを起動します。
- 
+ 8. 上記に続き以下の項目についても、 **[Step1：Elasticsearch Service の起動のセクション6]** で作成した、  **"マスターユーザー名":** ```aesadmin（任意）``` と **"マスターパスワード":** ```MyPassword1（任意）``` に置き換える形で修正する。
+
+ **[該当項目]**
+
+ ```
+ user <マスターユーザー名>
+ password <マスターパスワード>
+ ```
+
+ 9. td-agent のプロセスを起動します。
+
      **Asset** 資料：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
- 
+
  ```
  # /etc/init.d/td-agent start
  ```
- 
- 9. Fluentd のログを確認します。
- 
+
+ 10. Fluentd のログを確認します。
+
      **Asset** 資料：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
- 
+
  ```
  # tail -f /var/log/td-agent/td-agent.log
  ```
- 
+
    　   **Note：** ログの中にエラーが出続けることがないかを確認します。起動に成功した場合、以下の文言が出力されます。
- 
+
  ```
  [info]: #0 Connection opened to Elasticsearch cluster => {.....
  ```
@@ -134,28 +154,30 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  2. **[Amazon Elasticsearch Service ダッシュボード]** が開きます。作成した「 **handson-minilake**（任意）」ドメインの **[ドメインのステータス]** が **[アクティブ]** で、 **[検索可能なドキュメント]** の件数が1件以上になっていることを確認し、「 **handson-minilake**（任意）」ドメインをクリックします。  
 
  3. **[Kibana]** の右のURLをクリックします。  
- 
+
+ 5. **[Open Distro for Elasticsearch]** 画面が表示されるため、 **[Step1：Elasticsearch Service の起動のセクション6]** で作成した、  **"マスターユーザー名"** と **"マスターパスワード"** を入力する。
+
  4. **[Welcome to Elastic Kibana]** 画面が表示されるため、 **[Explore on my own]** を選択し、 **Kibana** の画面を開きます。
 
  #### Kibana での操作
 
- 5. **Kibana** の画面の左ペインから![kibana_management](images/kibana_management.png)アイコンをクリックし、 **[Index Patterns]** をクリックします。
+ 5. **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Dashboad]** をクリックします。
 
- 6. **[Create index pattern]** をクリックし、 **[Create index pattern]** 画面において、 **[Index pattern]** に「 **testappec2log-*** 」を入力し、右側の **[Next step]** をクリックします。
+ 6. **[Create index pattern]** をクリックし、 **[Create index pattern]** 画面において、 **[Index pattern]** に「 ___testappec2log-*___ 」を入力し、右側の **[Next step]** をクリックします。
 
  7. **[Time Filter field name]** において、 **[@timestamp]** を選択し、画面右下の **[Create index pattern]** をクリックします。
 
- 8. **Kibana** の画面の左ペインから![kibana_management](images/kibana_management.png)アイコンをクリックし、 **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
+ 8. **Kibana** の画面の左ペインにある **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
 
- 9. **[Saved Objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** をクリックします。続いての画面において、 **[New index patten]** に対して、「 **testappec2log-\*** 」を選択し、 **[Confirm all changes]** をクリックし、インポートを完了します。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 9. **[Saved Objects]** 画面において、 **[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** をクリックします。続いての画面において、 **[New index patten]** に対して、「 **testappec2log-\*** 」を選択し、 **[Confirm all changes]** をクリックし、インポートを完了します。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
      **Asset** 資料：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
 
- 10. 続いて、再度 **[Saved Objects]** 画面において、**[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-dashboard.json** 」を選択し、 **[Import]** をクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 10. 続いて、再度 **[Saved Objects]** 画面において、 **[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-dashboard.json** 」を選択し、 **[Import]** をクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
      **Asset** 資料：[2-dashboard.json](asset/ap-northeast-1/2-dashboard.json)
 
- 11. **Kibana** の画面の左ペインから![kibana_dashboard](images/kibana_dashboard.png)アイコンをクリックし、インポートした「 **test1-dashboard** 」をクリックし、以下のように値が表示されていれば完了です。  
+ 11. **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、ペインからインポートした「 **test1-dashboard** 」をクリックし、以下のように値が表示されていれば完了です。  
 
  <img src="images/kibana_capture01.png">  
 
@@ -180,6 +202,6 @@ Lab2 は以上です。選択されているパターンに合わせて次の手
 
 （1） ニアリアルタイムデータ分析環境（スピードレイヤ）の構築：[Lab1](../lab1/README.md) → [Lab2](../lab2/README.md) → [Lab3](../lab3/README.md)  
 （2） 長期間のデータをバッチ分析する環境（バッチレイヤ）の構築と、パフォーマンスとコストの最適化：[Lab1](../lab1/README.md) → [Lab4](../lab4/README.md) or [Lab5](../lab5/README.md) → [Lab6](../lab6/README.md)  
-（3） すべて実施：[Lab1](../lab1/README.md) → [Lab2](../lab2/README.md) → [Lab3](../lab3/README.md) → [Lab4](../lab4/README.md) → [Lab5](../lab5/README.md) → [Lab6](../lab6/README.md) 
+（3） すべて実施：[Lab1](../lab1/README.md) → [Lab2](../lab2/README.md) → [Lab3](../lab3/README.md) → [Lab4](../lab4/README.md) → [Lab5](../lab5/README.md) → [Lab6](../lab6/README.md)
 
 環境を削除される際は、[こちら](../clean-up/README.md)の手順をご覧ください。
