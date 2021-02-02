@@ -155,41 +155,41 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
 
  3. **[Kibana]** の右のURLをクリックします。  
 
- 5. **[Open Distro for Elasticsearch]** 画面が表示されるため、 **[Step1：Elasticsearch Service の起動のセクション6]** で作成した、  **"マスターユーザー名"** と **"マスターパスワード"** を入力する。
+ 4. **[Open Distro for Elasticsearch]** 画面が表示されるため、 **[Step1：Elasticsearch Service の起動のセクション6]** で作成した、  **"マスターユーザー名"** と **"マスターパスワード"** を入力する。
 
- 4. **[Welcome to Elastic Kibana]** 画面が表示されるため、 **[Explore on my own]** を選択し、 **Kibana** の画面を開きます。
+ 5. **[Welcome to Elastic Kibana]** 画面が表示されるため、 **[Explore on my own]** を選択し、 **Kibana** の画面を開きます。
 
  #### Kibana での操作
 
- 5. **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Dashboad]** をクリックします。
+ 6. **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Dashboad]** をクリックします。
 
- 6. **[Create index pattern]** をクリックし、 **[Create index pattern]** 画面において、 **[Index pattern]** に「 ___testappec2log-*___ 」を入力し、右側の **[Next step]** をクリックします。
+ 7. **[Create index pattern]** をクリックし、 **[Create index pattern]** 画面において、 **[Index pattern]** に「 ___testappec2log-*___ 」を入力し、右側の **[Next step]** をクリックします。
 
- 7. **[Time Filter field name]** において、 **[@timestamp]** を選択し、画面右下の **[Create index pattern]** をクリックします。
+ 8. **[Time Filter field name]** において、 **[@timestamp]** を選択し、画面右下の **[Create index pattern]** をクリックします。
 
- 8. **Kibana** の画面の左ペインにある **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
+ 9. **Kibana** の画面の左ペインにある **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
 
- 9. **[Saved Objects]** 画面において、 **[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** をクリックします。続いての画面において、 **[New index patten]** に対して、「 **testappec2log-\*** 」を選択し、 **[Confirm all changes]** をクリックし、インポートを完了します。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 10. **[Saved Objects]** 画面において、 **[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** をクリックします。続いての画面において、 **[New index patten]** に対して、「 **testappec2log-\*** 」を選択し、 **[Confirm all changes]** をクリックし、インポートを完了します。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
      **Asset** 資料：[2-visualization.json](asset/ap-northeast-1/2-visualization.json)
 
- 10. 続いて、再度 **[Saved Objects]** 画面において、 **[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-dashboard.json** 」を選択し、 **[Import]** をクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
+ 11. 続いて、再度 **[Saved Objects]** 画面において、 **[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-dashboard.json** 」を選択し、 **[Import]** をクリックし、インポートします。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
      **Asset** 資料：[2-dashboard.json](asset/ap-northeast-1/2-dashboard.json)
 
- 11. **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、ペインからインポートした「 **test1-dashboard** 」をクリックし、以下のように値が表示されていれば完了です。  
+ 12. **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、ペインからインポートした「 **test1-dashboard** 」をクリックし、以下のように値が表示されていれば完了です。  
 
  <img src="images/kibana_capture01.png">  
 
- 12. **Kibana** の画面にて、右上でタイムレンジが選べるため、期間を **[Last 1 hour]** にしてみます。グラフ表示が1時間の間の取得値に変化していることが確認できます。  
+ 13. **Kibana** の画面にて、右上でタイムレンジが選べるため、期間を **[Last 1 hour]** にしてみます。グラフ表示が1時間の間の取得値に変化していることが確認できます。  
 
- 13. **Kibana** の画面の左ペインから![kibana_discover](images/kibana_discover.png)アイコンをクリックします。  
+ 14. **Kibana** の画面の左ペインから![kibana_discover](images/kibana_discover.png)アイコンをクリックします。  
 
- 14. **"Available fields"** において、 **[alarmlevel]** の右の **[add]** をクリックします。同じように **[user]** の右側の **[add]** をクリックすると、対象のカラム（Time, alarmlevel, user）だけが表示されます。  
+ 15. **"Available fields"** において、 **[alarmlevel]** の右の **[add]** をクリックします。同じように **[user]** の右側の **[add]** をクリックすると、対象のカラム（Time, alarmlevel, user）だけが表示されます。  
 
      **Note：** **[add]** はカーソルがある時にだけ表示されます。
 
- 15. 検索窓に「 **user:"imai"** 」と入力し、Enterを押すと、「 **imai** 」というユーザーでフィルタリングされます。  
+ 16. 検索窓に「 **user:"imai"** 」と入力し、Enterを押すと、「 **imai** 」というユーザーでフィルタリングされます。  
 
 
 ## Section3：まとめ
