@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT-0
 
 # Lab1：はじめの準備
 残りの5つの Lab で必要となる共通の環境を構築します。  
-AWS CloudFormation（以降、CloudFormation）にて、 Amazon VPC（以降、VPC）、 Amazon EC2（以降、EC2）を構築し、 AWS IAM（以降、IAM）で権限設定を行います。その後、手動でログ収集ソフトウェアの Fluentd をインストールします。
+AWS CloudFormation（以降、CloudFormation）にて、 Amazon VPC（以降、VPC）、 Amazon EC2（以降、EC2）の構築、そして AWS IAM（以降、IAM）の権限設定を行います。CloudFormation を実行することで、FluentdがインストールされたEC2が起動します。
 
 ## Section1：事前準備
 ### Step1：AWS マネジメントコンソールにログイン
@@ -41,12 +41,14 @@ CloudFormation を使い、 VPC を作成し、作成された VPC にログを�
 
     **Asset** 資料：[1-minilake_ec2.yaml](asset/ap-northeast-1/1-minilake_ec2.yaml)
   
- 5. **[スタックの名前]** に 「 **handson-minilake**（任意）」、 **[パラメータ]** の **[InstanceType]** に「 **t2.micro** 」を選択し、 **[KeyPair]** に **Section1** で作成したキーペア「**handson.pem**（任意）」、もしくは既に作成済みの場合はそのキーペアを指定して、 **[次へ]** をクリックします。  
+ 5. **[スタックの名前]** に 「 **handson-minilake**（任意）」、 **[パラメータ]** の **[KeyPair]** に **Section1** で作成したキーペア「**handson.pem**（任意）」、もしくは既に作成済みの場合はそのキーペアを指定し、 **[RoleName]** に「 **handson-minilake-role**（任意）」と入力し、 **[次へ]** をクリックします。  
  
  6. オプションの **タグ** で、 **キー** に 「 **Name** 」 、 **値** に 「 **handson-minilake**（任意）」 と入力し、 **[次へ]** をクリックします。
  
- 7. 最後の確認ページの内容を確認し、 **[スタックの作成]** をクリックします。数分ほど待つと EC2 一台ができあがり、 **/root/es-demo/testapp.log** にログ出力が始まります。  
+ 7. 最後の確認ページの内容を確認し、 確認ページ下部の「 **AWS CloudFormation によって IAM リソースがカスタム名で作成される場合があることを承認します。** 」にチェックを入れ **[スタックの作成]** をクリックします。数分ほど待つと EC2 一台ができあがり、 **/root/es-demo/testapp.log** にログ出力が始まります。
  
+     **Note：** SSMでログインされる場合は、インスタンスが起動してからSSM接続ができるまでタイムラグが発生する可能性があるため、10分程度休憩時間を取得することを推奨します。
+
  8. EC2 へ **SSH ログインして root にスイッチし、** ログが2分おきに出力していることを確認します。  
  
     **Note：** EC2 のログイン方法については、[こちら](additional_info_lab1.md#EC2へのログイン方法)を参照ください。 EC2 の 接続先の IP アドレス情報につきましては、 **[CloudFormation]** の画面から、該当の CloudFormation のスタックを選択し、 **[出力]** のタブをクリックすると、 **[AllowIPAddress]** の情報から確認できます。
@@ -65,86 +67,14 @@ CloudFormation を使い、 VPC を作成し、作成された VPC にログを�
 [2019-09-16 15:18:01+0900] INFO prd-ap001 uehara 1001 [This is Information.]
 [2019-09-16 15:18:01+0900] ERROR prd-db02 uchida 1001 [This is ERROR.]
  ```
- 
-### Step2：IAM ロールの作成と EC2 へのアタッチ
-
-EC2 に対して、後続の Lab で利用するための IAM ロールを作成します。  
-
-**Note：** AWS Systems Manager Session Manager（以降、Session Manager）で EC2 に対してアクセスを行なっている場合、 Session Manager 側の手順で、 IAM ロールを作成している為、本手順の6番まではスキップしていただいて問題ありません。  
-
- 1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択します。
- 
- 2. **[ロールの作成]** をクリックします。
- 
- 3. **[AWS サービス]** を選択し、 **[EC2]** を選択、 **[次のステップ：アクセス権限]** をクリックします。
- 
- 4. **[Attach アクセス権限ポリシー]** の画面で、何も変更せずにそのまま **[次のステップ：タグ]** をクリックします。  
-
-    **Note：** この段階ではポリシーなしでロールを作成します。 Session Manager 利用の方は **AmazonSSMManagedInstanceCore** のみがアタッチされています。
-
- 5. **[タグの追加（オプション）]** 画面で、そのまま **[次のステップ：確認]** をクリックします。
- 
- 6. **ロール名** に「 **handson-minilake**（任意）」と入力し、 **[ロールの作成]** をクリックします。
- 
- 7. AWS マネージメントコンソールのサービス一覧から **EC2** を選択し、 **[EC2 ダッシュボード]** 画面の左ペインから **[インスタンス]** を選択し、今回作成したインスタンス「 **handson-minilake**（任意）」にチェックを入れ、 **[アクション] → [セキュリティ] → [IAM ロールを変更]** をクリックします。
- 
- 8. **[IAM ロールを変更]** の画面において、 **[IAM ロール]** に「 **handson-minilake**（任意）」を選択し、 **[保存]** をクリックします。
-  
-
-### Step3：Fluentd のインストール
-
-EC2 にログインし、ログ収集ソフトウェアの Fluentd のインストールを行い、設定を行います。
-
- 1. EC2 にログインし、 redhat-lsb-core と gcc をインストールします。
-   
-    **Note：** 準備済みの AMI にはすでにインストールされているため、スキップ可能な手順です。
-    **Asset** 資料：[1-cmd.txt](asset/ap-northeast-1/1-cmd.txt)
-
- ```
- $ sudo su -
- # yum -y install redhat-lsb-core gcc
- ```
-
- 2. td-agent をインストールします。
-
-    **Asset** 資料：[1-cmd.txt](asset/ap-northeast-1/1-cmd.txt)
-    
- ```
- # rpm -ivh http://packages.treasuredata.com.s3.amazonaws.com/3/redhat/6/x86_64/td-agent-3.1.1-0.el6.x86_64.rpm
- ```
-
- 3. **/etc/init.d/td-agent** の18行目の **TD\_AGENT\_USER** の指定を **td-agent** から **root** に修正します。  
- 
-    **Note：** コマンド例は、 vi エディタを使用した例ですが、他に使い慣れたエディタがある場合は、そちらをご利用ください。
-    **Asset** 資料：[1-cmd.txt](asset/ap-northeast-1/1-cmd.txt)
-
- ```
- # vi /etc/init.d/td-agent
- ```
-
- **[変更前]**
- 
- ```
- TD_AGENT_USER=td-agent
- ```
- 
- **[変更後]**
- 
- ```
- TD_AGENT_USER=root 
- ```
-
- 4. Fluentd の自動起動設定をします。（実際の起動は後ほど行います。）
-
-    **Asset** 資料：[1-cmd.txt](asset/ap-northeast-1/1-cmd.txt)
-
- ```
- # chkconfig td-agent on
- ```
 
 ## Section3：まとめ
 
-CloudFormation を使い、 VPC を作成し、2分おきに10件前後のログを、10分おきに300件のエラーログを出力し続ける EC2 を作成した VPC 内に構築し、構築した EC2 上に、ログ収集ソフトウェアの Fluentd のインストール、設定を行いました。
+CloudFormation を使い、 以下の設定を行いました。
+
+   1. VPC を作成し、2分おきに10件前後のログを出力し、10分おきに300件のエラーログを出力し続ける EC2 を作成しました。
+   2. VPC 内に作成した構築した EC2 に AWS リソースにアクセスするための権限を付与しました。詳細については[こちら](./additional_info_lab1_IAM.md) をご覧下さい。
+   3. 構築したEC2に、ログ収集ソフトウェアの Fluentd をインストールしました。詳細については[こちら](./additional_info_lab1_Fluentd.md) をご覧下さい。
 
 <img src="../images/architecture_lab1.png">
 

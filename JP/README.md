@@ -60,7 +60,7 @@ Lab6：サーバーレスでデータのETL処理
 
 ### Lab1：はじめの準備
 残りの5つの Lab で必要となる共通の環境を構築します。  
-AWS CloudFormation（以降、CloudFormation）にて、 Amazon VPC（以降、VPC）、 Amazon EC2（以降、EC2）を構築し、 AWS IAM（以降、IAM）で権限設定を行います。その後、手動でログ収集ソフトウェアのFluentdをインストールします。
+AWS CloudFormation（以降、CloudFormation）にて、 Amazon VPC（以降、VPC）、 Amazon EC2（以降、EC2）の構築、そして AWS IAM（以降、IAM）の権限設定を行います。CloudFormation を実行することで、FluentdがインストールされたEC2が起動します。
 
  - Lab1 の手順は[こちら](lab1/README.md)
 

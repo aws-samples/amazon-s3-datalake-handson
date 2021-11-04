@@ -29,29 +29,21 @@ SPDX-License-Identifier: MIT-0
 
  1. AWS マネジメントコンソールのサービス一覧から **Kinesis** を選択し、 Kinesis Data Firehose の **[配信ストリームを作成]** をクリックします。
  
- 2. **[Delivery stream name]** に「 **minilake1**（任意）」と入力し、 **[Next]** をクリックします。
+ 2. **[Source]** に **[Direct put]** に **[Destination]** に「 Amazon S3」、そして **[Delivery stream name]** に「 **minilake1**（任意）」と入力します。
  
     **Note：** 「 **minilake1**（任意）」を異なる名前に指定した場合、後続の手順において、「 **/etc/td-agent/td-agent.conf** 」のファイルにある「 **delivery_stream_name minilake1** 」の指定を合わせて変更いただく必要があります。
  
- 3. **[Data transformation]** を **[Disabled]** 、 **[Convert record format]** を **[Disabled]** のまま、 **[Next]** をクリックします。
+ 3. **[Data transformation]** が **[Disabled]** 、 **[Record format conversion]** が **[Disabled]** のままになっているか確認します。
  
- 4. **[Choose a destination]** で、「 **Amazon S3** 」を選択します。
- 
- 5. **[S3 bucket]** は **Step1** で作成したバケットを選択します。 **[S3 Prefix]** に「 **minilake-in1/** 」を入力します。
+ 4. **[Destination settings]** で、**[S3 bucket]** に **Step1** で作成したバケットを選択します。 **[S3 bucket prefix]** に「 **minilake-in1/** 」を入力します。
  
     **Note：** **[S3 Prefix]** の最後の「 **/** 」を忘れないように注意してください。 S3 への出力時のディレクトリとなり、デフォルトの場合、指定プレフィックス配下に「 **YYYY/MM/DD/HH** 」が作られます。
  
- 6. 画面右下の **[Next]** をクリックします。
- 
- 7. **[Buffer interval]** を「 **60** seconds」に設定します。バッファリングは、 Buffer size か Buffer interval のいずれかの条件がみたされるとS3に配信されます。  
+ 5. 画面右下の **[Create delivery stream]** をクリックします。
 
     **Note：** 今回は設定しませんが、データの圧縮、暗号化も可能です。大規模データやセキュリティ要件に対して、有効に働きます。 
  
- 8. **[Permissions]** で **[Create or update IAM role (自動で割り当てられた IAM ロール名)]** を選択し、  **[Next]** をクリックします。
-
- 9. 続いて、 Review 画面になるので設定値に問題なければ、 **[Create delivery stream]** をクリックします。
- 
- 10. **[Status]** が「 **Creating** 」となります。数分で「 **Active** 」になるので次の手順に進めてください。
+ 6. **[Status]** が「 **Creating** 」となります。数分で「 **Active** 」になるので次の手順に進めてください。
 
 
 ## Section2：EC2 の設定変更
@@ -59,7 +51,7 @@ SPDX-License-Identifier: MIT-0
 
 作成済の「 **handson-minilake**（任意）」の IAM ロールに以下のようにポリシーを追加します。 
 
- 1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake**（任意）」のロール名をクリックします。
+ 1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake-role**（任意）」のロール名をクリックします。
  
  2. **[アクセス権限]** タブを選択し、 **[ポリシーのアタッチ]** をクリックします。
  
@@ -71,16 +63,7 @@ SPDX-License-Identifier: MIT-0
 ### Step2：Fluentd の設定
 Fluentd から Kinesis Data Firehose にログデータを送信するための設定を行います。  
 
-   1. Kinesis Data Firehose のプラグインをインストールします。
- 
-      **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
- 
- ```
- $ sudo su -
- # td-agent-gem install fluent-plugin-kinesis -v 2.1.0
- ```
- 
-   2. プラグインのインストールを確認します。
+   1. Kinesis Data Firehose のプラグインのインストール状況を確認します。
 
       **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
 
@@ -96,36 +79,19 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
    3. 本手順については、どの Lab から開始したかによって、適用する設定ファイルが異なる為、ご自身が実施された手順に応じて、 Fluentd の設定を変更してください。
 #### (a) Lab1, 2, 3 から続けて、 Lab4 を実施している場合（**Asset** 資料：[4-td-agent1.conf](asset/ap-northeast-1/4-td-agent1.conf)）
  
- 3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、 **Asset** 資料の「 **4-td-agent1.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。
- 
+ 3. 「 **/etc/td-agent/td-agent.conf** 」の中身を **Lab4** 向けに変更するために、あらかじめ用意しておいた **asset** に 以下の cp コマンドを用いて置き換えます。その際、ファイルを上書きするかの確認が入る為、 **yes** と入力します。 
+
  ```
- # vi /etc/td-agent/td-agent.conf
+ # cp -p /root/asset/4-td-agent1.conf /etc/td-agent/td-agent.conf
  ```   
 
  #### (b) Lab1 を実施し、その後　Lab4 を実施している場合（**Asset** 資料：[4-td-agent2.conf](asset/ap-northeast-1/4-td-agent2.conf) ）
 
- 3-1. 「 **/etc/td-agent/td-agent.conf** 」の中身を削除（vi のコマンドの「:%d」などで削除）し、**Asset** 資料の「 **4-td-agent2.conf** 」ファイルをエディタで開き中身をコピーして貼り付けます。 
- 
+ 3. 「 **/etc/td-agent/td-agent.conf** 」の中身を **Lab4** 向けに変更するために、あらかじめ用意しておいた **asset** に 以下の cp コマンドを用いて置き換えます。その際、ファイルを上書きするかの確認が入る為、 **yes** と入力します。 
+
  ```
- # vi /etc/td-agent/td-agent.conf
- ```     
- 
- 3-2. 「 **/etc/init.d/td-agent** 」ファイルを開き、 14 行目辺りに以下の行を追加します。
- 
- ```
- # vi /etc/init.d/td-agent
- ```  
- 
- **[追記する行の例]**
- 
- **Asset** 資料：[4-cmd.txt](asset/ap-northeast-1/4-cmd.txt)
- 
- ```
- export AWS_REGION="ap-northeast-1"
- ```
- 
-  **Note：** リージョンを変更した場合は、適宜変更します。
-  
+ # cp -p /root/asset/4-td-agent2.conf /etc/td-agent/td-agent.conf
+ ```    
 
  #### 以下の手順からは、上記両方の場合において実施します。
  
@@ -253,9 +219,9 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
 
 ### Step4：QuickSight の設定
 
- 1. AWS マネジメントコンソールのサービス一覧から **QuickSight** を選択します。 QuickSight を初めて使う方はサインアップがまだされていない為、サインアップの画面が出るため、 **[Sign up for QuickSight]** をクリックします。  
+ 1. AWS マネジメントコンソールのサービス一覧から **QuickSight** を選択します。 QuickSight を初めて使う方はサインアップがまだされていない為、サインアップの画面が出るため、 **[Get Started]** をクリックします。  
 
-    **Note：** すでに東京リージョン以外で登録されている場合、 **[QuickSight の管理]** → **[アカウント設定]** で、 **[サブスクリプション解除]** 実施後、数分待つと、再度 Sign up することが可能になります。 
+    **Note：** すでに東京リージョン以外で登録されている場合、 **[QuickSight の管理]** → **[お客様のサブスクリプション]** で、所持しているサブスクリプションを選択し **[サブスクリプション削除]** をクリックします。実施後、数分待つと、再度 Sign up することが可能になります。 
 
  2. 画面右上の **[English]** アイコンをクリックし、 **[日本語]** に変更します。  
 
@@ -269,7 +235,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
 
  6. **[セキュリティとアクセス権限]** をクリックします。  
 
- 7. **[接続された製品とサービス]** の **[追加または削除する]** をクリックします。  
+ 7. **[QuickSight の AWS のサービスへのアクセス]** の **[追加または削除する]** をクリックします。  
 
  8. **[Amazon Athena]** にチェックを入れます（すでにチェックが入っている場合はそのままとします）。    
 
