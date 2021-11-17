@@ -93,7 +93,7 @@ EC2 上で出力されているログを Fluentd 経由で、Kinesi Data Firehos
   
 
 ### Step2：Kinesis Data Firehose の作成
-EC2 上で出力されているログを Fluentd 経由で、Kinesi Data Firehose を使って、S3 に取り込みますが、本手順では、Kinesi Data Firehose の設定を行います。
+EC2 上で出力されているログを Fluentd 経由で、Kinesi Data Firehose を使って、S3 に取り込みますが、本手順では、Kinesis Data Firehose の設定を行います。
 
  1. AWS マネジメントコンソールのサービス一覧から **Kinesis** を選択し、 Kinesis Data Firehose の **[配信ストリームを作成]** をクリックします。
  
