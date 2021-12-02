@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT-0
 
 # Lab3：アプリケーションログのリアルタイム可視化とアラーム
 「Lab2：アプリケーションログをリアルタイムで可視化」で実施した可視化に加え、アラーム検知を実施します。
-Fluentd から Elasticsearch Service に送信する前段に Amazon CloudWatch（以降、CloudWatch）、 AWS Lambda（以降、Lambda）を配置して、アラーム通知をする処理を追加します。
+Fluentd から OpenSearch Service に送信する前段に Amazon CloudWatch（以降、CloudWatch）、 AWS Lambda（以降、Lambda）を配置して、アラーム通知をする処理を追加します。
 
 ## Section1：EC2 の設定変更
 ### Step1：IAM ロールの設定
@@ -54,7 +54,7 @@ Fluentd から Elasticsearch Service に送信する前段に Amazon CloudWatch�
 
  7. あとで使用するため、 **[ロールARN]** の値をメモしておきます。
 
-### Step2：Elasticsearch へのロールの認証設定
+### Step2：OpenSearch へのロールの認証設定
 
 1. **Kibana** の画面を開き、 **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Security]** をクリックします。  
 
@@ -105,7 +105,7 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
  # tail -f /var/log/td-agent/td-agent.log
  ```
 
-## Section2：CloudWatch, Elasticsearch Service の設定変更
+## Section2：CloudWatch, OpenSearch Service の設定変更
 ### Step1：CloudWatch Logs の設定
 
  1. AWS マネジメントコンソールのサービス一覧から **CloudWatch** を選択し、 **[CloudWatch]** の画面の左側ペインから **[ロググループ]** をクリックします。  
@@ -116,7 +116,7 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  3. ログストリーム「 **testapplog_stream**（任意）」をクリックします。直近のログが出力されていることを確認します。画面上部の **[ロググループ]** の文字列をクリックし、ロググループに戻ります。  
 
- 4. ロググループ「 **minilake_group**（任意）」にチェックを入れ、 **[アクション]** をクリックし、 **[サブスクリプションフィルター]** の中にある **[Create Elasticsearch subscription filter]** をクリックします。  
+ 4. ロググループ「 **minilake_group**（任意）」にチェックを入れ、 **[アクション]** をクリックし、 **[サブスクリプションフィルター]** の中にある **[Create OpenSearch subscription filter]** をクリックします。  
 
     **Note：** 裏側では自動で Lambda Function が作られます。
 
@@ -127,7 +127,7 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
  6. **"ログ形式とフィルターの設定"** 画面において、　**[ログの形式]** に **[その他]** を選択し、　**[サブスクリプションフィルター名]** に、「**handson-minilake01**（任意）」と入力し、 **[ストリーミングの開始]** をクリックします。
 
 
-### Step2：Elasticsearch Service の設定
+### Step2：OpenSearch Service の設定
 
  1. **Kibana** の画面を開き、 **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Management]** 内にある **[Stack Management]** をクリックします。  
 

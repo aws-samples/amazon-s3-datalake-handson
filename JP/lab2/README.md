@@ -6,30 +6,28 @@ SPDX-License-Identifier: MIT-0
 
 
 # Lab2：アプリケーションログをリアルタイムで可視化
-「Lab1：はじめの準備」で構築したEC2のログデータをリアルタイムで可視化するために、 EC2 で出力されるログを OSS の Fluentd を使ってストリームで Amazon Elasticsearch Service（以降、Elasticsearch Service）に送信し、 Elasticsearch Service に付属している Kibana を使って、可視化を行います。
-2分おきに10件前後、10分おきに300件出力され続けるログを、 Fluentd を使って Elasticsearch Service に転送し、 Kibana で可視化します。
+「Lab1：はじめの準備」で構築したEC2のログデータをリアルタイムで可視化するために、 EC2 で出力されるログを OSS の Fluentd を使ってストリームで Amazon OpenSearch Service（以降、OpenSearch Service）に送信し、 OpenSearch Service に付属している Kibana を使って、可視化を行います。
+2分おきに10件前後、10分おきに300件出力され続けるログを、 Fluentd を使って OpenSearch Service に転送し、 Kibana で可視化します。
 
-## Section1：Elasticsearch Service の設定
-### Step1：Elasticsearch Service の起動
+## Section1：OpenSearch Service の設定
+### Step1：OpenSearch Service の起動
 
- 1. AWS マネージメントコンソールのサービス一覧から **Elasticsearch Service** を選択し、 **[新しいドメインの作成]** をクリックします。
+ 1. AWS マネージメントコンソールのサービス一覧から **OpenSearch Service** を選択し、 **[ドメインの作成]** をクリックします。
 
- 2. **"Step 1: デプロイタイプの選択"** において、 **"デプロイタイプ"** で **[開発およびテスト]** を選択します。 バージョンは変更せず、そのまま **[次へ]** をクリックします。  
+ 2. **"デプロイタイプ"** の項目において、 **"デプロイタイプ"** で **[開発およびテスト]** を選択します。 バージョンは変更せず、そのまま **[次へ]** をクリックします。  
 
-     **Note：** 今回の手順はバージョン7.10で確認しました。
+     **Note：** 今回の手順はバージョン1.0で確認しました。
 
- 3. **"Step 2: ドメインの設定"** において、 **"Elasticsearch ドメイン名"** に「 **handson-minilake**（任意）」と入力し、 **"データノード"** 項目の **"インスタンスタイプ"** に **[t3.small.elasticsearch]** を選択します。その他の設定は変更せず、画面右下の **[次へ]** をクリックします。
+ 3. **"データノード"** の項目において、 **"インスタンスタイプ"** に **[t3.small.search]** を選択します。その他の設定は変更せず、画面右下の **[次へ]** をクリックします。
 
- 4. **"Step 3: アクセスとセキュリティの設定"** において、 **"ネットワーク構成"** を **[パブリックアクセス]** に設定します。
+ 4. **"ネットワーク"** の項目において、 **"ネットワーク"** にある **[パブリックアクセス]** にチェックを入れます。
 
- 5. **[細かいアクセスコントロール]** 項目にて **[細かいアクセスコントロールを有効化]** にチェックを入れます。
-
- 6. **[マスターユーザーの作成]** にチェックを入れ、 **"マスターユーザー名"** と **"マスターパスワード"** を以下の通り設定する。
+ 5. **"きめ細かなアクセスコントロール"** 項目にて **[きめ細かなアクセスコントロールを有効化]** にチェックが入っていることを確認し、 **[マスターユーザーの作成]** にチェックを入れ、 **"マスターユーザー名"** と **"マスターパスワード"** を以下の通り設定する。
 
     - マスターユーザー名：**aesadmin**（任意）
     - マスターユーザーのパスワード：**MyPassword&1**（任意）
 
- 7. 次に、アクセスポリシーの項目を設定します。 **"ドメインアクセスポリシー"** において **[カスタムアクセスポリシー]** 選択し、以下の内容を設定し、画面一番下の **[次へ]** をクリックします。
+ 6. 次に、アクセスポリシーの項目を設定します。 **"ドメインアクセスポリシー"** において **[ドメインレベルのアクセスポリシーの設定]** を選択します。
 
     - タイプに **[IPv4 アドレス]** を選択、プリンシパルに「 **[ご自身のIPアドレス](http://checkip.amazonaws.com/)** 」を入力、アクションに **[許可]** を選択
 
@@ -37,14 +35,12 @@ SPDX-License-Identifier: MIT-0
 
     - **[要素を追加]** をクリックし、タイプに **[IAM ARN]** を選択、プリンシパルに「 **ご自身のAWSアカウントID** 」を入力、アクションに **[許可]** を選択    
 
- 8. **"Step 4: タグの追加"** においては、特に何も入力せず　**[次へ]** を選択します。
+ 7. 上記の設定以外は全てデフォルトのままで、画面の一番下にある **[作成]** をクリックしドメインを作成します。
 
- 9. **"Step 5: 確認"** において、これまでの設定内容を確認し、特に問題がなければ画面右下の  **[確認]** をクリックしドメインを作成します。
-
-     **Note：** Elasticsearch Service の作成が始まります。構築完了には 15 分ほどかかりますが完了を待たずに次の手順を進めてください。
+     **Note：** OpenSearch Service の作成が始まります。構築完了には 15 分ほどかかりますが完了を待たずに次の手順を進めてください。
 
 
-## Section2：EC2, Fluentd, Elasticsearch Service の設定
+## Section2：EC2, Fluentd, OpenSearch Service の設定
 ### Step1：IAM ロールの設定
 
 作成済の「 **handson-minilake**（任意）」の IAM ロールに以下のようにポリシーを追加します。
@@ -60,11 +56,11 @@ SPDX-License-Identifier: MIT-0
 
 ### Step2：Fluentd の設定
 
-Fluentd から Elasticsearch Service にログデータを送信するための設定を行います。
+Fluentd から OpenSearch Service にログデータを送信するための設定を行います。
 
- 1. AWS マネジメントコンソールのサービス一覧から **Elasticserach Service** を選択し、 **[Amazon Elasticsearch Service ダッシュボード]** 画面から作成したドメイン名「 **handson-minilake**（任意）」をクリックし、 **[エンドポイント]** にある **URL の文字列** を **https://を含めない形** でパソコンのメモ帳などにメモしておきます。
+ 1. AWS マネジメントコンソールのサービス一覧から **OpenSearch Service** を選択し、 **[Amazon OpenSearch Service ダッシュボード]** 画面から作成したドメイン名「 **handson-minilake**（任意）」をクリックし、 **[エンドポイント]** にある **URL の文字列** を **https://を含めない形** でパソコンのメモ帳などにメモしておきます。
 
- 2. EC2 にログインし、 Elasticsearch のプラグインのインストール状況を確認します。
+ 2. EC2 にログインし、 OpenSearch のプラグインのインストール状況を確認します。
 
     **Asset** 資料：[2-cmd.txt](asset/ap-northeast-1/2-cmd.txt)
 
@@ -104,7 +100,7 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
  host search-handson-minilake-ikop2vbusshbf3pgnuqzlxxxxx.ap-northeast-1.es.amazonaws.com
  ```
 
- 8. 上記に続き **<マスターユーザー名>** と **<マスターパスワード>** についても、 **[Step1：Elasticsearch Service の起動のセクション6]** で作成した、  **"マスターユーザー名":** ```aesadmin（任意）``` と **"マスターパスワード":** ```MyPassword&1（任意）``` に置き換える形で修正します。
+ 8. 上記に続き **<マスターユーザー名>** と **<マスターパスワード>** についても、 **[Step1：OpenSearch Service の起動のセクション6]** で作成した、  **"マスターユーザー名":** ```aesadmin（任意）``` と **"マスターパスワード":** ```MyPassword&1（任意）``` に置き換える形で修正します。
 
  **[変更前]**
 
@@ -137,19 +133,19 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
    　   **Note：** ログの中にエラーが出続けることがないかを確認します。起動に成功した場合、以下の文言が出力されます。
 
  ```
- [info]: #0 Connection opened to Elasticsearch cluster => {.....
+ [info]: #0 Connection opened to OpenSearch cluster => {.....
  ```
  ログ出力まで少し時間がかかる場合があります。
 
-### Step3：Elasticsearch Service の設定
+### Step3：OpenSearch Service の設定
 
- 1. AWS マネジメントコンソールのサービス一覧から **Elasticsearch Service** を選択します。  
+ 1. AWS マネジメントコンソールのサービス一覧から **OpenSearch Service** を選択します。  
 
- 2. **[Amazon Elasticsearch Service ダッシュボード]** が開きます。作成した「 **handson-minilake**（任意）」ドメインの **[ドメインのステータス]** が **[アクティブ]** で、 **[検索可能なドキュメント]** の件数が1件以上になっていることを確認し、「 **handson-minilake**（任意）」ドメインをクリックします。  
+ 2. **[Amazon OpenSearch Service ダッシュボード]** が開きます。作成した「 **handson-minilake**（任意）」ドメインの **[ドメインのステータス]** が **[アクティブ]** で、 **[検索可能なドキュメント]** の件数が1件以上になっていることを確認し、「 **handson-minilake**（任意）」ドメインをクリックします。  
 
  3. **[Kibana]** の右のURLをクリックします。  
 
- 4. **[Open Distro for Elasticsearch]** 画面が表示されるため、 **[Step1：Elasticsearch Service の起動のセクション6]** で作成した、  **"マスターユーザー名"** と **"マスターパスワード"** を入力する。
+ 4. **[Open Distro for OpenSearch]** 画面が表示されるため、 **[Step1：OpenSearch Service の起動のセクション6]** で作成した、  **"マスターユーザー名"** と **"マスターパスワード"** を入力する。
 
  5. **[Welcome to Elastic Kibana]** 画面が表示されるため、 **[Explore on my own]** を選択します。
  
@@ -190,7 +186,7 @@ Fluentd から Elasticsearch Service にログデータを送信するための�
 
 ## Section3：まとめ
 
-EC2 からのログをストリームで Elasticsearch Service に送り、 Kibana で可視化してエラーログなどを探しやすくなりました。大量の EC2 がある場合、ログを探すのは大変なのでさらに高い効果が見込めます。
+EC2 からのログをストリームで OpenSearch Service に送り、 Kibana で可視化してエラーログなどを探しやすくなりました。大量の EC2 がある場合、ログを探すのは大変なのでさらに高い効果が見込めます。
 
 <img src="../images/architecture_lab2.png">
 

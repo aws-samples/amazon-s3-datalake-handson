@@ -26,10 +26,10 @@ Lab1：はじめの準備（必須）
 主に使用するAWSサービス：Amazon VPC, Amazon EC2, AWS CloudFormation, AWS IAM 
       
 Lab2：アプリケーションログをリアルタイムで可視化  
-主に使用するAWSサービス：Amazon Elasticsearch Service
+主に使用するAWSサービス：Amazon OpenSearch Service
   
 Lab3：アプリケーションログのリアルタイム可視化とアラーム  
-主に使用するAWSサービス：Amazon CloudWatch, AWS Lambda, Amazon Elasticsearch Service
+主に使用するAWSサービス：Amazon CloudWatch, AWS Lambda, Amazon OpenSearch Service
 
 Lab4：アプリケーションログの永続化と長期間データの分析と可視化   
 主に使用するAWSサービス：Amazon Kinesis Data Firehose, Amazon S3, Amazon Athena, Amazon QuickSight
@@ -69,23 +69,23 @@ AWS CloudFormation（以降、CloudFormation）にて、 Amazon VPC（以降、V
 主に使用する AWS サービス：VPC, EC2, CloudFormation, IAM
 
 ### Lab2：アプリケーションログをリアルタイムで可視化
-「Lab1：はじめの準備」で構築した EC2 のログデータをリアルタイムで可視化するために、 EC2 で出力されるログを OSS の Fluentd を使ってストリームで Amazon Elasticsearch Service（以降、Elasticsearch Service）に送信し、 Elasticsearch Service に付属している Kibana を使って、可視化を行います。
+「Lab1：はじめの準備」で構築した EC2 のログデータをリアルタイムで可視化するために、 EC2 で出力されるログを OSS の Fluentd を使ってストリームで Amazon OpenSearch Service（以降、OpenSearch Service）に送信し、 OpenSearch Service に付属している Kibana を使って、可視化を行います。
 
  - Lab2 の手順は[こちら](lab2/README.md)
 
 <img src="images/architecture_lab2.png" >
 
-主に使用する AWS サービス：Elasticsearch Service
+主に使用する AWS サービス：OpenSearch Service
 
 ### Lab3：アプリケーションログのリアルタイム可視化とアラーム
 「Lab2：アプリケーションログをリアルタイムで可視化」で実施した可視化に加え、アラーム検知を実施します。
-Fluentd から Elasticsearch Service に送信する前段に Amazon CloudWatch（以降、CloudWatch）、 AWS Lambda（以降、Lambda）を配置して、アラーム通知をする処理を追加します。
+Fluentd から OpenSearch Service に送信する前段に Amazon CloudWatch（以降、CloudWatch）、 AWS Lambda（以降、Lambda）を配置して、アラーム通知をする処理を追加します。
 
  - Lab3 の手順は[こちら](lab3/README.md)
 
 <img src="images/architecture_lab3.png">
 
-主に使用するサービス：CloudWatch, Lambda, Elasticsearch Service
+主に使用するサービス：CloudWatch, Lambda, OpenSearch Service
 
 ### Lab4：アプリケーションログの永続化と長期間データの分析と可視化
 ストリームデータを Amazon Kinesis Data Firehose（以降、Kinesis Data Firehose）に送信後、 Amazon S3（以降、S3）に保存することで長期保存します。その後、 Amazon Athena（以降、Athena）を用いて、アドホックな分析を行い、 Amazon QuickSight（以降、QuickSight）で可視化します。
