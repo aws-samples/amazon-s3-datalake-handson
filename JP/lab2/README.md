@@ -6,28 +6,30 @@ SPDX-License-Identifier: MIT-0
 
 
 # Lab2：アプリケーションログをリアルタイムで可視化
-「Lab1：はじめの準備」で構築したEC2のログデータをリアルタイムで可視化するために、 EC2 で出力されるログを OSS の Fluentd を使ってストリームで Amazon OpenSearch Service（以降、OpenSearch Service）に送信し、 OpenSearch Service に付属している Kibana を使って、可視化を行います。
-2分おきに10件前後、10分おきに300件出力され続けるログを、 Fluentd を使って OpenSearch Service に転送し、 Kibana で可視化します。
+「Lab1：はじめの準備」で構築したEC2のログデータをリアルタイムで可視化するために、 EC2 で出力されるログを OSS の Fluentd を使ってストリームで Amazon OpenSearch Service（以降、OpenSearch Service）に送信し、 OpenSearch Service に付属している OpenSearch Dashboards を使って、可視化を行います。
+2分おきに10件前後、10分おきに300件出力され続けるログを、 Fluentd を使って OpenSearch Service に転送し、 OpenSearch Dashboards で可視化します。
 
 ## Section1：OpenSearch Service の設定
 ### Step1：OpenSearch Service の起動
 
  1. AWS マネージメントコンソールのサービス一覧から **OpenSearch Service** を選択し、 **[ドメインの作成]** をクリックします。
 
- 2. **"デプロイタイプ"** の項目において、 **"デプロイタイプ"** で **[開発およびテスト]** を選択します。 バージョンは変更せず、そのまま **[次へ]** をクリックします。  
+ 2. **"名前"** の項目において、 **"ドメイン名"** に「 **handson-minilake**（任意）」と入力しします。
+ 
+ 3. **"デプロイタイプ"** の項目において、 **"デプロイタイプ"** で **[開発およびテスト]** を選択します。 バージョンは変更せず、そのまま次へ進みます。  
 
      **Note：** 今回の手順はバージョン1.0で確認しました。
 
- 3. **"データノード"** の項目において、 **"インスタンスタイプ"** に **[t3.small.search]** を選択します。その他の設定は変更せず、画面右下の **[次へ]** をクリックします。
+ 4. **"データノード"** の項目において、 **"インスタンスタイプ"** に **[t3.small.search]** を選択します。その他の設定は変更せず、そのまま次へ進みます。
 
- 4. **"ネットワーク"** の項目において、 **"ネットワーク"** にある **[パブリックアクセス]** にチェックを入れます。
+ 5. **"ネットワーク"** の項目において、 **"ネットワーク"** にある **[パブリックアクセス]** にチェックを入れます。
 
- 5. **"きめ細かなアクセスコントロール"** 項目にて **[きめ細かなアクセスコントロールを有効化]** にチェックが入っていることを確認し、 **[マスターユーザーの作成]** にチェックを入れ、 **"マスターユーザー名"** と **"マスターパスワード"** を以下の通り設定する。
+ 6. **"きめ細かなアクセスコントロール"** 項目にて **[きめ細かなアクセスコントロールを有効化]** にチェックが入っていることを確認し、 **[マスターユーザーの作成]** にチェックを入れ、 **"マスターユーザー名"** と **"マスターパスワード"** を以下の通り設定します。
 
     - マスターユーザー名：**aesadmin**（任意）
     - マスターユーザーのパスワード：**MyPassword&1**（任意）
 
- 6. 次に、アクセスポリシーの項目を設定します。 **"ドメインアクセスポリシー"** において **[ドメインレベルのアクセスポリシーの設定]** を選択します。
+ 7. 次に、アクセスポリシーの項目を設定します。 **"ドメインアクセスポリシー"** において **[ドメインレベルのアクセスポリシーの設定]** を選択します。
 
     - タイプに **[IPv4 アドレス]** を選択、プリンシパルに「 **[ご自身のIPアドレス](http://checkip.amazonaws.com/)** 」を入力、アクションに **[許可]** を選択
 
@@ -35,7 +37,7 @@ SPDX-License-Identifier: MIT-0
 
     - **[要素を追加]** をクリックし、タイプに **[IAM ARN]** を選択、プリンシパルに「 **ご自身のAWSアカウントID** 」を入力、アクションに **[許可]** を選択    
 
- 7. 上記の設定以外は全てデフォルトのままで、画面の一番下にある **[作成]** をクリックしドメインを作成します。
+ 8. 上記の設定以外は全てデフォルトのままで、画面の一番下にある **[作成]** をクリックしドメインを作成します。
 
      **Note：** OpenSearch Service の作成が始まります。構築完了には 15 分ほどかかりますが完了を待たずに次の手順を進めてください。
 
@@ -141,25 +143,25 @@ Fluentd から OpenSearch Service にログデータを送信するための設�
 
  1. AWS マネジメントコンソールのサービス一覧から **OpenSearch Service** を選択します。  
 
- 2. **[Amazon OpenSearch Service ダッシュボード]** が開きます。作成した「 **handson-minilake**（任意）」ドメインの **[ドメインのステータス]** が **[アクティブ]** で、 **[検索可能なドキュメント]** の件数が1件以上になっていることを確認し、「 **handson-minilake**（任意）」ドメインをクリックします。  
+ 2. 左ペインにある **[ドメイン]** を選択します。作成した「 **handson-minilake**（任意）」ドメインの **[ドメインのステータス]** が **[アクティブ]** で、 **[検索可能なドキュメント]** の件数が1件以上になっていることを確認し、「 **handson-minilake**（任意）」ドメインをクリックします。  
 
- 3. **[Kibana]** の右のURLをクリックします。  
+ 3. **[OpenSearch Dashboards の URL]** のをクリックします。  
 
- 4. **[Open Distro for OpenSearch]** 画面が表示されるため、 **[Step1：OpenSearch Service の起動のセクション6]** で作成した、  **"マスターユーザー名"** と **"マスターパスワード"** を入力する。
+ 4. **[Open Distro for OpenSearch]** 画面が表示されるため、 **[Step1：OpenSearch Service の起動のセクション6]** で作成した、  **"マスターユーザー名"** と **"マスターパスワード"** を入力します。
 
- 5. **[Welcome to Elastic Kibana]** 画面が表示されるため、 **[Explore on my own]** を選択します。
+ 5. **[Welcome to OpenSearch]** 画面が表示されるため、 **[Explore on my own]** を選択します。
  
- 6. **[Select your tenant]** のポップアップが表示されるため、 **[Private]]** を選択し、 **[Confirm]]** をクリックし、 **Kibana** の画面を開きます。
+ 6. **[Select your tenant]** のポップアップが表示されるため、 **[Private]]** を選択し、 **[Confirm]]** をクリックし、 **OpenSearch Dashboards** の画面を開きます。
 
- #### Kibana での操作
+ #### OpenSearch Dashboards での操作
 
- 7. **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Dashboad]** をクリックします。
+ 7. **OpenSearch Dashboards** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Dashboad]** をクリックします。
 
  8. **[Create index pattern]** をクリックし、 **[Create index pattern]** 画面において、 **[Index pattern]** に「 ___testappec2log-*___ 」を入力し、右側の **[Next step]** をクリックします。
 
  9. **[Time Filter field name]** において、 **[@timestamp]** を選択し、画面右下の **[Create index pattern]** をクリックします。
 
- 10. **Kibana** の画面の左ペインにある **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
+ 10. **OpenSearch Dashboards** の画面の左ペインにある **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
 
  11. **[Import saved objects]** 画面において、 **[Import]** アイコンをクリックし、 **Asset** 資料の「 **2-visualization.json** 」を選択し、 **[Import]** をクリックします。続く画面において、 **[New index patten]** に対して、「 **testappec2log-\*** 」を選択し、 **[Confirm all changes]** をクリックし、インポートを完了します。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
@@ -169,24 +171,24 @@ Fluentd から OpenSearch Service にログデータを送信するための設�
 
      **Asset** 資料：[2-dashboard.json](asset/ap-northeast-1/2-dashboard.json)
 
- 13. **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、ペインからインポートした「 **test1-dashboard** 」をクリックし、以下のように値が表示されていれば完了です。  
+ 13. **OpenSearch Dashboards** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、ペインからインポートした「 **test1-dashboard** 」をクリックし、以下のように値が表示されていれば完了です。  
 
- <img src="images/kibana_capture01.png">  
+ <img src="images/kibana_capture02.png">  
 
- 14. **Kibana** の画面にて、右上でタイムレンジが選べるため、期間を **[Last 1 hour]** にしてみます。グラフ表示が1時間の間の取得値に変化していることが確認できます。  
+ 14. **OpenSearch Dashboards** の画面にて、右上でタイムレンジが選べるため、期間を **[Last 1 hour]** にしてみます。グラフ表示が1時間の間の取得値に変化していることが確認できます。  
 
- 15. **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、**[Discover]** をクリックします。  
+ 15. **OpenSearch Dashboards** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、**[Discover]** をクリックします。  
 
- 16. **"Available fields"** において、 **[alarmlevel]** の右の **[add]** をクリックします。同じように **[user]** の右側の **[add]** をクリックすると、対象のカラム（Time, alarmlevel, user）だけが表示されます。  
+ 16. **"Available fields"** において、 **[alarmlevel]** の右の **[プラスボタン]** をクリックします。同じように **[user]** の右側の **[プラスボタン]** をクリックすると、対象のカラム（Time, alarmlevel, user）だけが表示されます。  
 
-     **Note：** **[add]** はカーソルがある時にだけ表示されます。
+     **Note：** **[プラスボタン]** はカーソルがある時にだけ表示されます。
 
  17. 検索窓に「 **user:"imai"** 」と入力し、Enterを押すと、「 **imai** 」というユーザーでフィルタリングされます。  
 
 
 ## Section3：まとめ
 
-EC2 からのログをストリームで OpenSearch Service に送り、 Kibana で可視化してエラーログなどを探しやすくなりました。大量の EC2 がある場合、ログを探すのは大変なのでさらに高い効果が見込めます。
+EC2 からのログをストリームで OpenSearch Service に送り、 OpenSearch Dashboards で可視化してエラーログなどを探しやすくなりました。大量の EC2 がある場合、ログを探すのは大変なのでさらに高い効果が見込めます。
 
 <img src="../images/architecture_lab2.png">
 
