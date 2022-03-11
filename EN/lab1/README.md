@@ -38,11 +38,13 @@ Use CloudFormation to create a VPC and launch an EC2 instance which continuously
 
     **Asset** resource：[1-minilake_ec2.yaml](asset/ap-northeast-1/1-minilake_ec2.yaml)
   
- 5. Specify "**handson-minilake** (optional)" as **[Stack name]**, and "**handson.pem** (optional)" which was created in **Section1** as **[KeyPair]** or the existing keypair name if you already have it. Then, click **[Next]**.  
+ 5. Specify "**handson-minilake** (optional)" as **[Stack name]**, and "**handson.pem** (optional)" which was created in **Section1** as **[KeyPair]** or the existing keypair name if you already have it, and enter **handson-minilake-role** (optional) for RoleName. Then, click **[Next]**.  
  
  6. In the optional **tag**, enter "**Name**" for **Key** and "**handson-minilake** (optional)" for **Value**, then click **[Next]**.
  
- 7. Review the contents of the final confirmation page and click **[Create stack]**. After a few minutes, EC2 launches and log starts to output in **/root/es-demo/testapp.log**.  
+ 7. Review the contents of the final confirmation page, check the "**I acknowledge that AWS CloudFormation might create IAM resources with custom names.**", then click **[Create stack]**.After a few minutes, EC2 launches and log starts to output in **/root/es-demo/testapp.log**.  
+
+      **Note：** If you are logged in with SSM, we recommend that you take a break of 10 minutes or so, because there may be a time lag between when the instance starts and when SSM connectivity is available.
  
  8. Log in to EC2 **with SSH and switch to root**. Then, you can check the logs appearing every 2 minutes.
  
@@ -63,82 +65,15 @@ Use CloudFormation to create a VPC and launch an EC2 instance which continuously
 [2019-09-16 15:18:01+0900] ERROR prd-db02 uchida 1001 [This is ERROR.]
  ```
  
-### Step2：Create an IAM role and attach it to EC2
+ ## Section3：Conclusion
 
-Create an IAM role for EC2 to use in the remaining labs.  
+Using CloudFormation, we configured the following
 
-**Note：** If you are connecting an EC2 instance with AWS Systems Manager Session Manager (Session Manager), you can skip this step because there is an IAM role created in the process of setting the Session Manager .
+   1. You created a VPC and an EC2 that logs about 10 every 2 minutes and continues to log 300 errors every 10 minutes.
+   2. You have granted permissions to the EC2 you built in your VPC to access AWS resources. Please see [here](./additional_info_lab1_IAM.md) for details.
+   3. I installed the log collection software Fluentd on the EC2 that I built. Please see [here](./additional_info_lab1_Fluentd.md) for details.
 
- 1. Select **IAM** from the list of services in the AWS Management Console and click **[Roles]** from the left pane of the **[Identity and Access Management (IAM)]** dashboard.
- 
- 2. Click **[Create role]**.
- 
- 3. Select **[AWS Service]**, select **[EC2]**, and click **[Next: Permissions]**.
- 
- 4. On the **[Attach permission policies]** screen, click **[Next: Tags]** without changing anything.  
-
-    **Note：** At this step, you create a role without any policy. If you use Session Manager, only **AmazonEC2RoleforSSM** is attached.
-
- 5. On the **[Add tags (optional)]** screen, just click **[Next: Review]**.
- 
- 6. Enter "**handson-minilake** (optional)" for **[Role name]** and click **[Create role]**.
- 
- 7. Select **EC2** from the list of services in the AWS Management Console, click **[Instances]** from the left pane of the **[EC2 Dashboard]** screen, select the instance **handson-minilake** (optional)" and click **[Actions] → [Security] → [Modify IAM role]**.
- 
- 8. On the **[Modiry IAM role]** screen, select "**handson-minilake** (optional)" for **[IAM role]** and click **[Save]**.
-  
-
-### Step3：Install Fluentd
-
-Log in to EC2, install the log collection software, Fluentd, and configure the settings.
-
- 1. Log in to EC2 and install redhat-lsb-core and gcc.  
-   
-    **Note：** This step can be skipped if you used CloudFormation template in Step1 since the prepared AMI which has these components already installed to.  
-    **Asset** resource：[1-cmd.txt](asset/ap-northeast-1/1-cmd.txt)
-
- ```
- $ sudo su -
- # yum -y install redhat-lsb-core gcc
- ```
-
- 2. Install td-agent.
-
-    **Asset** resource：[1-cmd.txt](asset/ap-northeast-1/1-cmd.txt)
-    
- ```
- # rpm -ivh http://packages.treasuredata.com.s3.amazonaws.com/3/redhat/6/x86_64/td-agent-3.1.1-0.el6.x86_64.rpm
- ```
-
- 3. Modify the 18th line of **/etc/init.d/td-agent** from **td-agent** to **root**.  
- 
-    **Note：** The command example uses the vi editor, but if you have another editor you are familiar with, please feel free using the tool of your choice.  
-    **Asset** resource：[1-cmd.txt](asset/ap-northeast-1/1-cmd.txt)
-
- ```
- # vi /etc/init.d/td-agent
- ```
-
- **[Before change]**
- 
- ```
- TD_AGENT_USER=td-agent
- ```
- 
- **[After change]**
- 
- ```
- TD_AGENT_USER=root 
- ```
-
- 4. Set Fluentd to start at the system starting time. (The procedures of manually  starting up Fluentd will be covered later in the lab.)
-
-    **Asset** resource：[1-cmd.txt](asset/ap-northeast-1/1-cmd.txt)
-
- ```
- # chkconfig td-agent on
- ```
- 
+<img src="../images/architecture_lab1.png">
 
 That's it for Lab1. Try the following procedure according with the path you have selected.
 

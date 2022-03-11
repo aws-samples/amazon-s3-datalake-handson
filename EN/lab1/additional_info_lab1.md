@@ -72,33 +72,16 @@ Log in to EC2 from Windows using the following procedure.
 ## 3. For Session Manager
 
 Log in to EC2 from the Session Manager as follows. 
-Attach the required IAM role between EC2 and Session Manager and log in to EC2 via the AWS Management Console.  
 
- 1. Select **IAM** from the list of services in the AWS Management Console and click **[Roles]** from the left pane of the **[Identity and Access Management (IAM)]** dashboard.  
+  **Note：** The required IAM roles between EC2 and Session Manager are already in place when you run AWS CloudFormation.Please see [here](./additional_info_lab1_IAM.md) for details.
 
- 2. Click **[Create role]**.  
+ 1. Select **Systems Manager** from the list of services in the AWS Management Console, select **[Session Manager]**, and click **[Start session]**.  
 
- 3. Select **[AWS Service]**, select **[EC2]**, and click **[Next: Permissions]**.  
-
- 4. On the **[Attach permission policies]** screen, select **[AmazonEC2RoleforSSM]** and click **[Next: Tags]**. 
-
-  **Note：** Entering **SSM** in the filter is easy to find.
-
- 5. On the **[Add tags (optional)]** screen, just click **[Next: Review]**.
-
- 6. Enter "**handson-minilake** (optional)" for **[Role name]** and click **[Create role]**.
-
- 7. Select **EC2** from the list of services in the AWS Management Console, click **[Instances]** from the left pane of the **[EC2 Dashboard]** screen, select the instance **handson-minilake** (optional)" and click **[Actions] → [Instance Settings] → [Attach/Replace IAM Role]**.
-
- 8. On the **[Attach/Replace IAM Role]** screen, select "**handson-minilake** (optional)" for **[IAM role]** and click **[Apply]**.
-
- 9. Select **Systems Manager** from the list of services in the AWS Management Console, select **[Session Manager]**, and click **[Start session]**.  
-
- 10. Specify the EC2 instance ID to be logged in and click **[Start session]** to log in to EC2.  
+ 2. Specify the EC2 instance ID to be logged in and click **[Start session]** to log in to EC2.  
 
   **Note：** It is expected that it takes about 5 minutes until the corresponding instance is displayed.
 
- 11. A command line appears on the web. Execute the following command and switch to **ec2-user** user.    
+ 3. A command line appears on the web. Execute the following command and switch to **ec2-user** user.    
   **Note：** By default, you are logged in as the user **ssm-user**. 
   
  ```

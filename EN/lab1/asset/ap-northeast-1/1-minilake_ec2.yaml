@@ -1,12 +1,4 @@
 Parameters:
-  InstanceType:
-    Description: EC2 instance type
-    Type: String
-    Default: t2.micro
-    AllowedValues:
-      - t1.micro
-      - t2.micro
-    ConstraintDescription: must be a valid EC2 instance type.
   KeyPair:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
     Type: "AWS::EC2::KeyPair::KeyName"
@@ -14,6 +6,12 @@ Parameters:
     MaxLength: '255'
     AllowedPattern: '[\x20-\x7E]*'
     ConstraintDescription: can contain only ASCII characters.
+  RoleName:
+    Description: Set role name
+    Type: String
+    MinLength: '1'
+    MaxLength: '255'
+    AllowedPattern: '[\x20-\x7E]*'
 Resources:
 # Create VPC
   MyVPC:
@@ -81,13 +79,14 @@ Resources:
   MyEC2Instance:
     Type: 'AWS::EC2::Instance'
     Properties:
-      ImageId: ami-0c67dfaea448e590a
+      ImageId: ami-08c23a10b77e0835b
       InstanceType: t2.micro
       SubnetId: !Ref PublicSubnetA
       KeyName :
         Ref: KeyPair
       SecurityGroupIds:
         - Ref: MyEC2SecurityGroup
+      IamInstanceProfile: !Ref InstanceProfile
       Tags:
         - Key: Name
           Value: handson-minilake
@@ -108,6 +107,28 @@ Resources:
           ToPort: '5439'
           CidrIp:
             '0.0.0.0/0'
+  minilaketestrole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      RoleName:  !Ref RoleName
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  InstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Path: '/'
+      Roles:
+        - !Ref minilaketestrole
 Outputs:
   AllowIPAddress:
     Description: EC2 PublicIP
