@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT-0
 
 # Lab3：アプリケーションログのリアルタイム可視化とアラーム
 「Lab2：アプリケーションログをリアルタイムで可視化」で実施した可視化に加え、アラーム検知を実施します。
-Fluentd から OpenSearch Service に送信する前段に Amazon CloudWatch（以降、CloudWvatch）、 AWS Lambda（以降、Lambda）を配置して、アラーム通知をする処理を追加します。
+Fluentd から OpenSearch Service に送信する前段に Amazon CloudWatch（以降、CloudWatch）、 AWS Lambda（以降、Lambda）を配置して、アラーム通知をする処理を追加します。
 
 ## Section1：EC2 の設定変更˚
 ### Step1：IAM ロールの設定
