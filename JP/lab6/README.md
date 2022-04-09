@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT-0
 
 # Lab6：サーバーレスでデータのETL処理
 
-ストリームデータを Amazon Kinesis Data Firehose（以降、Kinesis Data Firehose）に送信後、 Amazon S3（以降、S3）にに保存することで長期保存します。その後、 AWS Glue（以下、Glue）を使って、①ファイルフォーマットを Apache Parquet 形式に変換します。②ファイルをパーティショングした配置するための処理、を実行し、その結果を S3 に保存します。その後、 Amazon Athena（以降、Athena）や Amazon Redshift Spectrum（以降、Redshift Spectrum）を用いて、クエリを実行し、 Amazon QuickSight（以降、QuickSight）で可視化します。
+ストリームデータを Amazon Kinesis Data Firehose（以降、Kinesis Data Firehose）に送信後、 Amazon S3（以降、S3）に保存することで長期保存します。その後、 AWS Glue（以下、Glue）を使って、①ファイルフォーマットを Apache Parquet 形式に変換します。②ファイルをパーティショングした配置するための処理、を実行し、その結果を S3 に保存します。その後、 Amazon Athena（以降、Athena）や Amazon Redshift Spectrum（以降、Redshift Spectrum）を用いて、クエリを実行し、 Amazon QuickSight（以降、QuickSight）で可視化します。
 
 ## Section1：Glue の ETL 処理
 ### Step1：IAM ロールにポリシーを追加
@@ -266,7 +266,7 @@ SELECT count(user) FROM "minilake"."minilake_out1" where user='uchida' and times
 
 
 ### Step7：Athena でクエリ比較
-Parquet 形式でパーティション設定したテーブルに対して区営rを実行し、スキャン量や実行時間がさらに改善していることを確認します。
+Parquet 形式でパーティション設定したテーブルに対してクエリを実行し、スキャン量や実行時間がさらに改善していることを確認します。
 
   1. Parquet 形式でパーティション設定したテーブルに対してクエリを実行します。
 
