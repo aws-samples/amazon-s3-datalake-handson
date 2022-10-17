@@ -9,20 +9,20 @@ SPDX-License-Identifier: MIT-0
 「Lab2：アプリケーションログをリアルタイムで可視化」で実施した可視化に加え、アラーム検知を実施します。
 Fluentd から OpenSearch Service に送信する前段に Amazon CloudWatch（以降、CloudWatch）、 AWS Lambda（以降、Lambda）を配置して、アラーム通知をする処理を追加します。
 
-## Section1：EC2 の設定変更˚
+## Section1：EC2 の設定変更
 ### Step1：IAM ロールの設定
 
 作成済の「 **handson-minilake**（任意）」の IAM ロールに以下のようにポリシーを追加します。
 
  1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake-role**（任意）」のロール名をクリックします。
 
- 2. **[アクセス権限]** タブを選択し、 **[ポリシーをアタッチします]** をクリックします。
+ 2. **[許可]** タブを選択し、 **[許可を追加]** をクリックし、 **[ポリシーをアタッチ]** をクリックします。
 
- 3. 検索などを使いながら、 **[CloudWatchLogsFullAccess]** のポリシーにチェックを入れ、 **[ポリシーのアタッチ]** をクリックします。
+ 3. 検索などを使いながら、 **[CloudWatchLogsFullAccess]** のポリシーにチェックを入れ、 **[ポリシーをアタッチ]** をクリックします。
 
- 4. 変更実施したロールの **[アクセス権限]** タブを選択し、 **[CloudWatchLogsFullAccess]** がアタッチされたことを確認します。
+ 4. 変更実施したロールの **[許可]** タブを選択し、 **[CloudWatchLogsFullAccess]** がアタッチされたことを確認します。
 
- 5. 次に **[信頼関係]** タブを選択し、 **[信頼関係の編集]** を押下し、ポリシーに以下を追加します。
+ 5. 次に **[信頼関係]** タブを選択し、 **[信頼ポリシーを編集]** を押下し、ポリシーに以下を追加します。
 
  **[追加するポリシー]**
 
@@ -58,11 +58,11 @@ Fluentd から OpenSearch Service に送信する前段に Amazon CloudWatch（�
 
 1. **OpenSearch Dashboards** の画面を開き、 **OpenSearch Dashboards** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Security]** をクリックします。  
 
-2. 左ペインにあるRolesを押下し、Role一覧の中にある **all_access** をクリックする。
+2. 左ペインにあるRolesを押下し、Role一覧の中にある **[all_access]** をクリックする。
 
-3. **Mapped users** のタブを選択し、 **Manage mapping** を押下する。
+3. **[Mapped users]** のタブを選択し、 **[Manage mapping]** を押下する。
 
-4. **Backend roles** に先ほどメモした、 「**handson-minilake**（任意）」の **[ロールARN]** の値を入力し **Map** ボタンを押下する。
+4. **[Backend roles]** に先ほどメモした、 「**handson-minilake**（任意）」の **[ロールARN]** の値を入力し **[Map]** ボタンを押下する。
 
 
 ### Step3：Fluentd の設定
@@ -116,30 +116,30 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  3. ログストリーム「 **testapplog_stream**（任意）」をクリックします。直近のログが出力されていることを確認します。画面上部の **[ロググループ]** の文字列をクリックし、ロググループに戻ります。  
 
- 4. ロググループ「 **minilake_group**（任意）」にチェックを入れ、 **[アクション]** をクリックし、 **[サブスクリプションフィルター]** の中にある **[Create OpenSearch subscription filter]** をクリックします。  
+ 4. ロググループ「 **minilake_group**（任意）」にチェックを入れ、 **[アクション]** をクリックし、 **[サブスクリプションフィルター]** の中にある **[Amazon OpenSearch Service サブスクリプションフィルターを作成]** をクリックします。  
 
     **Note：** 裏側では自動で Lambda Function が作られます。
 
- 5. **"送信先の選択"** において、 **[アカウントの選択]** で **[This account]** を選択し、 **[Amazon ES cluster]** において、作成済みの「 **handson-minilake**（任意）」を選択し、 **[Lambda IAM Execution Role]** において、 「**handson-minilake-role**（任意）」 を選択します。  
+ 5. **"送信先の選択"** において、 **[アカウントの選択]** で **[このアカウント]** を選択し、 **[Amazon OpenSearch Service クラスター]** において、作成済みの「 **handson-minilake**（任意）」を選択し、 **[Lambda IAM Execution Role]** において、 「**handson-minilake-role**（任意）」 を選択します。  
 
 　　**Note：** ブラウザでポップアップブロックが走ったら、許可して、1つ前の手順からやり直して下さい。
 
- 6. **"ログ形式とフィルターの設定"** 画面において、　**[ログの形式]** に **[その他]** を選択し、　**[サブスクリプションフィルター名]** に、「**handson-minilake01**（任意）」と入力し、 **[ストリーミングの開始]** をクリックします。
+ 6. **"ログ形式とフィルターを設定"** 画面において、　**[ログの形式]** に **[その他]** を選択し、　**[サブスクリプションフィルター名]** に、「**handson-minilake01**（任意）」と入力し、 **[ストリーミングの開始]** をクリックします。
 
 
 ### Step2：OpenSearch Service の設定
 
- 1. **Kibana** の画面を開き、 **Kibana** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Management]** 内にある **[Stack Management]** をクリックします。  
+ 1. **OpenSearch Dashboards** の画面を開き、 **OpenSearch Dashboards** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Management]** 内にある **[Stack Management]** をクリックします。  
 
- 2. 左ペインの **[Index Pattern]** を選択し、 **[Create index pattern]** をクリックします。
+ 2. 左ペインの **[Index Patterns]** を選択し、 **[Create index pattern]** をクリックします。
 
- 3. **[Index pattern]** に「 __cwl-*__ 」を入力し、右側の **[Next step]** をクリックします。
+ 3. **[Index pattern name]** に「 __cwl-*__ 」を入力し、右側の **[Next step]** をクリックします。
 
     **Note：** インデックス作成に多少の時間がかかるため、 **[Next step]** がクリックできるようになるまで、少し時間がかかることが想定されます。  
 
- 4. **[Time Filter field name]** に **[@timestamp]** を選択し、右下の **[Create index pattern]** をクリックします。
+ 4. **[Time field]** に **[@timestamp]** を選択し、右下の **[Create index pattern]** をクリックします。
 
- 5. **Kibana** の画面の左ペインから **[Saved Objects]** をクリックします。画面右上の **[Import]** アイコンをクリックします。
+ 5. **OpenSearch Dashboards** の画面の左ペインから **[Saved Objects]** をクリックします。画面右上の **[Import]** アイコンをクリックします。
 
  6. **[Import saved objects]** 画面において、 **[Import]** アイコンをクリックし、 **Asset** 資料の「 **3-visualization.json** 」を選択し、 **[Import]** をクリックします。続く画面において、 **[New index patten]** に対して、「 **cwl-\*** 」を選択し、 **[Confirm all changes]** をクリックし、インポートを完了します。問題なくインポートが完了したら、 **[Done]** をクリックすると、元の画面に戻ります。
 
@@ -151,7 +151,7 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
 ### Step3：CloudWatch アラームの設定
 
- 1. AWS マネジメントコンソールのサービス一覧から **CloudWatch** を選択し、**[ロググループ]** をクリックし、「 **minilake_group**（任意）」のロググループにチェックを入れ、 **[アクション]** から、**[メトリクスフィルターの作成]** をクリックします。
+ 1. AWS マネジメントコンソールのサービス一覧から **CloudWatch** を選択し、**[ロググループ]** をクリックし、「 **minilake_group**（任意）」のロググループにチェックを入れ、 **[アクション]** から、**[メトリクスフィルターを作成]** をクリックします。
 
  2. フィルターパターンに「 **ERROR** 」を入力し、 **[パターンをテスト]** の **[テストするログデータを選択]** にて、 **[testapplog_stream]** を選択し、画面右下の **[Next]** をクリックします。  
 
@@ -175,11 +175,10 @@ Fluentd から CloudWatch Logs にログデータを送信するための設定�
 
  7. 必要な設定は完了したため、 **[次へ]** をクリックします。
 
- 8. **[アラーム名]** に「 **minilake-handson-alarm**（任意）」と入力し、 **[次へ]** をクリックし、続いての画面で、 **[アラームの作成]** をクリックします。
+ 8. **[アラーム名]** に「 **minilake-handson-alarm**（任意）」と入力し、 **[次へ]** をクリックし、続いての画面で、 **[アラームを作成]** をクリックします。
 
  9. **[CloudWatch]** の **[アラーム]** をクリックし、 「**minilake-handson-alarm** 」をクリックし、グラフ画面を確認します。最初は状態が **[データ不足]** と表示されていますが、しばらくすると **[OK]** になります。1分間で50件以上  **ERROR** が発生するとアラートが上がります。10分ごとに ERROR が300件出る設定になっている為、10分毎にアラートが上がります。
 
-### 補足：Elasticsearch Service で、イベント監視およびアラートのサポートを開始しました。アラートは、 Elasticsearch 6.2 以降を実行しているドメインで利用可能です。本ハンズオンの該当する手順を置き換えた詳細な手順は[こちら](additional_info_lab3.md)をご覧ください。
 
 ## Section3：まとめ
 

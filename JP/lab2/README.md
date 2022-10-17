@@ -45,7 +45,7 @@ SPDX-License-Identifier: MIT-0
 ## Section2：EC2, Fluentd, OpenSearch Service の設定
 ### Step1：IAM ロールの設定
 
-作成済の「 **handson-minilake**（任意）」の IAM ロールに以下のようにポリシーを追加します。
+作成済の「 **handson-minilake-role**（任意）」の IAM ロールに以下のようにポリシーを追加します。
 
  1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake-role**（任意）」のロール名をクリックします。
 
@@ -60,7 +60,7 @@ SPDX-License-Identifier: MIT-0
 
 Fluentd から OpenSearch Service にログデータを送信するための設定を行います。
 
- 1. AWS マネジメントコンソールのサービス一覧から **OpenSearch Service** を選択し、 **[Amazon OpenSearch Service ダッシュボード]** 画面から作成したドメイン名「 **handson-minilake**（任意）」をクリックし、 **[エンドポイント]** にある **URL の文字列** を **https://を含めない形** でパソコンのメモ帳などにメモしておきます。
+ 1. AWS マネジメントコンソールのサービス一覧から **OpenSearch Service** を選択し、 **[Amazon OpenSearch Service ダッシュボード]** 画面から作成したドメイン名「 **handson-minilake**（任意）」をクリックし、 **[ドメインエンドポイント]** にある **URL の文字列** を **https://を含めない形** でパソコンのメモ帳などにメモしておきます。
 
  2. EC2 にログインし、 OpenSearch のプラグインのインストール状況を確認します。
 
@@ -157,9 +157,9 @@ Fluentd から OpenSearch Service にログデータを送信するための設�
 
  7. **OpenSearch Dashboards** の画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、 **[Dashboad]** をクリックします。
 
- 8. **[Create index pattern]** をクリックし、 **[Create index pattern]** 画面において、 **[Index pattern]** に「 ___testappec2log-*___ 」を入力し、右側の **[Next step]** をクリックします。
+ 8. **[Create index pattern]** をクリックし、 **[Create index pattern]** 画面において、 **[Index pattern name]** に「 ___testappec2log-*___ 」を入力し、右側の **[Next step]** をクリックします。
 
- 9. **[Time Filter field name]** において、 **[@timestamp]** を選択し、画面右下の **[Create index pattern]** をクリックします。
+ 9. **[Time field]** において、 **[@timestamp]** を選択し、画面右下の **[Create index pattern]** をクリックします。
 
  10. **OpenSearch Dashboards** の画面の左ペインにある **[Saved Objects]** をクリックします。画面右上の **[Import]** をクリックします。
 
