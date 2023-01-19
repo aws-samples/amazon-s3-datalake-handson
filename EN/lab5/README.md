@@ -48,7 +48,7 @@ Go to the **VPC** console and note the "**VPC ID**" that you created at the begi
     - Name：**handson-minilake-dwh** (optional)
     - handson-minilake-dwh：**dwh in my vpc** (optional)
     - VPC ID：Select "**VPC ID**" which you created
-    - dwh in my vpc：**ap-northeast-1a**
+    - dwh in my vpc：**ap-northeast-1b**
     - dwh in my vpc：Select "**Subnet ID**" which you created and click **[Add]**
  
  5. Select **[DASHBOARD]** and click **[Create cluster]**.
