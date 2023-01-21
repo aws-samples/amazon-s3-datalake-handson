@@ -80,7 +80,7 @@ Resources:
     Type: 'AWS::EC2::Instance'
     Properties:
       ImageId: ami-07ffa58a0316a8fd3
-      InstanceType: t2.micro
+      InstanceType: t3.micro
       SubnetId: !Ref PublicSubnetA
       KeyName :
         Ref: KeyPair

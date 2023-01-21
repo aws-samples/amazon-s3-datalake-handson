@@ -38,7 +38,7 @@ Resources:
     Properties:
       VpcId: !Ref MyVPC
       CidrBlock: 10.0.0.0/27
-      AvailabilityZone: "ap-northeast-1b"
+      AvailabilityZone: "ap-northeast-1a"
       Tags:
       - Key: Name
         Value: handson-minilake
@@ -80,7 +80,7 @@ Resources:
     Type: 'AWS::EC2::Instance'
     Properties:
       ImageId: ami-08c23a10b77e0835b
-      InstanceType: t2.micro
+      InstanceType: t3.micro
       SubnetId: !Ref PublicSubnetA
       KeyName :
         Ref: KeyPair

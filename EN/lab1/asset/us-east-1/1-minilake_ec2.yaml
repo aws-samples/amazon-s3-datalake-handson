@@ -2,10 +2,10 @@ Parameters:
   InstanceType:
     Description: EC2 instance type
     Type: String
-    Default: t2.micro
+    Default: t3.micro
     AllowedValues:
-      - t1.micro
       - t2.micro
+      - t3.micro
     ConstraintDescription: must be a valid EC2 instance type.
   KeyPair:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
@@ -82,7 +82,7 @@ Resources:
     Type: 'AWS::EC2::Instance'
     Properties:
       ImageId: ami-010bdc9d71b0090aa
-      InstanceType: t2.micro
+      InstanceType: t3.micro
       SubnetId: !Ref PublicSubnetA
       KeyName :
         Ref: KeyPair
