@@ -20,7 +20,7 @@ Resources:
     Properties:
       VpcId: !Ref VpcId
       CidrBlock: 10.0.0.32/27
-      AvailabilityZone: "ap-northeast-1b"
+      AvailabilityZone: "ap-northeast-1a"
       Tags:
       - Key: Name
         Value: handson-minilake-private-sub
